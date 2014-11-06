@@ -4,6 +4,13 @@
 (function () {
     'use strict';
     
+    var PROJECT_ID      = 'todo-gmail-1986',
+        CLIENT_ID       = '1070900723620-n6pf5q8ha6tfart5rkr6eaavqf1cvu7e.apps.googleusercontent.com',
+        CLIENT_SECRET   = 'RL4Y12AkuDlr3wiQ3BzoNKrO',
+        API_KEY         = 'AIzaSyCEbDkQOJR626_SWtkpZM1ridtbossk40Y',
+        API_KEY_ANDROID = 'AIzaSyCZbZTd4-gStEiCUys-6mai6-atO0yRZKU',
+        REDIRECT_URI    = 'http://localhost';
+    
     var App = {
 
         /**
@@ -35,20 +42,19 @@
             } else {
                 window.onload = this.onDeviceReady();
             }
-
         },
 
         onDeviceReady: function () {
-            App.receivedEvent('deviceready');
+            App.deviceReady();
         },
         
-        authorize: function (options) {
+        phonegapAuthorize: function () {
             
             var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
-                client_id: options.client_id,
-                redirect_uri: options.redirect_uri,
+                client_id: CLIENT_ID,
+                redirect_uri: REDIRECT_URI,
                 response_type: 'code',
-                scope: options.scope
+                scope: "https://www.googleapis.com/auth/gmail.readonly"
             });
             
             //Open the OAuth consent page in the InAppBrowser
@@ -61,7 +67,6 @@
                 var error = /\?error=(.+)$/.exec(url);
 
                 if (code || error) {
-                    //Always close the browser when match is found
                     authWindow.close();
                 }
 
@@ -69,42 +74,72 @@
                     
                     $.post('https://accounts.google.com/o/oauth2/token', {
                         code: code[1],
-                        client_id: options.client_id,
-                        client_secret: options.client_secret,
-                        redirect_uri: options.redirect_uri,
+                        client_id: CLIENT_ID,
+                        client_secret: CLIENT_SECRET,
+                        redirect_uri: REDIRECT_URI,
                         grant_type: 'authorization_code'
                     }).done(function(data) {
-                        $("#login p").html("OAuth code: " + data.access_token);
+                        
+                        //alert(JSON.stringify(data));
+                        
+                        gapi.client.setApiKey(API_KEY_ANDROID);
+                        gapi.auth.setToken(data);
+                        
+                        App.authComplete();
+                                                
                     });
                 } else if (error) {
-                    $("#login p").html("OAuth error....");
+                    App.authError();
                 }
             });
             
         },
         
-        receivedEvent: function (event) {
+        browserAuthorize: function () {
             
-            switch (event) {
+            gapi.client.setApiKey(API_KEY);
+            gapi.auth.authorize({
+                client_id: CLIENT_ID,
+                scope: "https://www.googleapis.com/auth/gmail.readonly",
+                immediate: false
+            }, 
+            function(authResult) {
+                if (authResult && !authResult.error) {
+                    App.authComplete();
+                } else {
+                    App.authError();
+                }
+            });
+        },
+        
+        authComplete: function () {
+            
+            gapi.client.load('gmail', 'v1', function () {
+                gapi.client.gmail.users.labels.list({"userId": "ghalex@gmail.com"}).execute(function (resp) {
 
-                case 'deviceready':
-                    
-                    this.initFramework7();
-                    
-                    $("#login a").on('click', $.proxy(function () {
-                        
-                        this.authorize({
-                            client_id: "1070900723620-n6pf5q8ha6tfart5rkr6eaavqf1cvu7e.apps.googleusercontent.com",
-                            client_secret: "RL4Y12AkuDlr3wiQ3BzoNKrO",
-                            redirect_uri: 'http://localhost',
-                            scope: 'https://www.googleapis.com/auth/gmail.readonly'
-                        });
-                        
-                    }, this));
-                    
-                    break;
-                    
-            }
+                    $("#login p").html(resp.labels[0].name);
+                    //alert(JSON.stringify(resp));
+                });                
+            })
+        },
+        
+        authError: function () {
+            $("#login p").html("auth error");
+        },
+        
+        deviceReady: function (event) {
+            
+            this.initFramework7();
+
+            $("#login a").on('click', $.proxy(function () {
+
+                if (this.isPhonegap()) {
+                    this.phonegapAuthorize();
+                } else {
+                    this.browserAuthorize();
+                }
+
+            }, this));
         }
     };
 
