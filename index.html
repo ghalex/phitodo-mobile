@@ -25,15 +25,31 @@
             <div class="view view-main">
                 
                 <!--Navbar-->
-                <div class="navbar">
+                <div class="navbar theme-white">
                     <div class="navbar-inner">
-                        TodoGmail
+                        <div class="left">
+                            <a href="#"><i class="icon icon-back"></i></a>
+                        </div>
+                        <div class="center">
+                            <span>TodoGmail</span>
+                        </div>
+                        <div class="right">
+                            <a href="#"><i class="icon icon-bars"></i></a>
+                        </div>
                     </div>
                 </div>
                 
                 <!--Pages-->
                 <div class="pages navbar-through toolbar-through">
                     <div class="page" data-page="about">
+                        
+                        <form class="searchbar" data-search-list=".list-block-search" data-search-in=".item-title" data-searchbar-found=".searchbar-found" data-searchbar-not-found=".searchbar-not-found">
+                            <div class="searchbar-input">
+                                <input type="search" placeholder="Search" class="">
+                                <a href="#" class="searchbar-clear"></a>
+                            </div>
+                            <a href="#" class="searchbar-cancel" style="margin-right: -53px;">Cancel</a>
+				        </form>
                         <div class="page-content">
                             <div class="content-block">
                                 <div id="login">
@@ -42,12 +58,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!--Bottom toolbar-->
-                <div class="toolbar">
-                    <div class="toolbar-inner">
                     </div>
                 </div>
             </div>
