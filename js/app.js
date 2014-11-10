@@ -1,4 +1,4 @@
-/*jslint vars: true, plusplus: true, white: true */
+/*jslint vars: true, plusplus: true, node: true */
 /*global require, module, Framework7, Dom7, console, cordova, phonegap, $ */
 
 (function () {
@@ -129,7 +129,7 @@
         
         deviceReady: function (event) {
             
-            this.initFramework7();
+            this.initFramework7();            
 
             $("#login a").on('click', $.proxy(function () {
 
