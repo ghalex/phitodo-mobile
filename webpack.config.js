@@ -5,13 +5,12 @@ module.exports = {
 	"entry": "./src/main.js",
 	"output": {
 		"path": "./build/",
-		"filename": "sp-1.0.0.js"
+		"filename": "app-1.0.0.js"
 	},
     "externals": {
         "angular": "angular",
-        "jquery": "jQuery",
-        "nprogress": "NProgress",
-		"phi": "phi"
+        "framework7": "Framework7",
+        "cordova": "cordova"
     },
 	"resolve": {
 		"alias": {},

@@ -17,13 +17,24 @@
     </head>
     <body>
         
+        <!-- Status bar overlay for fullscreen mode-->
         <div class="statusbar-overlay"></div>
         
-        <div class="views">
-            
+        <!-- Panels overlay-->
+        <div class="panel-overlay"></div>
+        
+        <!-- Left panel -->
+        <div class="panel panel-left panel-reveal">
+            <div class="content-block">
+                <p>Left Panel content here</p>
+            </div>
+        </div>
+        
+        <div class="views toolbar-fixed">
+
             <!--View 1-->
             <div class="view view-main">
-                
+
                 <!--Navbar-->
                 <div class="navbar theme-white">
                     <div class="navbar-inner">
@@ -40,20 +51,24 @@
                 </div>
                 
                 <!--Pages-->
-                <div class="pages navbar-through toolbar-through">
-                    
+                <div class="pages navbar-through toolbar-through tabs">
+                    <div id="tab1" class="page tab active" data-page="todos" ng-include="'todos-template'"></div>
+                    <div id="tab2" class="page cached tab" data-page="settings" ng-include="'settings-template'"></div>
                 </div>
+                
             </div>
-        
+
         </div>
         
         
         <!--JS-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
-        <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
-        <script type="text/javascript" src="js/framework7.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="thirdparty/jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="thirdparty/framework7.js"></script>
+        <script type="text/javascript" src="thirdparty/angular.js"></script>
+        <script type="text/javascript" src="thirdparty/angular-ui-router.js"></script>
+        <script type="text/javascript" src="build/app-1.0.0.js"></script>
         
     </body>
 </html>

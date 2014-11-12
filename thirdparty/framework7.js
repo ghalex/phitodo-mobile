@@ -8863,4 +8863,3 @@ window.Template7 = (function () {
     t7.helpers = Template7.prototype.helpers;
     return t7;
 })();
-//# sourceMappingURL=framework7.js.map
