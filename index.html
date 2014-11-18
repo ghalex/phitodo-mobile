@@ -30,32 +30,89 @@
             </div>
         </div>
         
-        <div class="views toolbar-fixed">
+        <div class="views">
 
             <!--View 1-->
             <div class="view view-main">
 
                 <!--Navbar-->
-                <div class="navbar theme-white">
-                    <div class="navbar-inner">
-                        <div class="left">
-                            <a href="#"><i class="icon icon-back"></i></a>
-                        </div>
-                        <div class="center">
-                            <span>TodoGmail</span>
-                        </div>
-                        <div class="right">
-                            <a href="#"><i class="icon icon-bars"></i></a>
-                        </div>
+                <div class="navbar">
+                    <div class="navbar-inner" data-page="todos">
+                        <div class="left"></div>
+                        <div class="center"><span>Todo for Gmail</span></div>
+                        <div class="right"></div>
                     </div>
                 </div>
+            
                 
                 <!--Pages-->
-                <div class="pages navbar-through toolbar-through tabs">
-                    <div id="tab1" class="page tab active" data-page="todos" ng-include="'todos-template'"></div>
-                    <div id="tab2" class="page cached tab" data-page="settings" ng-include="'settings-template'"></div>
+                <div class="pages navbar-through toolbar-through">
+                    <!--<div include-page="todos"></div>
+                    <div include-page="settings"></div>-->
+                    <div class="page navbar-fixed" data-page="home">
+                        <div class="page-content">
+                            
+                            <div class="tabs-animated-wrap">
+                                <div class="tabs">
+                                    
+                                    <div id="tab1" class="tab active">
+                                        <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar">
+                                            <div class="searchbar-input">
+                                                <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+                                            </div>
+                                        </form>
+                                        <div class="content-block">
+                                            <p>Page 1</p>
+                                            <a href="#tab2" class="tab-link">GoTo</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="tab2" class="tab">
+                                        <div class="content-block">
+                                            <p>Page 2</p>
+                                            <a href="#tab1" class="tab-link">Back</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="tab3" class="tab">
+                                        <div class="content-block">
+                                            <p>Page 3</p>
+                                            <a href="#tab1">GoTo</a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
                 </div>
                 
+                    
+                <!--Toolbar-->
+                <div class="toolbar tabbar tabbar-labels">
+                    <div class="toolbar-inner">
+                        
+                        <a href="#tab1" class="tab-link active">
+                            <i class="icon home-icon"></i>
+                            <span class="tabbar-label">Home</span>
+                        </a>
+                        
+                        <a href="#tab2" class="tab-link">
+                            <i class="icon todos-icon">
+                                <span class="badge bg-red">5</span>
+                            </i>
+                            <span class="tabbar-label">Todos</span>
+                        </a>
+                        
+                        <a href="#tab3" class="tab-link">
+                            <i class="icon settings-icon"></i>
+                            <span class="tabbar-label">Settings</span>
+                        </a>
+                        
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -67,7 +124,6 @@
         <script type="text/javascript" src="thirdparty/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="thirdparty/framework7.js"></script>
         <script type="text/javascript" src="thirdparty/angular.js"></script>
-        <script type="text/javascript" src="thirdparty/angular-ui-router.js"></script>
         <script type="text/javascript" src="build/app-1.0.0.js"></script>
         
     </body>

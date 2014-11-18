@@ -51,13 +51,36 @@
 
 	var angular = __webpack_require__(1),
 	    Framework7 = __webpack_require__(2),
-	    settings = __webpack_require__(4),
-	    todos = __webpack_require__(3);
+	    settings = __webpack_require__(3),
+	    todos = __webpack_require__(4);
 
 	// Init
-	var app = angular.module('app', ['ui.router', 'app.todos', 'app.settings']),
-	    f7 = new Framework7({modalTitle: 'TodoGmail'}),
-	    mainView = f7.addView('.view-main', {});
+	var app = angular.module('app', [
+	    'app.todos',
+	    'app.settings'
+	]);
+
+	app.directive('includePage', function (f7, $templateCache) {
+	    return {
+	        replace: true,
+	        restrict: 'A',
+	        template: function (element, attr) {
+	            return $templateCache.get(attr.includePage);
+	        },
+	        link: function (scope, element, attrs) {
+	            f7.mainView.initialPages.push(element[0]);
+	        }
+	    };
+	});
+
+	app.factory('f7', function () {
+	    var f7 = new Framework7({modalTitle: 'TodoGmail'});
+	    return f7;
+	});
+
+	app.run(function (f7) {
+	    
+	});
 
 	// Start app
 	angular.bootstrap(document, ['app']);
@@ -93,11 +116,11 @@
 	    angular = __webpack_require__(1),
 	    angularModule = null;
 	    
-	angularModule = angular.module('app.todos', []);
+	angularModule = angular.module('app.settings', []);
 
-	angularModule.controller("TodosCtrl", controller);
+	angularModule.controller("SettingsCtrl", controller);
 	angularModule.run(function ($templateCache) {
-	    $templateCache.put("todos-template", template);
+	    $templateCache.put("settings", template);
 	});
 
 	module.exports = angularModule;
@@ -116,11 +139,11 @@
 	    angular = __webpack_require__(1),
 	    angularModule = null;
 	    
-	angularModule = angular.module('app.settings', []);
+	angularModule = angular.module('app.todos', []);
 
-	angularModule.controller("SettingsCtrl", controller);
+	angularModule.controller("TodosCtrl", controller);
 	angularModule.run(function ($templateCache) {
-	    $templateCache.put("settings-template", template);
+	    $templateCache.put("todos", template);
 	});
 
 	module.exports = angularModule;
@@ -141,13 +164,13 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div>\r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <div>\r\n                <a href=\"#tab1\" class=\"button tab-link\">Back</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"page\" data-page=\"todos\">\r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <p>Page 1</p>\r\n            <a href=\"#settings\">GoTo</a>\r\n        </div>\r\n    </div>\r\n</div>";
 
 /***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div>\r\n    <form class=\"searchbar\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" class=\"\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <div id=\"login\">\r\n                <a href=\"#\">Google Sign In!</a>\r\n                <a href=\"#tab2\" class=\"button button-big button-fill tab-link\">Settings</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"page cached\" data-page=\"settings\">\r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <p>Page 2</p>\r\n            <a href=\"#todos\" class=\"back\">Go Back</a>\r\n        </div>\r\n    </div>\r\n</div>";
 
 /***/ }
 /******/ ])

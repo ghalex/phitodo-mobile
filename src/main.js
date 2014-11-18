@@ -9,9 +9,32 @@ var angular = require('angular'),
     todos = require('todos');
 
 // Init
-var app = angular.module('app', ['ui.router', 'app.todos', 'app.settings']),
-    f7 = new Framework7({modalTitle: 'TodoGmail'}),
-    mainView = f7.addView('.view-main', {});
+var app = angular.module('app', [
+    'app.todos',
+    'app.settings'
+]);
+
+app.directive('includePage', function (f7, $templateCache) {
+    return {
+        replace: true,
+        restrict: 'A',
+        template: function (element, attr) {
+            return $templateCache.get(attr.includePage);
+        },
+        link: function (scope, element, attrs) {
+            f7.mainView.initialPages.push(element[0]);
+        }
+    };
+});
+
+app.factory('f7', function () {
+    var f7 = new Framework7({modalTitle: 'TodoGmail'});
+    return f7;
+});
+
+app.run(function (f7) {
+    
+});
 
 // Start app
 angular.bootstrap(document, ['app']);

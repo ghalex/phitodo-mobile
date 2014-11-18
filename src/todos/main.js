@@ -12,7 +12,7 @@ angularModule = angular.module('app.todos', []);
 
 angularModule.controller("TodosCtrl", controller);
 angularModule.run(function ($templateCache) {
-    $templateCache.put("todos-template", template);
+    $templateCache.put("todos", template);
 });
 
 module.exports = angularModule;

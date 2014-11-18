@@ -12,7 +12,7 @@ angularModule = angular.module('app.settings', []);
 
 angularModule.controller("SettingsCtrl", controller);
 angularModule.run(function ($templateCache) {
-    $templateCache.put("settings-template", template);
+    $templateCache.put("settings", template);
 });
 
 module.exports = angularModule;
