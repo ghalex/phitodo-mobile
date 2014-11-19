@@ -157,7 +157,35 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
 
+	'use strict';
+
+	var TodosCtrl = function ($scope) {
+	        
+	    $scope.todos = [
+	        {
+	            id: 1,
+	            isDone: false,
+	            title: "Send papers to Goteburg with ...."
+	        },
+	        {
+	            id: 2,
+	            isDone: false,
+	            title: "Todo 2, for more info"
+	        },
+	        {
+	            id: 3,
+	            isDone: false,
+	            title: "Load all mails with label @todo and ..."
+	        }
+	    ];
+	};
+	    
+	TodosCtrl.$inject = ["$scope"];
+
+	module.exports = TodosCtrl;
 
 /***/ },
 /* 7 */
@@ -169,7 +197,7 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab active\">\r\n    \r\n    <form class=\"searchbar\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"content-block\">\r\n        <p>Page 1</p>\r\n        <a href=\"#tab2\" class=\"tab-link\">GoTo: {{searchText}}</a>\r\n    </div>\r\n    \r\n</div>";
+	module.exports = "<div class=\"tab active\">\r\n    \r\n    <form class=\"searchbar\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"content-block-title\">Full Layout</div>\r\n    <div class=\"list-block inset\">\r\n        <ul>\r\n            <li class=\"item-content\">\r\n                <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                <div class=\"item-inner\">\r\n                    <div class=\"item-title\">Item title</div>\r\n                    <div class=\"item-after\">#richard,  #np</div>\r\n                </div>\r\n            </li>\r\n            <li class=\"item-content\">\r\n                <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                <div class=\"item-inner\">\r\n                    <div class=\"item-title\">Item with badge</div>\r\n                    <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                </div>\r\n            </li>\r\n            <li class=\"item-content\">\r\n                <div class=\"item-media\"><i class=\"icon checkbox-done-icon\"></i></div>\r\n                <div class=\"item-inner\">\r\n                    <div class=\"item-title strike\">Item title</div>\r\n                    <div class=\"item-after\">#inbox</div>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    \r\n</div>";
 
 /***/ }
 /******/ ])
