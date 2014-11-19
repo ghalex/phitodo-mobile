@@ -14,15 +14,14 @@ var app = angular.module('app', [
     'app.settings'
 ]);
 
-app.directive('includePage', function (f7, $templateCache) {
+app.directive('include', function ($templateCache) {
     return {
         replace: true,
         restrict: 'A',
         template: function (element, attr) {
-            return $templateCache.get(attr.includePage);
+            return $templateCache.get(attr.include);
         },
         link: function (scope, element, attrs) {
-            f7.mainView.initialPages.push(element[0]);
         }
     };
 });

@@ -60,15 +60,14 @@
 	    'app.settings'
 	]);
 
-	app.directive('includePage', function (f7, $templateCache) {
+	app.directive('include', function ($templateCache) {
 	    return {
 	        replace: true,
 	        restrict: 'A',
 	        template: function (element, attr) {
-	            return $templateCache.get(attr.includePage);
+	            return $templateCache.get(attr.include);
 	        },
 	        link: function (scope, element, attrs) {
-	            f7.mainView.initialPages.push(element[0]);
 	        }
 	    };
 	});
@@ -111,19 +110,19 @@
 
 	'use strict';
 
-	var template = __webpack_require__(8),
-	    controller = __webpack_require__(6),
+	var template = __webpack_require__(7),
+	    controller = __webpack_require__(5),
 	    angular = __webpack_require__(1),
-	    angularModule = null;
+	    m = null;
 	    
-	angularModule = angular.module('app.settings', []);
+	m = angular.module('app.settings', []);
 
-	angularModule.controller("SettingsCtrl", controller);
-	angularModule.run(function ($templateCache) {
-	    $templateCache.put("settings", template);
+	m.controller("SettingsCtrl", controller);
+	m.run(function ($templateCache) {
+	    $templateCache.put("settings-tab", template);
 	});
 
-	module.exports = angularModule;
+	module.exports = m;
 
 /***/ },
 /* 4 */
@@ -134,19 +133,19 @@
 
 	'use strict';
 
-	var template = __webpack_require__(7),
-	    controller = __webpack_require__(5),
+	var template = __webpack_require__(8),
+	    controller = __webpack_require__(6),
 	    angular = __webpack_require__(1),
-	    angularModule = null;
+	    m = null;
 	    
-	angularModule = angular.module('app.todos', []);
+	m = angular.module('app.todos', []);
 
-	angularModule.controller("TodosCtrl", controller);
-	angularModule.run(function ($templateCache) {
-	    $templateCache.put("todos", template);
+	m.controller("TodosCtrl", controller);
+	m.run(function ($templateCache) {
+	    $templateCache.put("todos-tab", template);
 	});
 
-	module.exports = angularModule;
+	module.exports = m;
 
 /***/ },
 /* 5 */
@@ -164,13 +163,13 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"page\" data-page=\"todos\">\r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <p>Page 1</p>\r\n            <a href=\"#settings\">GoTo</a>\r\n        </div>\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab\">\r\n    <div class=\"content-block\">\r\n        <p>Page 2</p>\r\n        <a href=\"#tab1\" class=\"tab-link\">Back</a>\r\n    </div>\r\n</div>";
 
 /***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"page cached\" data-page=\"settings\">\r\n    <div class=\"page-content\">\r\n        <div class=\"content-block\">\r\n            <p>Page 2</p>\r\n            <a href=\"#todos\" class=\"back\">Go Back</a>\r\n        </div>\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab active\">\r\n    \r\n    <form class=\"searchbar\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"content-block\">\r\n        <p>Page 1</p>\r\n        <a href=\"#tab2\" class=\"tab-link\">GoTo: {{searchText}}</a>\r\n    </div>\r\n    \r\n</div>";
 
 /***/ }
 /******/ ])

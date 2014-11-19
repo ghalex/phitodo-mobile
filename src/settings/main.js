@@ -6,13 +6,13 @@
 var template = require("html-loader!./Settings.html"),
     controller = require("./SettingsCtrl.js"),
     angular = require("angular"),
-    angularModule = null;
+    m = null;
     
-angularModule = angular.module('app.settings', []);
+m = angular.module('app.settings', []);
 
-angularModule.controller("SettingsCtrl", controller);
-angularModule.run(function ($templateCache) {
-    $templateCache.put("settings", template);
+m.controller("SettingsCtrl", controller);
+m.run(function ($templateCache) {
+    $templateCache.put("settings-tab", template);
 });
 
-module.exports = angularModule;
+module.exports = m;

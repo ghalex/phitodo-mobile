@@ -1,8 +1,15 @@
-<div class="page" data-page="todos">
-    <div class="page-content">
-        <div class="content-block">
-            <p>Page 1</p>
-            <a href="#settings">GoTo</a>
+<div class="tab active">
+    
+    <form class="searchbar">
+        <div class="searchbar-input">
+            <input type="search" placeholder="Search" ng-model="searchText">
+            <a href="#" class="searchbar-clear"></a>
         </div>
+    </form>
+    
+    <div class="content-block">
+        <p>Page 1</p>
+        <a href="#tab2" class="tab-link">GoTo: {{searchText}}</a>
     </div>
+    
 </div>

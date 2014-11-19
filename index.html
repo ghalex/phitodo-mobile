@@ -32,10 +32,10 @@
         
         <div class="views">
 
-            <!--View 1-->
+            <!--view 1-->
             <div class="view view-main">
 
-                <!--Navbar-->
+                <!--navbar-->
                 <div class="navbar">
                     <div class="navbar-inner" data-page="todos">
                         <div class="left"></div>
@@ -43,46 +43,29 @@
                         <div class="right"></div>
                     </div>
                 </div>
-            
                 
-                <!--Pages-->
+                <!--pages-->
                 <div class="pages navbar-through toolbar-through">
-                    <!--<div include-page="todos"></div>
-                    <div include-page="settings"></div>-->
+                    
+                    <!--page 1-->
                     <div class="page navbar-fixed" data-page="home">
                         <div class="page-content">
                             
+                            <!--tabs-->
                             <div class="tabs-animated-wrap">
                                 <div class="tabs">
                                     
-                                    <div id="tab1" class="tab active">
-                                        <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar">
-                                            <div class="searchbar-input">
-                                                <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
-                                            </div>
-                                        </form>
-                                        <div class="content-block">
-                                            <p>Page 1</p>
-                                            <a href="#tab2" class="tab-link">GoTo</a>
-                                        </div>
-                                    </div>
+                                    <!--tab 1-->
+                                    <div id="tab1" include="todos-tab"></div>
                                     
-                                    <div id="tab2" class="tab">
-                                        <div class="content-block">
-                                            <p>Page 2</p>
-                                            <a href="#tab1" class="tab-link">Back</a>
-                                        </div>
-                                    </div>
+                                    <!--tab 2-->
+                                    <div id="tab2" class="tab"></div>
                                     
-                                    <div id="tab3" class="tab">
-                                        <div class="content-block">
-                                            <p>Page 3</p>
-                                            <a href="#tab1">GoTo</a>
-                                        </div>
-                                    </div>
-                                    
+                                    <!--tab 3-->
+                                    <div id="tab3" include="settings-tab"></div>                                   
                                 </div>
                             </div>
+                            <!-- end tabs -->
                             
                         </div>
                     </div>
@@ -116,7 +99,6 @@
             </div>
 
         </div>
-        
         
         <!--JS-->
         <script type="text/javascript" src="cordova.js"></script>
