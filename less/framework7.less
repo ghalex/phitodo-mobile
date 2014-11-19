@@ -11,19 +11,8 @@
     background-size:  cover;
 }
 
-.toolbar {
-    &.toolbar-top {
-        bottom: auto;
-        border-top: none;
-        border-bottom: 1px solid #c4c4c4;
-    }
-    
-    &.navbar-through {}
-}
-
-.toolbar-through-top .page-content {
-    margin-top: 44px;
-}
+.toolbar-through .page-content { padding-bottom: 50px; }
+.searchbar-through > div:last-child { padding-bottom: 44px; }
 
 .list-block {
     &.inset {
@@ -31,4 +20,9 @@
             border-radius: 5px;
         }
     }
+}
+
+.scroll-block {
+    overflow: auto;
+    height: 100%;
 }

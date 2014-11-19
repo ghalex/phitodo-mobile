@@ -6,6 +6,9 @@ BODY {
 .strike {
   text-decoration: line-through;
 }
+.no-margin {
+  margin: 0px;
+}
 /* Icons */
 .home-icon {
   width: 25px;
@@ -50,14 +53,16 @@ BODY {
   background-image: url('../img/bg.jpg');
   background-size: cover;
 }
-.toolbar.toolbar-top {
-  bottom: auto;
-  border-top: none;
-  border-bottom: 1px solid #c4c4c4;
+.toolbar-through .page-content {
+  padding-bottom: 50px;
 }
-.toolbar-through-top .page-content {
-  margin-top: 44px;
+.searchbar-through > div:last-child {
+  padding-bottom: 44px;
 }
 .list-block.inset .list-group-title {
   border-radius: 5px;
+}
+.scroll-block {
+  overflow: auto;
+  height: 100%;
 }
