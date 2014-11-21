@@ -43,7 +43,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "47a150288d93d6cdfeb0";
+/******/ 	var hotCurrentHash = "4869e4406b8374b6e875";
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParent = 0;
 /******/ 	
@@ -432,12 +432,14 @@
 	var angular = __webpack_require__(1),
 	    Framework7 = __webpack_require__(2),
 	    settings = __webpack_require__(3),
-	    todos = __webpack_require__(4);
+	    services = __webpack_require__(4),
+	    todos = __webpack_require__(5);
 
 	// Init
 	var app = angular.module('app', [
 	    'app.todos',
-	    'app.settings'
+	    'app.settings',
+	    'app.services'
 	]);
 
 	app.directive('include', function ($templateCache) {
@@ -454,11 +456,22 @@
 
 	app.factory('f7', function () {
 	    var f7 = new Framework7({modalTitle: 'TodoGmail'});
+	    
+	    f7.addView('#view-1', {});
+	    f7.addView('#view-2', {});
+	    
 	    return f7;
 	});
 
-	app.run(function (f7) {
+	app.run(function (f7, google, $q) {
 	    
+	    /*$q.all([google.login(), google.loadAPIs()]).then(function () {
+	        
+	        google.getUserInfo().then(function (user) {
+	            console.log(user);
+	        });
+	        
+	    })*/
 	});
 
 	// Start app
@@ -490,7 +503,7 @@
 
 	'use strict';
 
-	var template = __webpack_require__(8),
+	var template = __webpack_require__(12),
 	    controller = __webpack_require__(6),
 	    angular = __webpack_require__(1),
 	    m = null;
@@ -513,8 +526,29 @@
 
 	'use strict';
 
-	var template = __webpack_require__(7),
-	    controller = __webpack_require__(5),
+	var angular = __webpack_require__(1),
+	    googleService = __webpack_require__(8),
+	    deviceService = __webpack_require__(9),
+	    m = null;
+	    
+	m = angular.module('app.services', []);
+
+	m.service("google", googleService);
+	m.service("device", deviceService);
+
+	module.exports = m;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var template = __webpack_require__(13),
+	    controller = __webpack_require__(7),
 	    angular = __webpack_require__(1),
 	    m = null;
 	    
@@ -528,7 +562,13 @@
 	module.exports = m;
 
 /***/ },
-/* 5 */
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true */
@@ -562,22 +602,209 @@
 	module.exports = TodosCtrl;
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"tab\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block searchbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\">Sample: {{searchText}}</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            <div class=\"list-group\">\r\n            <ul>\r\n                <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                <li class=\"swipeout\">\r\n                    <div class=\"swipeout-content item-content\">\r\n                        <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\">Item title</div>\r\n                            <div class=\"item-after\">#richard,  #np</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"swipeout-actions-right\">\r\n                        <a href=\"#\" class=\"bg-red\">Delete</a>\r\n                    </div>\r\n                </li>\r\n                <li class=\"swipeout\">\r\n                    <div class=\"swipeout-content item-content\">\r\n                        <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\">Item with badge</div>\r\n                            <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"swipeout-actions-right\">\r\n                        <a href=\"#\" class=\"bg-red\">Delete</a>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-done-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title strike\">Item title</div>\r\n                        <div class=\"item-after\">#inbox</div>\r\n                    </div>\r\n                </li>\r\n            </ul>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            <div class=\"list-group\">\r\n            <ul>\r\n                <li class=\"list-group-title\">aghiura@tibco.com</li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Mail from \"aa@b\" to this</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">1</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Another task</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Do this \"today\"</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Buy some cards</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Item with badge</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n            </ul>\r\n            </div>\r\n        </div>\r\n    \r\n    </div>\r\n</div>";
-
-/***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab\">\r\n    <div class=\"content-block\">\r\n        <p>Page 2</p>\r\n        <a href=\"#tab1\" class=\"tab-link\">Back</a>\r\n    </div>\r\n</div>";
+	/*jslint plusplus: true, node: true, vars: true */
+	/*global require, module */
+
+	'use strict';
+
+	var GoogleService = function ($q, device) {
+	    
+	    var PROJECT_ID      = 'todo-gmail-1986',
+	        CLIENT_ID       = '1070900723620-n6pf5q8ha6tfart5rkr6eaavqf1cvu7e.apps.googleusercontent.com',
+	        CLIENT_SECRET   = 'RL4Y12AkuDlr3wiQ3BzoNKrO',
+	        API_KEY         = 'AIzaSyCEbDkQOJR626_SWtkpZM1ridtbossk40Y',
+	        API_KEY_ANDROID = 'AIzaSyCZbZTd4-gStEiCUys-6mai6-atO0yRZKU',
+	        REDIRECT_URI    = 'http://localhost',
+	        gapi = __webpack_require__(10),
+	        $ = __webpack_require__(11);
+	    
+	    /**
+	     * Sign In with google on the phone 
+	     * using InAppBrowser
+	     *
+	     * @param success
+	     * @param error
+	     */
+	    this.phonegapLogin = function (success, error) {
+	            
+	        var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
+	            client_id: CLIENT_ID,
+	            redirect_uri: REDIRECT_URI,
+	            response_type: 'code',
+	            scope: "email"
+	        });
+
+	        //Open the OAuth consent page in the InAppBrowser
+	        var authWindow = window.open(authUrl, '_blank', 'location=no,toolbar=no'),
+	            deferred = $q.defer();
+
+	        $(authWindow).on('loadstart', function (e) {
+
+	            var url = e.originalEvent.url;
+	            var code = /\?code=(.+)$/.exec(url);
+	            var error = /\?error=(.+)$/.exec(url);
+
+	            if (code || error) {
+	                authWindow.close();
+	            }
+
+	            if (code) {
+
+	                $.post('https://accounts.google.com/o/oauth2/token', {
+	                    code: code[1],
+	                    client_id: CLIENT_ID,
+	                    client_secret: CLIENT_SECRET,
+	                    redirect_uri: REDIRECT_URI,
+	                    grant_type: 'authorization_code'
+	                }).done(function (data) {
+
+	                    gapi.client.setApiKey(API_KEY_ANDROID);
+	                    gapi.auth.setToken(data);
+
+	                    deferred.resolve(data);
+
+	                });
+	            } else if (error) {
+	                deferred.reject(error);
+	            }
+	        });
+	        
+	        return deferred.promise;
+	    };
+	      
+	    /**
+	     * Sign In usig gapi
+	     */
+	    this.browserLogin = function () {
+
+	        var deferred = $q.defer();
+	        
+	        gapi.client.setApiKey(API_KEY);
+	        gapi.auth.authorize({
+	            client_id: CLIENT_ID,
+	            scope: "email",
+	            immediate: false
+	        }, function (authResult) {
+	            if (authResult && !authResult.error) {
+	                deferred.resolve(authResult)
+	            } else {
+	                deferred.reject(authResult);
+	            }
+	        });
+	        
+	        return deferred.promise;
+	    };
+	    
+	    this.login = function () {
+	        
+	        if (!device.isPhonegap()) {
+	            return this.browserLogin();
+	        } else {
+	            return this.phonegapLogin();
+	        }
+	    };
+	    
+	    /**
+	     * Load user information, like
+	     * email, display name, etc...
+	     */
+	    this.getUserInfo = function () {
+	        if (!gapi.client.oauth2) {
+	            throw new Error('OAuth2 api not loaded!');
+	        }
+	        
+	        var deferred = $q.defer();
+	        
+	        gapi.client.oauth2.userinfo.get().execute($.proxy(function(resp) {
+	            
+	            this.user = {};
+	            this.user.id = resp.id;
+	            this.user.email = resp.email;
+	            this.user.displayName = resp.family_name + " " + resp.given_name;
+	            this.user.picture = resp.picture;
+	            
+	            deferred.resolve(this.user);
+	            
+	        }, this));
+	        
+	        return deferred.promise;
+	    };
+	    
+	    /**
+	     * Load all Google Api's required.
+	     */
+	    this.loadAPIs = function () {
+	        var gmailPromise = $q.defer(),
+	            oAuthPromise = $q.defer(),
+	            all;
+	                
+	        gapi.client.load('gmail', 'v1', function () {
+	            gmailPromise.resolve(gapi);
+	        });
+	        
+	        gapi.client.load('oauth2', 'v2', function(){
+	            oAuthPromise.resolve(gapi);
+	        });
+	        
+	        all = $q.all([gmailPromise.promise, oAuthPromise.promise]);
+	        
+	        //all.then($.proxy(function () {            
+	        //}, this));
+	        
+	        return all;
+	    };
+	};
+	    
+	GoogleService.$inject = ['$q', 'device'];
+
+	module.exports = GoogleService;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint plusplus: true, node: true, vars: true */
+	/*global require, module, cordova, phonegap */
+
+	'use strict';
+
+	var DeviceService = function () {
+	    
+	    this.isPhonegap = function () {
+	        return (typeof (cordova) !== 'undefined' || typeof (phonegap) !== 'undefined');
+	    };
+	};
+	    
+	DeviceService.$inject = [];
+
+	module.exports = DeviceService;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = gapi;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = jQuery;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"tab\">\r\n    <div class=\"profile-block\">\r\n        <div class=\"profile-image\"><img ng-src=\"img/profile.jpg\"></div>\r\n        <div class=\"profile-title\">Alexandru</div>\r\n        <div class=\"profile-email\">ghalex@gmail.com</div>\r\n    </div>\r\n\r\n    <div class=\"home-block\">\r\n\r\n        <div class=\"scroll-block toolbar-through\">\r\n            <!--General list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">General</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal color-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Theme Color</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal image-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Background</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!--More list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">More</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal help-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Support</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal users-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">About us</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"tab\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block toolbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\">Sample: {{searchText}}</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            <div class=\"list-group\">\r\n            <ul>\r\n                <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                <li class=\"swipeout\">\r\n                    <div class=\"swipeout-content item-content\">\r\n                        <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\">Item title</div>\r\n                            <div class=\"item-after\">#richard,  #np</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"swipeout-actions-right\">\r\n                        <a href=\"#\" class=\"bg-red\">Delete</a>\r\n                    </div>\r\n                </li>\r\n                <li class=\"swipeout\">\r\n                    <div class=\"swipeout-content item-content\">\r\n                        <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\">Item with badge</div>\r\n                            <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"swipeout-actions-right\">\r\n                        <a href=\"#\" class=\"bg-red\">Delete</a>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-done-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title strike\">Item title</div>\r\n                        <div class=\"item-after\">#inbox</div>\r\n                    </div>\r\n                </li>\r\n            </ul>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            <div class=\"list-group\">\r\n            <ul>\r\n                <li class=\"list-group-title\">aghiura@tibco.com</li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Mail from \"aa@b\" to this</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">1</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Another task</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Do this \"today\"</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Buy some cards</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n                <li class=\"item-content\">\r\n                    <div class=\"item-media\"><i class=\"icon checkbox-icon\"></i></div>\r\n                    <div class=\"item-inner\">\r\n                        <div class=\"item-title\">Item with badge</div>\r\n                        <div class=\"item-after\"><span class=\"badge\">5</span></div>\r\n                    </div>\r\n                </li>\r\n            </ul>\r\n            </div>\r\n        </div>\r\n    \r\n    </div>\r\n</div>";
 
 /***/ }
 /******/ ])

@@ -10,7 +10,9 @@ module.exports = {
     "externals": {
         "angular": "angular",
         "framework7": "Framework7",
-        "cordova": "cordova"
+        "cordova": "cordova",
+        "jquery": "jQuery",
+        "gapi": "gapi"
     },
 	"resolve": {
 		"alias": {},

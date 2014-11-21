@@ -1,0 +1,60 @@
+<html>
+    <head>
+        
+        <!--Meta-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        
+        <!--CSS-->
+        <link rel="stylesheet" type="text/css" href="css/framework7.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        
+        <!--Title-->
+        <title>TodoGmail</title>
+        
+    </head>
+    <body>
+
+        <div class="views">
+ 
+            <div id="view-1" class="view view-main">
+                <div class="pages">
+                    <div data-page="page1" class="page">
+                        <div class="page-content">
+                            <div class="content-block-title">Page 1 - View1</div>
+                            <div class="content-block">
+                                <p>This is an example of tab bar application layout. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
+                                <a href="#" data-view="view-2">GoTo: View 2</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="view-2" class="view">
+                <div class="pages">
+                    <div data-page="page-1" class="page">
+                        <div class="page-content">
+                            <div class="content-block-title">Page 2 - View2</div>
+                            <div class="content-block">
+                                <p>This is an example of tab bar application layout. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
+                                <a href="#" data-view="view-1">GoTo: View 1</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+        <script type="text/javascript" src="thirdparty/jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="thirdparty/framework7.js"></script>
+        <script type="text/javascript" src="thirdparty/angular.js"></script>
+        <script type="text/javascript" src="build/app-1.0.0.js"></script>
+        
+    </body>
+</html>

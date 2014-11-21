@@ -16,24 +16,21 @@
         
     </head>
     <body>
-        
-        <!-- Status bar overlay for fullscreen mode-->
-        <div class="statusbar-overlay"></div>
-        
-        <!-- Panels overlay-->
-        <div class="panel-overlay"></div>
-        
-        <!-- Left panel -->
-        <div class="panel panel-left panel-reveal">
-            <div class="content-block">
-                <p>Left Panel content here</p>
-            </div>
-        </div>
-        
+      
         <div class="views">
 
+            <div class="view loading-view">
+                <div class="pages">
+                    <div class="page">
+                        <div class="page-content">
+                            <a href="#" data-view=".right-vew" class="button">Start</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!--view 1-->
-            <div class="view view-main">
+            <div class="view main-view">
 
                 <!--navbar-->
                 <div class="navbar">
@@ -50,8 +47,8 @@
                 
                 <!--pages-->
                 <div class="pages navbar-through toolbar-through">
-                    
-                    <!--page 1-->
+                        
+                    <!--page 2-->
                     <div class="page" data-page="home">
                         <div class="page-content">
 
@@ -60,41 +57,14 @@
                                 <div class="tabs">
                                     
                                     <!--tab 1-->
-                                    <div id="tab1" class="tab active">
-                                        
-                                        <div class="profile-block">
-                                            <div class="profile-image"><img src="img/profile.jpg"></div>
-                                            <div class="profile-title">Alexandru</div>
-                                            <div class="profile-email">ghalex@gmail.com</div>
-                                        </div>
-                                        <div class="home-block">
-                                            <div class="list-block inset">
-                                                <ul>
-                                                    <li class="item-content item-link">
-                                                        <div class="item-inner">
-                                                            <div><i class="icon icon-normal home-icon"></i></div>
-                                                            <div class="item-title">Sign In</div>
-                                                            <div class="item-after"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="item-content item-link">
-                                                        <div class="item-inner">
-                                                            <div><i class="icon icon-normal todos-icon"></i></div>
-                                                            <div class="item-title">Todos</div>
-                                                            <div class="item-after"></div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
+                                    <div id="tab1" include="settings-tab" class="active"></div>
                                     
                                     <!--tab 2-->
                                     <div id="tab2" include="todos-tab"></div>
                                     
                                     <!--tab 3-->
-                                    <div id="tab3" include="settings-tab"></div>                                   
+                                    <div id="tab3" class="tab"></div>
+                                    
                                 </div>
                             </div>
                             <!-- end tabs -->
@@ -128,6 +98,7 @@
                         
                     </div>
                 </div>
+            
             </div>
 
         </div>
