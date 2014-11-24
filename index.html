@@ -16,18 +16,8 @@
         
     </head>
     <body>
-      
+              
         <div class="views">
-
-            <div class="view loading-view">
-                <div class="pages">
-                    <div class="page">
-                        <div class="page-content">
-                            <a href="#" data-view=".right-vew" class="button">Start</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
             <!--view 1-->
             <div class="view main-view">
@@ -102,14 +92,37 @@
             </div>
 
         </div>
-        
+        <div class="loading-overlay">
+            
+            <div class="loading-header">
+                <div class="title">PhiTodo</div>
+                <div class="small"><span>for </span><img src="img/gmail.png" height="25px" /></div>
+            </div>
+            
+            <div class="loading-content">
+                <div><span style="width:42px; height:42px" class="preloader preloader-white"></span></div>
+                <div>Loading....</div>
+                <div class="log"></div>
+            </div>
+            
+        </div>
+    
+         <script>
+            function start() {
+                var app = new PhiApp();
+                app.start();
+            }
+        </script>
         <!--JS-->
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
         <script type="text/javascript" src="thirdparty/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="thirdparty/framework7.js"></script>
         <script type="text/javascript" src="thirdparty/angular.js"></script>
+        <script type="text/javascript" src="thirdparty/phonegapi.js"></script>
         <script type="text/javascript" src="build/app-1.0.0.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=start"></script>
+    
+   
         
     </body>
 </html>

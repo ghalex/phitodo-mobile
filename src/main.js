@@ -3,54 +3,61 @@
 
 'use strict';
 
-var angular = require('angular'),
+var $ = require('jquery'),
+    angular = require('angular'),
     Framework7 = require('framework7'),
     settings = require('settings'),
     services = require('services'),
     todos = require('todos');
 
-// Init
-var app = angular.module('app', [
-    'app.todos',
-    'app.settings',
-    'app.services'
-]);
 
-app.directive('include', function ($templateCache) {
-    return {
-        replace: true,
-        restrict: 'A',
-        template: function (element, attr) {
-            return $templateCache.get(attr.include);
-        },
-        link: function (scope, element, attrs) {
-        }
-    };
-});
+var PhiApp = function () {
+    
+    /** Create AngularJS app **/
+    this.angularApp = angular.module('app', ['app.todos', 'app.settings', 'app.services']);
+    
+    /** Include directive **/
+    this.angularApp.directive('include', function ($templateCache) {
+        return {
+            replace: true,
+            restrict: 'A',
+            template: function (element, attr) {
+                return $templateCache.get(attr.include);
+            },
+            link: function (scope, element, attrs) {
+            }
+        };
+    });
+    
+    /** F7 factory **/
+    this.angularApp.factory('f7', function () {
+        var f7 = new Framework7({modalTitle: 'TodoGmail'});
+        f7.addView('.main-view', {});
 
-app.factory('f7', function () {
-    var f7 = new Framework7({modalTitle: 'TodoGmail'});
+        return f7;
+    });
     
-    f7.addView('#view-1', {});
-    f7.addView('#view-2', {});
+    this.angularApp.run(function (f7, google, $q) {
     
-    return f7;
-});
+        /*$q.all([google.login(), google.loadAPIs()]).then(function () {
 
-app.run(function (f7, google, $q) {
-    
-    /*$q.all([google.login(), google.loadAPIs()]).then(function () {
+            google.getUserInfo().then(function (user) {
+                $('.loading-overlay').remove();
+            });
+
+        });*/
         
-        google.getUserInfo().then(function (user) {
-            console.log(user);
+        google.login().then(function () {
+            $('.loading-overlay').remove();
         });
-        
-    })*/
-});
-
-// Start app
-angular.bootstrap(document, ['app']);
+    });
+    
+    /** Starting point **/
+    this.start = function () {
+        angular.bootstrap(document, ['app']);
+    };
+};
 
 // Exports
-module.exports = app;
+module.exports = PhiApp;
     

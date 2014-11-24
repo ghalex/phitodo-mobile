@@ -1,380 +1,5 @@
+var PhiApp =
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	this["webpackHotUpdate"] = 
-/******/ 			function webpackHotUpdateCallback(chunkId, moreModules) {
-/******/ 				hotAddUpdateChunk(chunkId, moreModules);
-/******/ 			}
-/******/ 	
-/******/ 			function hotDownloadUpdateChunk(chunkId) {
-/******/ 				var head = document.getElementsByTagName('head')[0];
-/******/ 				var script = document.createElement('script');
-/******/ 				script.type = 'text/javascript';
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 				head.appendChild(script);
-/******/ 			}
-/******/ 	
-/******/ 			function hotDownloadManifest(callback) {
-/******/ 				if(typeof XMLHttpRequest === "undefined")
-/******/ 					return callback(new Error("No browser support"));
-/******/ 				try {
-/******/ 					var request = new XMLHttpRequest();
-/******/ 					request.open("GET", __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json", true);
-/******/ 					request.send(null);
-/******/ 				} catch(err) {
-/******/ 					return callback(err);
-/******/ 				}
-/******/ 				request.onreadystatechange = function() {
-/******/ 					if(request.readyState !== 4) return;
-/******/ 					if(request.status !== 200 && request.status !== 304) {
-/******/ 						callback();
-/******/ 					} else {
-/******/ 						try {
-/******/ 							var update = JSON.parse(request.responseText);
-/******/ 						} catch(e) {
-/******/ 							callback();
-/******/ 							return;
-/******/ 						}
-/******/ 						callback(null, update);
-/******/ 					}
-/******/ 				};
-/******/ 			}
-/******/ 		
-/******/
-/******/ 	
-/******/ 	
-/******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4869e4406b8374b6e875";
-/******/ 	var hotCurrentModuleData = {};
-/******/ 	var hotCurrentParent = 0;
-/******/ 	
-/******/ 	function hotCreateRequire(moduleId) {
-/******/ 		var me = installedModules[moduleId];
-/******/ 		var fn = function(request) {
-/******/ 			if(installedModules[request] && installedModules[request].parents.indexOf(moduleId) < 0)
-/******/ 				installedModules[request].parents.push(moduleId);
-/******/ 			if(me && me.children.indexOf(request) < 0)
-/******/ 				me.children.push(request);
-/******/ 			hotCurrentParent = moduleId;
-/******/ 			return __webpack_require__(request);
-/******/ 		};
-/******/ 		fn.e = function(chunkId, callback) {
-/******/ 			if(hotStatus === "ready")
-/******/ 				hotSetStatus("prepare");
-/******/ 			hotChunksLoading++;
-/******/ 			__webpack_require__.e(chunkId, function() {
-/******/ 				try {
-/******/ 					callback.call(null, fn);
-/******/ 				} finally {
-/******/ 					finishChunkLoading();
-/******/ 				}
-/******/ 				function finishChunkLoading() {
-/******/ 					hotChunksLoading--;
-/******/ 					if(hotStatus === "prepare") {
-/******/ 						if(!hotWaitingFilesMap[chunkId]) {
-/******/ 							hotEnsureUpdateChunk(chunkId);
-/******/ 						}
-/******/ 						if(hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 							hotUpdateDownloaded();
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 			});
-/******/ 		}
-/******/ 		for(var name in __webpack_require__)
-/******/ 			fn[name] = __webpack_require__[name];
-/******/ 		return fn;
-/******/ 	}
-/******/ 	
-/******/ 	function hotCreateModule(moduleId) {
-/******/ 		var hot = {
-/******/ 			// private stuff
-/******/ 			_acceptedDependencies: {},
-/******/ 			_declinedDependencies: {},
-/******/ 			_selfAccepted: false,
-/******/ 			_selfDeclined: false,
-/******/ 			_disposeHandlers: [],
-/******/ 	
-/******/ 			// Module API
-/******/ 			accept: function(dep, callback) {
-/******/ 				if(typeof dep === "undefined")
-/******/ 					hot._selfAccepted = true;
-/******/ 				else if(typeof dep === "number")
-/******/ 					hot._acceptedDependencies[dep] = callback;
-/******/ 				else for(var i = 0; i < dep.length; i++)
-/******/ 					hot._acceptedDependencies[dep[i]] = callback;
-/******/ 			},
-/******/ 			decline: function(dep) {
-/******/ 				if(typeof dep === "undefined")
-/******/ 					hot._selfDeclined = true;
-/******/ 				else if(typeof dep === "number")
-/******/ 					hot._declinedDependencies[dep] = true;
-/******/ 				else for(var i = 0; i < dep.length; i++)
-/******/ 					hot._declinedDependencies[dep[i]] = true;
-/******/ 			},
-/******/ 			dispose: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			addDisposeHandler: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			removeDisposeHandler: function(callback) {
-/******/ 				var idx = hot._disposeHandlers.indexOf(callback);
-/******/ 				if(idx >= 0) hot._disposeHandlers.splice(idx, 1);
-/******/ 			},
-/******/ 	
-/******/ 			// Management API
-/******/ 			check: hotCheck,
-/******/ 			apply: hotApply,
-/******/ 			setApplyOnUpdate: function(applyOnUpdate) {
-/******/ 				hotApplyOnUpdate = applyOnUpdate;
-/******/ 			},
-/******/ 			status: function(l) {
-/******/ 				if(!l) return hotStatus;
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			addStatusHandler: function(l) {
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			removeStatusHandler: function(l) {
-/******/ 				var idx = hotStatusHandlers.indexOf(l);
-/******/ 				if(idx >= 0) hotStatusHandlers.splice(idx, 1);
-/******/ 			}
-/******/ 		};
-/******/ 		return hot;
-/******/ 	}
-/******/ 	
-/******/ 	var hotStatusHandlers = [];
-/******/ 	var hotStatus = "idle";
-/******/ 	
-/******/ 	function hotSetStatus(newStatus) {
-/******/ 		var oldStatus = hotStatus;
-/******/ 		hotStatus = newStatus;
-/******/ 		for(var i = 0; i < hotStatusHandlers.length; i++)
-/******/ 			hotStatusHandlers[i].call(null, newStatus);
-/******/ 	}
-/******/ 	
-/******/ 	// while downloading
-/******/ 	var hotWaitingFiles = 0;
-/******/ 	var hotChunksLoading = 0;
-/******/ 	var hotWaitingFilesMap = {};
-/******/ 	var hotAvailibleFilesMap = {};
-/******/ 	var hotCallback;
-/******/ 	
-/******/ 	// The update info
-/******/ 	var hotUpdate, hotUpdateNewHash;
-/******/ 	
-/******/ 	function hotCheck(callback) {
-/******/ 		callback = callback || function(err) { if(err) throw err };
-/******/ 		if(hotStatus !== "idle") throw new Error("check() is only allowed in idle status");
-/******/ 		hotSetStatus("check");
-/******/ 		hotDownloadManifest(function(err, update) {
-/******/ 			if(err) return callback(err);
-/******/ 			if(!update) {
-/******/ 				hotSetStatus("idle");
-/******/ 				callback(null, null);
-/******/ 				return;
-/******/ 			}
-/******/ 	
-/******/ 			hotAvailibleFilesMap = {};
-/******/ 			hotWaitingFilesMap = {};
-/******/ 			for(var i = 0; i < update.c.length; i++)
-/******/ 				hotAvailibleFilesMap[update.c[i]] = true;
-/******/ 			hotUpdateNewHash = update.h;
-/******/ 	
-/******/ 			hotSetStatus("prepare");
-/******/ 			hotCallback = callback;
-/******/ 			hotUpdate = {};
-/******/ 			var chunkId = 0; {
-/******/ 				hotEnsureUpdateChunk(chunkId);
-/******/ 			}
-/******/ 			if(hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 				hotUpdateDownloaded();
-/******/ 			}
-/******/ 		});
-/******/ 	}
-/******/ 	
-/******/ 	function hotAddUpdateChunk(chunkId, moreModules) {
-/******/ 		for(var moduleId in moreModules) {
-/******/ 			hotUpdate[moduleId] = moreModules[moduleId];
-/******/ 		}
-/******/ 		if(--hotWaitingFiles === 0 && hotChunksLoading === 0) {
-/******/ 			hotUpdateDownloaded();
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotEnsureUpdateChunk(chunkId) {
-/******/ 		if(!hotAvailibleFilesMap[chunkId]) {
-/******/ 			hotWaitingFilesMap[chunkId] = true;
-/******/ 		} else {
-/******/ 			hotWaitingFiles++;
-/******/ 			hotDownloadUpdateChunk(chunkId);
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotUpdateDownloaded() {
-/******/ 		hotSetStatus("ready");
-/******/ 		var callback = hotCallback;
-/******/ 		hotCallback = null;
-/******/ 		if(!callback) return;
-/******/ 		if(hotApplyOnUpdate) {
-/******/ 			hotApply(callback);
-/******/ 		} else {
-/******/ 			var outdatedModules = [];
-/******/ 			for(var id in hotUpdate) {
-/******/ 				outdatedModules.push(+id);
-/******/ 			}
-/******/ 			callback(null, outdatedModules);
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotApply(callback) {
-/******/ 		callback = callback || function(err) { if(err) throw err };
-/******/ 		if(hotStatus !== "ready") throw new Error("apply() is only allowed in ready status");
-/******/ 	
-/******/ 		// at begin all updates modules are outdated
-/******/ 		// the "outdated" status can propagate to parents if they don't accept the children
-/******/ 		var outdatedDependencies = {};
-/******/ 		var outdatedModules = [];
-/******/ 		for(var id in hotUpdate) {
-/******/ 			outdatedModules.push(+id);
-/******/ 		}
-/******/ 		var queue = outdatedModules.slice();
-/******/ 		while(queue.length > 0) {
-/******/ 			var moduleId = queue.pop();
-/******/ 			var module = installedModules[moduleId];
-/******/ 			if(!module || module.hot._selfAccepted)
-/******/ 				continue;
-/******/ 			if(module.hot._selfDeclined) {
-/******/ 				hotSetStatus("abort");
-/******/ 				return callback(new Error("Aborted because of self decline: " + moduleId));
-/******/ 			}
-/******/ 			if(moduleId === 0) {
-/******/ 				hotSetStatus("abort");
-/******/ 				return callback(new Error("Aborted because of bubbling"));
-/******/ 			}
-/******/ 			for(var i = 0; i < module.parents.length; i++) {
-/******/ 				var parentId = module.parents[i];
-/******/ 				var parent = installedModules[parentId];
-/******/ 				if(parent.hot._declinedDependencies[moduleId]) {
-/******/ 					hotSetStatus("abort");
-/******/ 					return callback(new Error("Aborted because of declined dependency: " + moduleId + " in " + parentId));
-/******/ 				}
-/******/ 				if(outdatedModules.indexOf(parentId) >= 0) continue;
-/******/ 				if(parent.hot._acceptedDependencies[moduleId]) {
-/******/ 					if(!outdatedDependencies[parentId]) outdatedDependencies[parentId] = [];
-/******/ 					if(outdatedDependencies[parentId].indexOf(moduleId) >= 0) continue;
-/******/ 					outdatedDependencies[parentId].push(moduleId);
-/******/ 					continue;
-/******/ 				}
-/******/ 				delete outdatedDependencies[parentId];
-/******/ 				outdatedModules.push(parentId);
-/******/ 				queue.push(parentId);
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// Store self accepted outdated modules to require them later by the module system
-/******/ 		var outdatedSelfAcceptedModules = [];
-/******/ 		for(var i = 0; i < outdatedModules.length; i++) {
-/******/ 			var moduleId = outdatedModules[i];
-/******/ 			if(installedModules[moduleId] && installedModules[moduleId].hot._selfAccepted)
-/******/ 				outdatedSelfAcceptedModules.push(moduleId);
-/******/ 		}
-/******/ 	
-/******/ 		// Now in "dispose" phase
-/******/ 		hotSetStatus("dispose");
-/******/ 		var queue = outdatedModules.slice();
-/******/ 		while(queue.length > 0) {
-/******/ 			var moduleId = queue.pop();
-/******/ 			var module = installedModules[moduleId];
-/******/ 			if(!module) continue;
-/******/ 	
-/******/ 			var data = {};
-/******/ 	
-/******/ 			// Call dispose handlers
-/******/ 			var disposeHandlers = module.hot._disposeHandlers;
-/******/ 			for(var j = 0; j < disposeHandlers.length; j++) {
-/******/ 				var cb = disposeHandlers[j]
-/******/ 				cb(data);
-/******/ 			}
-/******/ 			hotCurrentModuleData[moduleId] = data;
-/******/ 	
-/******/ 			// remove module from cache
-/******/ 			delete installedModules[moduleId];
-/******/ 	
-/******/ 			// remove "parents" references from all children
-/******/ 			for(var j = 0; j < module.children.length; j++) {
-/******/ 				var child = installedModules[module.children[j]];
-/******/ 				if(!child) continue;
-/******/ 				var idx = child.parents.indexOf(moduleId);
-/******/ 				if(idx >= 0) {
-/******/ 					child.parents.splice(idx, 1);
-/******/ 					if(child.parents.length === 0 && child.hot && child.hot._disposeHandlers && child.hot._disposeHandlers.length > 0) {
-/******/ 						// Child has dispose handlers and no more references, dispose it too
-/******/ 						queue.push(child.id);
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// remove outdated dependency from module children
-/******/ 		for(var moduleId in outdatedDependencies) {
-/******/ 			var module = installedModules[moduleId];
-/******/ 			var moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 			for(var j = 0; j < moduleOutdatedDependencies.length; j++) {
-/******/ 				var dependency = moduleOutdatedDependencies[j];
-/******/ 				var idx = module.children.indexOf(dependency);
-/******/ 				if(idx >= 0) module.children.splice(idx, 1);
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// Not in "apply" phase
-/******/ 		hotSetStatus("apply");
-/******/ 	
-/******/ 		hotCurrentHash = hotUpdateNewHash;
-/******/ 	
-/******/ 		// insert new code
-/******/ 		for(var moduleId in hotUpdate) {
-/******/ 			modules[moduleId] = hotUpdate[moduleId];
-/******/ 		}
-/******/ 	
-/******/ 		// call accept handlers
-/******/ 		var error = null;
-/******/ 		for(var moduleId in outdatedDependencies) {
-/******/ 			var module = installedModules[moduleId];
-/******/ 			var moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 			var callbacks = [];
-/******/ 			for(var i = 0; i < moduleOutdatedDependencies.length; i++) {
-/******/ 				var dependency = moduleOutdatedDependencies[i];
-/******/ 				var cb = module.hot._acceptedDependencies[dependency];
-/******/ 				if(callbacks.indexOf(cb) >= 0) continue;
-/******/ 				callbacks.push(cb);
-/******/ 			}
-/******/ 			for(var i = 0; i < callbacks.length; i++) {
-/******/ 				var cb = callbacks[i];
-/******/ 				try {
-/******/ 					cb(outdatedDependencies);
-/******/ 				} catch(err) {
-/******/ 					if(!error)
-/******/ 						error = err;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 		if(error) {
-/******/ 			hotSetStatus("fail");
-/******/ 			return callback(error);
-/******/ 		}
-/******/ 	
-/******/ 		// Load self accepted modules
-/******/ 		for(var i = 0; i < outdatedSelfAcceptedModules.length; i++) {
-/******/ 			var moduleId = outdatedSelfAcceptedModules[i];
-/******/ 			hotCurrentParent = moduleId;
-/******/ 			__webpack_require__(moduleId);
-/******/ 		}
-/******/ 	
-/******/ 		hotSetStatus("idle");
-/******/ 		callback(null, outdatedModules);
-/******/ 	}
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -389,15 +14,11 @@
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
-/******/ 			loaded: false,
-/******/ 			hot: hotCreateModule(undefined),
-/******/ 			parents: [hotCurrentParent],
-/******/ 			data: hotCurrentModuleData[undefined],
-/******/ 			children: []
+/******/ 			loaded: false
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -417,7 +38,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(0)(0);
+/******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -429,56 +50,63 @@
 
 	'use strict';
 
-	var angular = __webpack_require__(1),
-	    Framework7 = __webpack_require__(2),
-	    settings = __webpack_require__(3),
-	    services = __webpack_require__(4),
+	var $ = __webpack_require__(1),
+	    angular = __webpack_require__(2),
+	    Framework7 = __webpack_require__(3),
+	    settings = __webpack_require__(4),
+	    services = __webpack_require__(6),
 	    todos = __webpack_require__(5);
 
-	// Init
-	var app = angular.module('app', [
-	    'app.todos',
-	    'app.settings',
-	    'app.services'
-	]);
 
-	app.directive('include', function ($templateCache) {
-	    return {
-	        replace: true,
-	        restrict: 'A',
-	        template: function (element, attr) {
-	            return $templateCache.get(attr.include);
-	        },
-	        link: function (scope, element, attrs) {
-	        }
-	    };
-	});
+	var PhiApp = function () {
+	    
+	    /** Create AngularJS app **/
+	    this.angularApp = angular.module('app', ['app.todos', 'app.settings', 'app.services']);
+	    
+	    /** Include directive **/
+	    this.angularApp.directive('include', function ($templateCache) {
+	        return {
+	            replace: true,
+	            restrict: 'A',
+	            template: function (element, attr) {
+	                return $templateCache.get(attr.include);
+	            },
+	            link: function (scope, element, attrs) {
+	            }
+	        };
+	    });
+	    
+	    /** F7 factory **/
+	    this.angularApp.factory('f7', function () {
+	        var f7 = new Framework7({modalTitle: 'TodoGmail'});
+	        f7.addView('.main-view', {});
 
-	app.factory('f7', function () {
-	    var f7 = new Framework7({modalTitle: 'TodoGmail'});
+	        return f7;
+	    });
 	    
-	    f7.addView('#view-1', {});
-	    f7.addView('#view-2', {});
+	    this.angularApp.run(function (f7, google, $q) {
 	    
-	    return f7;
-	});
+	        /*$q.all([google.login(), google.loadAPIs()]).then(function () {
 
-	app.run(function (f7, google, $q) {
-	    
-	    /*$q.all([google.login(), google.loadAPIs()]).then(function () {
+	            google.getUserInfo().then(function (user) {
+	                $('.loading-overlay').remove();
+	            });
+
+	        });*/
 	        
-	        google.getUserInfo().then(function (user) {
-	            console.log(user);
+	        google.login().then(function () {
+	            $('.loading-overlay').remove();
 	        });
-	        
-	    })*/
-	});
-
-	// Start app
-	angular.bootstrap(document, ['app']);
+	    });
+	    
+	    /** Starting point **/
+	    this.start = function () {
+	        angular.bootstrap(document, ['app']);
+	    };
+	};
 
 	// Exports
-	module.exports = app;
+	module.exports = PhiApp;
 	    
 
 
@@ -486,36 +114,19 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = angular;
+	module.exports = jQuery;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = Framework7;
+	module.exports = angular;
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
-
-	'use strict';
-
-	var template = __webpack_require__(12),
-	    controller = __webpack_require__(6),
-	    angular = __webpack_require__(1),
-	    m = null;
-	    
-	m = angular.module('app.settings', []);
-
-	m.controller("SettingsCtrl", controller);
-	m.run(function ($templateCache) {
-	    $templateCache.put("settings-tab", template);
-	});
-
-	module.exports = m;
+	module.exports = Framework7;
 
 /***/ },
 /* 4 */
@@ -526,15 +137,17 @@
 
 	'use strict';
 
-	var angular = __webpack_require__(1),
-	    googleService = __webpack_require__(8),
-	    deviceService = __webpack_require__(9),
+	var template = __webpack_require__(12),
+	    controller = __webpack_require__(7),
+	    angular = __webpack_require__(2),
 	    m = null;
 	    
-	m = angular.module('app.services', []);
+	m = angular.module('app.settings', []);
 
-	m.service("google", googleService);
-	m.service("device", deviceService);
+	m.controller("SettingsCtrl", controller);
+	m.run(function ($templateCache) {
+	    $templateCache.put("settings-tab", template);
+	});
 
 	module.exports = m;
 
@@ -548,8 +161,8 @@
 	'use strict';
 
 	var template = __webpack_require__(13),
-	    controller = __webpack_require__(7),
-	    angular = __webpack_require__(1),
+	    controller = __webpack_require__(8),
+	    angular = __webpack_require__(2),
 	    m = null;
 	    
 	m = angular.module('app.todos', []);
@@ -565,10 +178,31 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
 
+	'use strict';
+
+	var angular = __webpack_require__(2),
+	    googleService = __webpack_require__(9),
+	    deviceService = __webpack_require__(10),
+	    m = null;
+	    
+	m = angular.module('app.services', []);
+
+	m.service("google", googleService);
+	m.service("device", deviceService);
+
+	module.exports = m;
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true */
@@ -602,7 +236,7 @@
 	module.exports = TodosCtrl;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true, vars: true */
@@ -618,8 +252,10 @@
 	        API_KEY         = 'AIzaSyCEbDkQOJR626_SWtkpZM1ridtbossk40Y',
 	        API_KEY_ANDROID = 'AIzaSyCZbZTd4-gStEiCUys-6mai6-atO0yRZKU',
 	        REDIRECT_URI    = 'http://localhost',
-	        gapi = __webpack_require__(10),
-	        $ = __webpack_require__(11);
+	        gapi = __webpack_require__(11),
+	        $ = __webpack_require__(1);
+	    
+	    var $log = $('.log');
 	    
 	    /**
 	     * Sign In with google on the phone 
@@ -630,7 +266,7 @@
 	     */
 	    this.phonegapLogin = function (success, error) {
 	            
-	        var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
+	        /*var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
 	            client_id: CLIENT_ID,
 	            redirect_uri: REDIRECT_URI,
 	            response_type: 'code',
@@ -670,6 +306,23 @@
 	            } else if (error) {
 	                deferred.reject(error);
 	            }
+	        });*/
+	        
+	        var deferred = $q.defer();
+	        
+	        phonegapi.signIn({
+	            client_id: CLIENT_ID,
+	            client_secret: CLIENT_SECRET,
+	            scope: "email",
+	            callback: function(error, tokens) {
+	                
+	                if (error) {
+	                    $log.append("error");
+	                } else {
+	                    $log.append("success");
+	                    deferred.resolve(tokens);
+	                }
+	            }
 	        });
 	        
 	        return deferred.promise;
@@ -689,7 +342,7 @@
 	            immediate: false
 	        }, function (authResult) {
 	            if (authResult && !authResult.error) {
-	                deferred.resolve(authResult)
+	                deferred.resolve(authResult);
 	            } else {
 	                deferred.reject(authResult);
 	            }
@@ -700,11 +353,11 @@
 	    
 	    this.login = function () {
 	        
-	        if (!device.isPhonegap()) {
-	            return this.browserLogin();
-	        } else {
+	        //if (!device.isPhonegap()) {
+	        //    return this.browserLogin();
+	        //} else {
 	            return this.phonegapLogin();
-	        }
+	        //}
 	    };
 	    
 	    /**
@@ -718,7 +371,7 @@
 	        
 	        var deferred = $q.defer();
 	        
-	        gapi.client.oauth2.userinfo.get().execute($.proxy(function(resp) {
+	        gapi.client.oauth2.userinfo.get().execute($.proxy(function (resp) {
 	            
 	            this.user = {};
 	            this.user.id = resp.id;
@@ -745,14 +398,11 @@
 	            gmailPromise.resolve(gapi);
 	        });
 	        
-	        gapi.client.load('oauth2', 'v2', function(){
+	        gapi.client.load('oauth2', 'v2', function () {
 	            oAuthPromise.resolve(gapi);
 	        });
 	        
 	        all = $q.all([gmailPromise.promise, oAuthPromise.promise]);
-	        
-	        //all.then($.proxy(function () {            
-	        //}, this));
 	        
 	        return all;
 	    };
@@ -763,7 +413,7 @@
 	module.exports = GoogleService;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true, vars: true */
@@ -783,16 +433,10 @@
 	module.exports = DeviceService;
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = gapi;
-
-/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = jQuery;
+	module.exports = gapi;
 
 /***/ },
 /* 12 */

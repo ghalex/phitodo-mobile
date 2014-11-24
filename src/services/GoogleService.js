@@ -14,6 +14,8 @@ var GoogleService = function ($q, device) {
         gapi = require('gapi'),
         $ = require('jquery');
     
+    var $log = $('.log');
+    
     /**
      * Sign In with google on the phone 
      * using InAppBrowser
@@ -23,7 +25,7 @@ var GoogleService = function ($q, device) {
      */
     this.phonegapLogin = function (success, error) {
             
-        var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
+        /*var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
             client_id: CLIENT_ID,
             redirect_uri: REDIRECT_URI,
             response_type: 'code',
@@ -63,6 +65,23 @@ var GoogleService = function ($q, device) {
             } else if (error) {
                 deferred.reject(error);
             }
+        });*/
+        
+        var deferred = $q.defer();
+        
+        phonegapi.signIn({
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            scope: "email",
+            callback: function(error, tokens) {
+                
+                if (error) {
+                    $log.append("error");
+                } else {
+                    $log.append("success");
+                    deferred.resolve(tokens);
+                }
+            }
         });
         
         return deferred.promise;
@@ -82,7 +101,7 @@ var GoogleService = function ($q, device) {
             immediate: false
         }, function (authResult) {
             if (authResult && !authResult.error) {
-                deferred.resolve(authResult)
+                deferred.resolve(authResult);
             } else {
                 deferred.reject(authResult);
             }
@@ -93,11 +112,11 @@ var GoogleService = function ($q, device) {
     
     this.login = function () {
         
-        if (!device.isPhonegap()) {
-            return this.browserLogin();
-        } else {
+        //if (!device.isPhonegap()) {
+        //    return this.browserLogin();
+        //} else {
             return this.phonegapLogin();
-        }
+        //}
     };
     
     /**
@@ -111,7 +130,7 @@ var GoogleService = function ($q, device) {
         
         var deferred = $q.defer();
         
-        gapi.client.oauth2.userinfo.get().execute($.proxy(function(resp) {
+        gapi.client.oauth2.userinfo.get().execute($.proxy(function (resp) {
             
             this.user = {};
             this.user.id = resp.id;
@@ -138,14 +157,11 @@ var GoogleService = function ($q, device) {
             gmailPromise.resolve(gapi);
         });
         
-        gapi.client.load('oauth2', 'v2', function(){
+        gapi.client.load('oauth2', 'v2', function () {
             oAuthPromise.resolve(gapi);
         });
         
         all = $q.all([gmailPromise.promise, oAuthPromise.promise]);
-        
-        //all.then($.proxy(function () {            
-        //}, this));
         
         return all;
     };

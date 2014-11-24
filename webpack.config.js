@@ -5,7 +5,9 @@ module.exports = {
 	"entry": "./src/main.js",
 	"output": {
 		"path": "./build/",
-		"filename": "app-1.0.0.js"
+		"filename": "app-1.0.0.js",
+        "libraryTarget": "var",
+        "library": "PhiApp"
 	},
     "externals": {
         "angular": "angular",
