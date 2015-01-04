@@ -1,4 +1,4 @@
-<div class="tab">
+<div class="tab" ng-controller="TodosCtrl">
     
     <form class="searchbar no-margin">
         <div class="searchbar-input">
@@ -12,91 +12,31 @@
         <div class="list-block inset">
             <ul>
                 <li>
-                    <a href="#" class="item-link list-button">Sample: {{searchText}}</a>
+                    <a href="#" class="item-link list-button" ng-click="reload()">Todos</a>
                 </li>
             </ul>
         </div>
 
         <div class="list-block inset">
+            
             <div class="list-group">
-            <ul>
-                <li class="list-group-title">ghalex@gmail.com</li>
-                <li class="swipeout">
-                    <div class="swipeout-content item-content">
-                        <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                        <div class="item-inner">
-                            <div class="item-title">Item title</div>
-                            <div class="item-after">#richard,  #np</div>
+                <ul>
+                    <li class="list-group-title">ghalex@gmail.com</li>
+                    
+                    <li class="item-content" ng-repeat="todo in todos">
+                        <div class="item-media" ng-click="todo.isDone = !todo.isDone">
+                            <i ng-class="{'checkbox-done-icon': todo.isDone}" class="icon checkbox-icon"></i>
                         </div>
-                    </div>
-                    <div class="swipeout-actions-right">
-                        <a href="#" class="bg-red">Delete</a>
-                    </div>
-                </li>
-                <li class="swipeout">
-                    <div class="swipeout-content item-content">
-                        <div class="item-media"><i class="icon checkbox-icon"></i></div>
                         <div class="item-inner">
-                            <div class="item-title">Item with badge</div>
-                            <div class="item-after"><span class="badge">5</span></div>
+                            <div class="item-title" ng-class="{'strike':todo.isDone}">{{todo.subject}}</div>
+                            <div class="item-after"></div>
                         </div>
-                    </div>
-                    <div class="swipeout-actions-right">
-                        <a href="#" class="bg-red">Delete</a>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-done-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title strike">Item title</div>
-                        <div class="item-after">#inbox</div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                    
+                    
+                </ul>
             </div>
-        </div>
-
-        <div class="list-block inset">
-            <div class="list-group">
-            <ul>
-                <li class="list-group-title">aghiura@tibco.com</li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title">Mail from "aa@b" to this</div>
-                        <div class="item-after"><span class="badge">1</span></div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title">Another task</div>
-                        <div class="item-after"><span class="badge">5</span></div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title">Do this "today"</div>
-                        <div class="item-after"><span class="badge">5</span></div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title">Buy some cards</div>
-                        <div class="item-after"><span class="badge">5</span></div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-media"><i class="icon checkbox-icon"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title">Item with badge</div>
-                        <div class="item-after"><span class="badge">5</span></div>
-                    </div>
-                </li>
-            </ul>
-            </div>
+            
         </div>
     
     </div>

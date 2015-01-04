@@ -3,27 +3,22 @@
 
 'use strict';
 
-var TodosCtrl = function ($scope) {
+var TodosCtrl = function ($scope, userInfo, google) {
         
-    $scope.todos = [
-        {
-            id: 1,
-            isDone: false,
-            title: "Send papers to Goteburg with ...."
-        },
-        {
-            id: 2,
-            isDone: false,
-            title: "Todo 2, for more info"
-        },
-        {
-            id: 3,
-            isDone: false,
-            title: "Load all mails with label @todo and ..."
-        }
-    ];
+    $scope.todos = [];
+    
+    $scope.reload = function () {
+        
+        /*google.loadLabels(userInfo.loginUser.id).then(function (labels) {
+            console.log(labels);
+        });*/
+        
+        google.loadTodos(userInfo.loginUser.id, []).then(function (todos) {
+            $scope.todos = todos;
+        });
+    }
 };
     
-TodosCtrl.$inject = ["$scope"];
+TodosCtrl.$inject = ["$scope", "userInfo", "google"];
 
 module.exports = TodosCtrl;

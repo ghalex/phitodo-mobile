@@ -25,7 +25,7 @@ var GoogleService = function ($q, device) {
      */
     this.phonegapLogin = function (success, error) {
             
-        /*var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
+        var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + $.param({
             client_id: CLIENT_ID,
             redirect_uri: REDIRECT_URI,
             response_type: 'code',
@@ -65,26 +65,26 @@ var GoogleService = function ($q, device) {
             } else if (error) {
                 deferred.reject(error);
             }
-        });*/
-        
-        var deferred = $q.defer();
-        
-        phonegapi.signIn({
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
-            scope: "email",
-            callback: function(error, tokens) {
-                
-                if (error) {
-                    $log.append("error");
-                } else {
-                    $log.append("success");
-                    deferred.resolve(tokens);
-                }
-            }
         });
         
-        return deferred.promise;
+//        var deferred = $q.defer();
+//        
+//        phonegapi.signIn({
+//            client_id: CLIENT_ID,
+//            client_secret: CLIENT_SECRET,
+//            scope: "email",
+//            callback: function(error, tokens) {
+//                
+//                if (error) {
+//                    $log.append("error");
+//                } else {
+//                    $log.append("success");
+//                    deferred.resolve(tokens);
+//                }
+//            }
+//        });
+//        
+//        return deferred.promise;
     };
       
     /**
@@ -110,13 +110,17 @@ var GoogleService = function ($q, device) {
         return deferred.promise;
     };
     
+    /**
+     * Choose 'browserLogin' or 'phonegapLogin' depending
+     * on the platform.
+     */
     this.login = function () {
         
-        //if (!device.isPhonegap()) {
-        //    return this.browserLogin();
-        //} else {
+        if (!device.isPhonegap()) {
+            return this.browserLogin();
+        } else {
             return this.phonegapLogin();
-        //}
+        }
     };
     
     /**
@@ -164,6 +168,48 @@ var GoogleService = function ($q, device) {
         all = $q.all([gmailPromise.promise, oAuthPromise.promise]);
         
         return all;
+    };
+    
+    this.loadTodos = function (userId, labels) {
+        
+        var i = 0,
+            todos = [],
+            deferred = $q.defer(),
+            request = gapi.client.gmail.users.messages.list({'userId': userId, 'labelIds': ['Label_41']});
+      
+        request.execute(function (result) {
+            
+            for (i = 0; i < result.messages.length; i++) {
+                
+                gapi.client.gmail.users.messages.get({'userId': userId, 'id': result.messages[i].id, 'format': 'metadata'}).execute(function (todo) {
+                    todos.push({
+                        id: todo.id,
+                        subject: todo.payload.headers[12].value,
+                        from: todo.payload.headers[10].value,
+                        date: todo.payload.headers[15].value,
+                        snippet: todo.snippet
+                    });
+                    
+                    if (todos.length == result.messages.length) {
+                        deferred.resolve(todos);
+                    }
+                });
+            }
+        });
+        
+        return deferred.promise;
+    };
+    
+    this.loadLabels = function (userId) {
+        
+        var deferred = $q.defer(),
+            request = gapi.client.gmail.users.labels.list({'userId': userId});
+        
+        request.execute(function (result) {
+            deferred.resolve(result.labels);
+        });
+        
+        return deferred.promise;
     };
 };
     

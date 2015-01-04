@@ -37,19 +37,25 @@ var PhiApp = function () {
         return f7;
     });
     
-    this.angularApp.run(function (f7, google, $q) {
+    this.angularApp.service('userInfo', function () {
+        this.loginUser = null
+    });
     
-        /*$q.all([google.login(), google.loadAPIs()]).then(function () {
+    this.angularApp.run(function (f7, google, $q, userInfo) {
+    
+        $q.all([google.login(), google.loadAPIs()]).then(function () {
 
             google.getUserInfo().then(function (user) {
+                
+                userInfo.loginUser = user;
                 $('.loading-overlay').remove();
             });
 
-        });*/
-        
-        google.login().then(function () {
-            $('.loading-overlay').remove();
         });
+        
+        //google.login().then(function () {
+        //    $('.loading-overlay').remove();
+        //});
     });
     
     /** Starting point **/
