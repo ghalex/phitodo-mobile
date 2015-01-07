@@ -11,6 +11,7 @@ var GoogleService = function ($q, device) {
         API_KEY         = 'AIzaSyCEbDkQOJR626_SWtkpZM1ridtbossk40Y',
         API_KEY_ANDROID = 'AIzaSyCZbZTd4-gStEiCUys-6mai6-atO0yRZKU',
         REDIRECT_URI    = 'http://localhost',
+        SCOPE           = 'https://www.googleapis.com/auth/gmail.modify',
         gapi = require('gapi'),
         $ = require('jquery');
     
@@ -29,7 +30,7 @@ var GoogleService = function ($q, device) {
             client_id: CLIENT_ID,
             redirect_uri: REDIRECT_URI,
             response_type: 'code',
-            scope: "email"
+            scope: SCOPE
         });
 
         //Open the OAuth consent page in the InAppBrowser
@@ -72,7 +73,7 @@ var GoogleService = function ($q, device) {
 //        phonegapi.signIn({
 //            client_id: CLIENT_ID,
 //            client_secret: CLIENT_SECRET,
-//            scope: "email",
+//            scope: SCOPE,
 //            callback: function(error, tokens) {
 //                
 //                if (error) {
@@ -97,7 +98,7 @@ var GoogleService = function ($q, device) {
         gapi.client.setApiKey(API_KEY);
         gapi.auth.authorize({
             client_id: CLIENT_ID,
-            scope: "email",
+            scope: SCOPE,
             immediate: false
         }, function (authResult) {
             if (authResult && !authResult.error) {
@@ -179,21 +180,25 @@ var GoogleService = function ($q, device) {
       
         request.execute(function (result) {
             
-            for (i = 0; i < result.messages.length; i++) {
-                
-                gapi.client.gmail.users.messages.get({'userId': userId, 'id': result.messages[i].id, 'format': 'metadata'}).execute(function (todo) {
-                    todos.push({
-                        id: todo.id,
-                        subject: todo.payload.headers[12].value,
-                        from: todo.payload.headers[10].value,
-                        date: todo.payload.headers[15].value,
-                        snippet: todo.snippet
+            if (result.messages) {
+                for (i = 0; i < result.messages.length; i++) {
+
+                    gapi.client.gmail.users.messages.get({'userId': userId, 'id': result.messages[i].id, 'format': 'metadata'}).execute(function (todo) {
+                        todos.push({
+                            id: todo.id,
+                            subject: todo.payload.headers[12].value,
+                            from: todo.payload.headers[10].value,
+                            date: todo.payload.headers[15].value,
+                            snippet: todo.snippet
+                        });
+
+                        if (todos.length === result.messages.length) {
+                            deferred.resolve(todos);
+                        }
                     });
-                    
-                    if (todos.length == result.messages.length) {
-                        deferred.resolve(todos);
-                    }
-                });
+                }
+            } else {
+                deferred.resolve([]);
             }
         });
         
@@ -207,6 +212,17 @@ var GoogleService = function ($q, device) {
         
         request.execute(function (result) {
             deferred.resolve(result.labels);
+        });
+        
+        return deferred.promise;
+    };
+    
+    this.updateTodo = function (userId, messageId) {
+        var deferred = $q.defer(),
+            request = gapi.client.gmail.users.messages.modify({'userId': userId, 'id': messageId, 'removeLabelIds': ['Label_41']});
+        
+        request.execute(function (result) {
+            deferred.resolve(result);
         });
         
         return deferred.promise;

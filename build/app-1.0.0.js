@@ -53,8 +53,8 @@ var PhiApp =
 	var $ = __webpack_require__(1),
 	    angular = __webpack_require__(2),
 	    Framework7 = __webpack_require__(3),
-	    settings = __webpack_require__(5),
-	    services = __webpack_require__(4),
+	    settings = __webpack_require__(4),
+	    services = __webpack_require__(5),
 	    todos = __webpack_require__(6);
 
 
@@ -143,29 +143,8 @@ var PhiApp =
 
 	'use strict';
 
-	var angular = __webpack_require__(2),
-	    googleService = __webpack_require__(7),
-	    deviceService = __webpack_require__(8),
-	    m = null;
-	    
-	m = angular.module('app.services', []);
-
-	m.service("google", googleService);
-	m.service("device", deviceService);
-
-	module.exports = m;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
-
-	'use strict';
-
-	var template = __webpack_require__(13),
-	    controller = __webpack_require__(10),
+	var template = __webpack_require__(12),
+	    controller = __webpack_require__(7),
 	    angular = __webpack_require__(2),
 	    m = null;
 	    
@@ -179,6 +158,27 @@ var PhiApp =
 	module.exports = m;
 
 /***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var angular = __webpack_require__(2),
+	    googleService = __webpack_require__(8),
+	    deviceService = __webpack_require__(9),
+	    m = null;
+	    
+	m = angular.module('app.services', []);
+
+	m.service("google", googleService);
+	m.service("device", deviceService);
+
+	module.exports = m;
+
+/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -187,8 +187,8 @@ var PhiApp =
 
 	'use strict';
 
-	var template = __webpack_require__(12),
-	    controller = __webpack_require__(9),
+	var template = __webpack_require__(13),
+	    controller = __webpack_require__(10),
 	    angular = __webpack_require__(2),
 	    m = null;
 	    
@@ -205,6 +205,22 @@ var PhiApp =
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var SettingsCtrl = function ($scope) {        
+	};
+	    
+	SettingsCtrl.$inject = ["$scope"];
+
+	module.exports = SettingsCtrl;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/*jslint plusplus: true, node: true, vars: true */
 	/*global require, module */
 
@@ -218,6 +234,7 @@ var PhiApp =
 	        API_KEY         = 'AIzaSyCEbDkQOJR626_SWtkpZM1ridtbossk40Y',
 	        API_KEY_ANDROID = 'AIzaSyCZbZTd4-gStEiCUys-6mai6-atO0yRZKU',
 	        REDIRECT_URI    = 'http://localhost',
+	        SCOPE           = 'https://www.googleapis.com/auth/gmail.modify',
 	        gapi = __webpack_require__(11),
 	        $ = __webpack_require__(1);
 	    
@@ -236,7 +253,7 @@ var PhiApp =
 	            client_id: CLIENT_ID,
 	            redirect_uri: REDIRECT_URI,
 	            response_type: 'code',
-	            scope: "email"
+	            scope: SCOPE
 	        });
 
 	        //Open the OAuth consent page in the InAppBrowser
@@ -279,7 +296,7 @@ var PhiApp =
 	//        phonegapi.signIn({
 	//            client_id: CLIENT_ID,
 	//            client_secret: CLIENT_SECRET,
-	//            scope: "email",
+	//            scope: SCOPE,
 	//            callback: function(error, tokens) {
 	//                
 	//                if (error) {
@@ -304,7 +321,7 @@ var PhiApp =
 	        gapi.client.setApiKey(API_KEY);
 	        gapi.auth.authorize({
 	            client_id: CLIENT_ID,
-	            scope: "email",
+	            scope: SCOPE,
 	            immediate: false
 	        }, function (authResult) {
 	            if (authResult && !authResult.error) {
@@ -386,21 +403,25 @@ var PhiApp =
 	      
 	        request.execute(function (result) {
 	            
-	            for (i = 0; i < result.messages.length; i++) {
-	                
-	                gapi.client.gmail.users.messages.get({'userId': userId, 'id': result.messages[i].id, 'format': 'metadata'}).execute(function (todo) {
-	                    todos.push({
-	                        id: todo.id,
-	                        subject: todo.payload.headers[12].value,
-	                        from: todo.payload.headers[10].value,
-	                        date: todo.payload.headers[15].value,
-	                        snippet: todo.snippet
+	            if (result.messages) {
+	                for (i = 0; i < result.messages.length; i++) {
+
+	                    gapi.client.gmail.users.messages.get({'userId': userId, 'id': result.messages[i].id, 'format': 'metadata'}).execute(function (todo) {
+	                        todos.push({
+	                            id: todo.id,
+	                            subject: todo.payload.headers[12].value,
+	                            from: todo.payload.headers[10].value,
+	                            date: todo.payload.headers[15].value,
+	                            snippet: todo.snippet
+	                        });
+
+	                        if (todos.length === result.messages.length) {
+	                            deferred.resolve(todos);
+	                        }
 	                    });
-	                    
-	                    if (todos.length == result.messages.length) {
-	                        deferred.resolve(todos);
-	                    }
-	                });
+	                }
+	            } else {
+	                deferred.resolve([]);
 	            }
 	        });
 	        
@@ -418,6 +439,17 @@ var PhiApp =
 	        
 	        return deferred.promise;
 	    };
+	    
+	    this.updateTodo = function (userId, messageId) {
+	        var deferred = $q.defer(),
+	            request = gapi.client.gmail.users.messages.modify({'userId': userId, 'id': messageId, 'removeLabelIds': ['Label_41']});
+	        
+	        request.execute(function (result) {
+	            deferred.resolve(result);
+	        });
+	        
+	        return deferred.promise;
+	    };
 	};
 	    
 	GoogleService.$inject = ['$q', 'device'];
@@ -425,7 +457,7 @@ var PhiApp =
 	module.exports = GoogleService;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true, vars: true */
@@ -445,7 +477,7 @@ var PhiApp =
 	module.exports = DeviceService;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true */
@@ -457,37 +489,47 @@ var PhiApp =
 	        
 	    $scope.todos = [];
 	    
+	    $scope.done = function (todo) {
+	        todo.isDone = !todo.isDone;
+	        
+	        google.updateTodo(userInfo.loginUser.id, todo.id).then(function () {
+	            $scope.reload();
+	        });
+	    };
+	    
+	    $scope.findTodo = function (todo) {
+	        var i = 0;
+	        
+	        for (i = 0; i < $scope.todos.length; i++) {
+	            if (todo.id === $scope.todos[i].id) {
+	                return todo;
+	            }
+	        }
+	        
+	        return null
+	    };
+	    
 	    $scope.reload = function () {
 	        
-	        /*google.loadLabels(userInfo.loginUser.id).then(function (labels) {
-	            console.log(labels);
-	        });*/
-	        
 	        google.loadTodos(userInfo.loginUser.id, []).then(function (todos) {
+	            
+	//            var tmp = $scope.todos.concat(),
+	//                i = 0;
+	//            
+	//            for (i = 0; i < todos.length; i++) {
+	//                if (!$scope.findTodo(todos[i])) {
+	//                    tmp.push(todos[i])
+	//                }
+	//            }
+	            
 	            $scope.todos = todos;
 	        });
-	    }
+	    };
 	};
 	    
 	TodosCtrl.$inject = ["$scope", "userInfo", "google"];
 
 	module.exports = TodosCtrl;
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
-
-	'use strict';
-
-	var SettingsCtrl = function ($scope) {        
-	};
-	    
-	SettingsCtrl.$inject = ["$scope"];
-
-	module.exports = SettingsCtrl;
 
 /***/ },
 /* 11 */
@@ -499,13 +541,13 @@ var PhiApp =
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab\" ng-controller=\"TodosCtrl\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block toolbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\" ng-click=\"reload()\">Todos</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            \r\n            <div class=\"list-group\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                    \r\n                    <li class=\"item-content\" ng-repeat=\"todo in todos\">\r\n                        <div class=\"item-media\" ng-click=\"todo.isDone = !todo.isDone\">\r\n                            <i ng-class=\"{'checkbox-done-icon': todo.isDone}\" class=\"icon checkbox-icon\"></i>\r\n                        </div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\" ng-class=\"{'strike':todo.isDone}\">{{todo.subject}}</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    \r\n                    \r\n                </ul>\r\n            </div>\r\n            \r\n        </div>\r\n    \r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab\" ng-controller=\"SettingsCtrl\">\r\n    <div class=\"profile-block\">\r\n        <div class=\"profile-image\"><img ng-src=\"img/profile.jpg\"></div>\r\n        <div class=\"profile-title\">Alexandru</div>\r\n        <div class=\"profile-email\">ghalex@gmail.com</div>\r\n    </div>\r\n\r\n    <div class=\"home-block\">\r\n\r\n        <div class=\"scroll-block toolbar-through\">\r\n            <!--General list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">General</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal color-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Theme Color</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal image-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Background</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!--More list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">More</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal help-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Support</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal users-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">About us</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
 
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab\" ng-controller=\"SettingsCtrl\">\r\n    <div class=\"profile-block\">\r\n        <div class=\"profile-image\"><img ng-src=\"img/profile.jpg\"></div>\r\n        <div class=\"profile-title\">Alexandru</div>\r\n        <div class=\"profile-email\">ghalex@gmail.com</div>\r\n    </div>\r\n\r\n    <div class=\"home-block\">\r\n\r\n        <div class=\"scroll-block toolbar-through\">\r\n            <!--General list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">General</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal color-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Theme Color</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal image-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Background</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!--More list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">More</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal help-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Support</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal users-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">About us</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab\" ng-controller=\"TodosCtrl\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block toolbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\" ng-click=\"reload()\">Todos</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            \r\n            <div class=\"list-group\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                    \r\n                    <li class=\"item-content todo\" ng-repeat=\"todo in todos\">\r\n                        <div class=\"item-media\" ng-click=\"done(todo)\">\r\n                            <i ng-class=\"{'checkbox-done-icon': todo.isDone}\" class=\"icon checkbox-icon\"></i>\r\n                        </div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\" ng-class=\"{'strike':todo.isDone}\">\r\n                                <div>{{todo.subject}}</div>\r\n                                <div class=\"todo-snippet\">{{todo.snippet}}</div>\r\n                            </div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    \r\n                    <li ng-show=\"todos.length == 0\">\r\n                        <div class=\"center padding5x\">No todos! Hurray !</div>\r\n                    </li>\r\n                    \r\n                    \r\n                </ul>\r\n            </div>\r\n            \r\n        </div>\r\n    \r\n    </div>\r\n</div>";
 
 /***/ }
 /******/ ])
