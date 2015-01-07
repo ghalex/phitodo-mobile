@@ -3,7 +3,8 @@
 
 'use strict';
 
-var SettingsCtrl = function ($scope) {        
+var SettingsCtrl = function ($scope) {
+
 };
     
 SettingsCtrl.$inject = ["$scope"];

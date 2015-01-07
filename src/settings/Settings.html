@@ -1,8 +1,8 @@
 <div class="tab" ng-controller="SettingsCtrl">
     <div class="profile-block">
-        <div class="profile-image"><img ng-src="img/profile.jpg"></div>
-        <div class="profile-title">Alexandru</div>
-        <div class="profile-email">ghalex@gmail.com</div>
+        <div class="profile-image"><img ng-src="{{user.picture}}"></div>
+        <div class="profile-title">{{user.displayName}}</div>
+        <div class="profile-email">{{user.email}}</div>
     </div>
 
     <div class="home-block">

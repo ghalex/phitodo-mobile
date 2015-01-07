@@ -37,18 +37,20 @@ var PhiApp = function () {
         return f7;
     });
     
-    this.angularApp.service('userInfo', function () {
-        this.loginUser = null
-    });
-    
-    this.angularApp.run(function (f7, google, $q, userInfo) {
+    this.angularApp.run(function (f7, google, $q, $rootScope) {
     
         $q.all([google.login(), google.loadAPIs()]).then(function () {
 
             google.getUserInfo().then(function (user) {
                 
-                userInfo.loginUser = user;
+                $rootScope.todos = [];
+                $rootScope.loading = false;
+                $rootScope.user = user;
+                $rootScope.$broadcast('appReady');
+                
                 $('.loading-overlay').remove();
+                
+                
             });
 
         });

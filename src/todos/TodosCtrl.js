@@ -3,14 +3,13 @@
 
 'use strict';
 
-var TodosCtrl = function ($scope, userInfo, google) {
+var TodosCtrl = function ($scope, $rootScope, google) {
         
-    $scope.todos = [];
-    
     $scope.done = function (todo) {
         todo.isDone = !todo.isDone;
+        $rootScope.loading = true;
         
-        google.updateTodo(userInfo.loginUser.id, todo.id).then(function () {
+        google.updateTodo($rootScope.user.id, todo.id).then(function () {
             $scope.reload();
         });
     };
@@ -24,27 +23,25 @@ var TodosCtrl = function ($scope, userInfo, google) {
             }
         }
         
-        return null
+        return null;
     };
     
     $scope.reload = function () {
         
-        google.loadTodos(userInfo.loginUser.id, []).then(function (todos) {
+        $rootScope.loading = true;
+        
+        google.loadTodos($rootScope.user.id, []).then(function (todos) {
             
-//            var tmp = $scope.todos.concat(),
-//                i = 0;
-//            
-//            for (i = 0; i < todos.length; i++) {
-//                if (!$scope.findTodo(todos[i])) {
-//                    tmp.push(todos[i])
-//                }
-//            }
-            
-            $scope.todos = todos;
+            $rootScope.todos = todos;
+            $rootScope.loading = false;
         });
     };
+    
+    $rootScope.$on('appReady', function () {
+        $scope.reload();
+    });
 };
     
-TodosCtrl.$inject = ["$scope", "userInfo", "google"];
+TodosCtrl.$inject = ["$scope", "$rootScope", "google"];
 
 module.exports = TodosCtrl;

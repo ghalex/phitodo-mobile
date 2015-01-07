@@ -84,18 +84,20 @@ var PhiApp =
 	        return f7;
 	    });
 	    
-	    this.angularApp.service('userInfo', function () {
-	        this.loginUser = null
-	    });
-	    
-	    this.angularApp.run(function (f7, google, $q, userInfo) {
+	    this.angularApp.run(function (f7, google, $q, $rootScope) {
 	    
 	        $q.all([google.login(), google.loadAPIs()]).then(function () {
 
 	            google.getUserInfo().then(function (user) {
 	                
-	                userInfo.loginUser = user;
+	                $rootScope.todos = [];
+	                $rootScope.loading = false;
+	                $rootScope.user = user;
+	                $rootScope.$broadcast('appReady');
+	                
 	                $('.loading-overlay').remove();
+	                
+	                
 	            });
 
 	        });
@@ -143,8 +145,8 @@ var PhiApp =
 
 	'use strict';
 
-	var template = __webpack_require__(12),
-	    controller = __webpack_require__(7),
+	var template = __webpack_require__(13),
+	    controller = __webpack_require__(8),
 	    angular = __webpack_require__(2),
 	    m = null;
 	    
@@ -167,8 +169,8 @@ var PhiApp =
 	'use strict';
 
 	var angular = __webpack_require__(2),
-	    googleService = __webpack_require__(8),
-	    deviceService = __webpack_require__(9),
+	    googleService = __webpack_require__(9),
+	    deviceService = __webpack_require__(10),
 	    m = null;
 	    
 	m = angular.module('app.services', []);
@@ -187,8 +189,8 @@ var PhiApp =
 
 	'use strict';
 
-	var template = __webpack_require__(13),
-	    controller = __webpack_require__(10),
+	var template = __webpack_require__(12),
+	    controller = __webpack_require__(7),
 	    angular = __webpack_require__(2),
 	    m = null;
 	    
@@ -210,7 +212,60 @@ var PhiApp =
 
 	'use strict';
 
-	var SettingsCtrl = function ($scope) {        
+	var TodosCtrl = function ($scope, $rootScope, google) {
+	        
+	    $scope.done = function (todo) {
+	        todo.isDone = !todo.isDone;
+	        $rootScope.loading = true;
+	        
+	        google.updateTodo($rootScope.user.id, todo.id).then(function () {
+	            $scope.reload();
+	        });
+	    };
+	    
+	    $scope.findTodo = function (todo) {
+	        var i = 0;
+	        
+	        for (i = 0; i < $scope.todos.length; i++) {
+	            if (todo.id === $scope.todos[i].id) {
+	                return todo;
+	            }
+	        }
+	        
+	        return null;
+	    };
+	    
+	    $scope.reload = function () {
+	        
+	        $rootScope.loading = true;
+	        
+	        google.loadTodos($rootScope.user.id, []).then(function (todos) {
+	            
+	            $rootScope.todos = todos;
+	            $rootScope.loading = false;
+	        });
+	    };
+	    
+	    $rootScope.$on('appReady', function () {
+	        $scope.reload();
+	    });
+	};
+	    
+	TodosCtrl.$inject = ["$scope", "$rootScope", "google"];
+
+	module.exports = TodosCtrl;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var SettingsCtrl = function ($scope) {
+
 	};
 	    
 	SettingsCtrl.$inject = ["$scope"];
@@ -218,7 +273,7 @@ var PhiApp =
 	module.exports = SettingsCtrl;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true, vars: true */
@@ -457,7 +512,7 @@ var PhiApp =
 	module.exports = GoogleService;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true, vars: true */
@@ -477,61 +532,6 @@ var PhiApp =
 	module.exports = DeviceService;
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
-
-	'use strict';
-
-	var TodosCtrl = function ($scope, userInfo, google) {
-	        
-	    $scope.todos = [];
-	    
-	    $scope.done = function (todo) {
-	        todo.isDone = !todo.isDone;
-	        
-	        google.updateTodo(userInfo.loginUser.id, todo.id).then(function () {
-	            $scope.reload();
-	        });
-	    };
-	    
-	    $scope.findTodo = function (todo) {
-	        var i = 0;
-	        
-	        for (i = 0; i < $scope.todos.length; i++) {
-	            if (todo.id === $scope.todos[i].id) {
-	                return todo;
-	            }
-	        }
-	        
-	        return null
-	    };
-	    
-	    $scope.reload = function () {
-	        
-	        google.loadTodos(userInfo.loginUser.id, []).then(function (todos) {
-	            
-	//            var tmp = $scope.todos.concat(),
-	//                i = 0;
-	//            
-	//            for (i = 0; i < todos.length; i++) {
-	//                if (!$scope.findTodo(todos[i])) {
-	//                    tmp.push(todos[i])
-	//                }
-	//            }
-	            
-	            $scope.todos = todos;
-	        });
-	    };
-	};
-	    
-	TodosCtrl.$inject = ["$scope", "userInfo", "google"];
-
-	module.exports = TodosCtrl;
-
-/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -541,13 +541,13 @@ var PhiApp =
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab\" ng-controller=\"SettingsCtrl\">\r\n    <div class=\"profile-block\">\r\n        <div class=\"profile-image\"><img ng-src=\"img/profile.jpg\"></div>\r\n        <div class=\"profile-title\">Alexandru</div>\r\n        <div class=\"profile-email\">ghalex@gmail.com</div>\r\n    </div>\r\n\r\n    <div class=\"home-block\">\r\n\r\n        <div class=\"scroll-block toolbar-through\">\r\n            <!--General list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">General</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal color-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Theme Color</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal image-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Background</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!--More list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">More</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal help-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Support</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal users-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">About us</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab\" ng-controller=\"TodosCtrl\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block toolbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\" ng-click=\"reload()\">\r\n                        <div ng-show=\"loading\" class=\"todos-preloader\"><span class=\"preloader\"></span></div>\r\n                        <label>Click to reload</label>\r\n                    </a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            \r\n            <div class=\"list-group\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                    \r\n                    <li class=\"item-content todo\" ng-repeat=\"todo in todos\">\r\n                        <div class=\"item-media\" ng-click=\"done(todo)\">\r\n                            <i ng-class=\"{'checkbox-done-icon': todo.isDone}\" class=\"icon checkbox-icon\"></i>\r\n                        </div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\" ng-class=\"{'strike':todo.isDone}\">\r\n                                <div>{{todo.subject}}</div>\r\n                                <div class=\"todo-snippet\">{{todo.snippet}}</div>\r\n                            </div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    \r\n                    <li ng-show=\"todos.length == 0\">\r\n                        <div class=\"center padding5x\">No todos! Hurray !</div>\r\n                    </li>\r\n                    \r\n                    \r\n                </ul>\r\n            </div>\r\n            \r\n        </div>\r\n    \r\n    </div>\r\n</div>";
 
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"tab\" ng-controller=\"TodosCtrl\">\r\n    \r\n    <form class=\"searchbar no-margin\">\r\n        <div class=\"searchbar-input\">\r\n            <input type=\"search\" placeholder=\"Search\" ng-model=\"searchText\">\r\n            <a href=\"#\" class=\"searchbar-clear\"></a>\r\n        </div>\r\n    </form>\r\n    \r\n    <div class=\"scroll-block toolbar-through\">\r\n    \r\n        <div class=\"list-block inset\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"#\" class=\"item-link list-button\" ng-click=\"reload()\">Todos</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n\r\n        <div class=\"list-block inset\">\r\n            \r\n            <div class=\"list-group\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">ghalex@gmail.com</li>\r\n                    \r\n                    <li class=\"item-content todo\" ng-repeat=\"todo in todos\">\r\n                        <div class=\"item-media\" ng-click=\"done(todo)\">\r\n                            <i ng-class=\"{'checkbox-done-icon': todo.isDone}\" class=\"icon checkbox-icon\"></i>\r\n                        </div>\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-title\" ng-class=\"{'strike':todo.isDone}\">\r\n                                <div>{{todo.subject}}</div>\r\n                                <div class=\"todo-snippet\">{{todo.snippet}}</div>\r\n                            </div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    \r\n                    <li ng-show=\"todos.length == 0\">\r\n                        <div class=\"center padding5x\">No todos! Hurray !</div>\r\n                    </li>\r\n                    \r\n                    \r\n                </ul>\r\n            </div>\r\n            \r\n        </div>\r\n    \r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"tab\" ng-controller=\"SettingsCtrl\">\r\n    <div class=\"profile-block\">\r\n        <div class=\"profile-image\"><img ng-src=\"{{user.picture}}\"></div>\r\n        <div class=\"profile-title\">{{user.displayName}}</div>\r\n        <div class=\"profile-email\">{{user.email}}</div>\r\n    </div>\r\n\r\n    <div class=\"home-block\">\r\n\r\n        <div class=\"scroll-block toolbar-through\">\r\n            <!--General list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">General</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal color-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Theme Color</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal image-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Background</div>\r\n                            <div class=\"item-after\">\r\n                            </div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!--More list-->\r\n            <div class=\"list-block inset\">\r\n                <ul>\r\n                    <li class=\"list-group-title\">More</li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal help-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">Support</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"item-content align-left item-link\">\r\n                        <div class=\"item-inner\">\r\n                            <div class=\"item-media\">\r\n                                <i class=\"icon icon-normal users-icon\"></i>\r\n                            </div>\r\n                            <div class=\"item-title\">About us</div>\r\n                            <div class=\"item-after\"></div>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
 
 /***/ }
 /******/ ])

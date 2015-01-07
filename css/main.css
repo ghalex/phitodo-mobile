@@ -58,6 +58,9 @@ BODY {
 .list-icon {
   background-image: url('data:image/svg+xml;charset=utf-8,<svg fill="#929292" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="85.511px" viewBox="0 0 100 85.511" enable-background="new 0 0 100 85.511" xml:space="preserve"><g id="Your_Icon"><path d="M45.172,17.244h49.344c3.027,0,5.484-2.453,5.484-5.483c0-3.03-2.458-5.484-5.484-5.484H45.172 c-3.029,0-5.483,2.454-5.483,5.484C39.689,14.792,42.145,17.244,45.172,17.244z"/><path d="M94.516,39.175H45.172c-3.029,0-5.483,2.453-5.483,5.482c0,3.032,2.456,5.484,5.483,5.484h49.344 c3.027,0,5.484-2.453,5.484-5.484C100,41.627,97.543,39.175,94.516,39.175z"/><path d="M94.516,72.071H45.172c-3.029,0-5.483,2.451-5.483,5.484c0,3.03,2.456,5.481,5.483,5.481h49.344 c3.027,0,5.484-2.451,5.484-5.481C100,74.522,97.543,72.071,94.516,72.071z"/><path d="M22.718,7.588h-6.652l-2.053-6.324C13.768,0.509,13.068,0,12.275,0c-0.792,0-1.492,0.509-1.738,1.264 l-2.06,6.324H1.83c-0.792,0-1.495,0.511-1.742,1.264c-0.242,0.754,0.025,1.578,0.664,2.042l5.384,3.911L4.08,21.129 c-0.242,0.75,0.022,1.578,0.664,2.042c0.639,0.466,1.507,0.466,2.15,0l5.382-3.91l5.383,3.91c0.321,0.235,0.699,0.35,1.074,0.35 c0.374,0,0.753-0.115,1.074-0.35c0.643-0.464,0.907-1.292,0.665-2.042l-2.057-6.324l5.384-3.911 c0.638-0.464,0.905-1.289,0.664-2.042C24.215,8.099,23.512,7.588,22.718,7.588z"/><path d="M18.403,36.701H6.147c-1.01,0-1.828,0.817-1.828,1.828v12.257c0,1.011,0.818,1.826,1.828,1.826h12.256 c1.011,0,1.827-0.815,1.827-1.826V38.529C20.23,37.519,19.414,36.701,18.403,36.701z"/><path d="M18.403,69.598H6.147c-1.01,0-1.828,0.817-1.828,1.827v12.257c0,1.013,0.818,1.829,1.828,1.829h12.256 c1.011,0,1.827-0.816,1.827-1.829V71.425C20.23,70.415,19.414,69.598,18.403,69.598z"/></g></svg>');
 }
+.reload-icon {
+  background-image: url('data:image/svg+xml;charset=utf-8,<svg fill="#929292" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="5.0 0.0 100.0 135.0" enable-background="new 0 0 100 100" xml:space="preserve"><g><path d="M98,50C98,23.49,76.509,2,50,2C38.961,2,28.799,5.736,20.69,12H36v13.755C40.119,23.371,44.898,22,50,22   c15.464,0,28,12.536,28,28c0,3.29-0.587,6.438-1.631,9.368L70,52.999V81h28l-6.646-6.647C95.569,67.213,98,58.893,98,50z"/><path d="M64,74.245C59.881,76.629,55.102,78,50,78c-15.464,0-28-12.536-28-28c0-3.29,0.587-6.438,1.631-9.369L30,47V19H2   l6.646,6.646C4.43,32.787,2,41.107,2,50c0,26.509,21.49,48,48,48c11.039,0,21.2-3.736,29.309-10H64V74.245z"/></g><text x="0.0" y="117.5" font-size="5.0" font-weight="bold" font-family="Helvetica Neue, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">Created by Jeff Portaro</text><text x="0.0" y="122.5" font-size="5.0" font-weight="bold" font-family="Helvetica Neue, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">from the Noun Project</text></svg>');
+}
 A.active .home-icon {
   background-image: url('data:image/svg+xml;charset=utf-8,<svg fill="#007AFF" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="84px" viewBox="0 0 100 84" enable-background="new 0 0 100 84" xml:space="preserve"><polygon points="82,32.641 82,9 68,9 68,18.359 50,0 0,51 12,51 12,84 43,84 43,57 57,57 57,84 88,84 88,51 100,51 "/></svg>');
 }
@@ -188,6 +191,10 @@ A.active .settings-icon {
   background: rgba(37, 37, 37, 0.5);
   border-radius: 5px;
   padding: 20px;
+}
+.todos-preloader {
+  position: absolute;
+  top: 10px;
 }
 .todo .todo-snippet {
   font-size: 11px;

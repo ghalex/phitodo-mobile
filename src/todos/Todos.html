@@ -12,7 +12,10 @@
         <div class="list-block inset">
             <ul>
                 <li>
-                    <a href="#" class="item-link list-button" ng-click="reload()">Todos</a>
+                    <a href="#" class="item-link list-button" ng-click="reload()">
+                        <div ng-show="loading" class="todos-preloader"><span class="preloader"></span></div>
+                        <label>Click to reload</label>
+                    </a>
                 </li>
             </ul>
         </div>
