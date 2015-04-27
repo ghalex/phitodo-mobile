@@ -1,0 +1,8 @@
+{
+    "name": "application",
+    "main": "./main.js",
+    "description": "",
+    "contributors": [
+        {"name": "Ghiura Alexandru", "email": "ghalex@gmail.com"}
+    ]
+}

@@ -1,24 +1,29 @@
 /*jslint */
-/*global module */
+/*global module, require */
+
+var webpack = require("webpack");
 
 module.exports = {
 	"entry": "./src/main.js",
 	"output": {
 		"path": "./build/",
-		"filename": "app-1.0.0.js",
-        "libraryTarget": "var",
-        "library": "PhiApp"
+		"filename": "phitodo-2.0.0.js"
 	},
     "externals": {
         "angular": "angular",
-        "framework7": "Framework7",
-        "cordova": "cordova",
-        "jquery": "jQuery",
-        "gapi": "gapi"
+        "parse": "Parse",
+        "jquery": "jQuery"
     },
 	"resolve": {
 		"alias": {},
 		"modulesDirectories": ["src"]
 	},
-    "module": {}
+    "plugins": [
+        //new webpack.optimize.UglifyJsPlugin({minimize: true})
+    ],
+    "module": {
+        loaders: [
+            { test: /\.html$/, loader: "html-loader" }
+        ]
+    }
 };

@@ -1,0 +1,73 @@
+<div class="application-view views" ng-controller="ApplicationCtrl">
+	
+	<!--view 1-->
+	<div class="view main-view">
+
+		<!--navbar-->
+		<div class="navbar">
+			<div class="navbar-inner" data-page="todos">
+				<div class="left"></div>
+				<div class="center">
+					<span class="title">PhiTodo</span>
+				</div>
+				<div class="right"></div>
+			</div>
+		</div>
+
+		<!--pages-->
+		<div class="pages navbar-through toolbar-through">
+
+			<!--page-->
+			<div class="page" data-page="application">
+				<div class="page-content">
+
+					<!--tabs-->
+					<div class="tabs-animated-wrap">
+						<div class="tabs">
+
+							<!--tab 1-->
+							<div id="tab1" include="settings-tab" class="active"></div>
+
+							<!--tab 2-->
+							<div id="tab2" include="todos-tab"></div>
+
+							<!--tab 3-->
+							<div id="tab3" class="tab"></div>
+
+						</div>
+					</div>
+					<!-- end tabs -->
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<!--Toolbar-->
+		<div class="toolbar tabbar tabbar-labels">
+			<div class="toolbar-inner">
+
+				<a href="#tab1" class="tab-link active">
+					<i class="icon icon-normal home-icon"></i>
+					<span class="tabbar-label">Home</span>
+				</a>
+
+				<a href="#tab2" class="tab-link">
+					<i class="icon icon-normal todos-icon">
+						<span class="badge bg-red" ng-show="todos.length">{{todos.length}}</span>
+					</i>
+					<span class="tabbar-label">Todos</span>
+				</a>
+
+				<a href="#tab3" class="tab-link">
+					<i class="icon icon-normal help-icon"></i>
+					<span class="tabbar-label">Help</span>
+				</a>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>

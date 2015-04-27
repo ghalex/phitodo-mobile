@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         
         <!--Meta-->
@@ -12,117 +13,110 @@
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         
         <!--Title-->
-        <title>TodoGmail</title>
+        <title>PhiTodo - Simple To-Do List & Tasks</title>
         
     </head>
+	
     <body>
-              
-        <div class="views">
-            
-            <!--view 1-->
-            <div class="view main-view">
+        
+		<!--Layout-->
+		<div class="views">
+	
+			<!--view 1-->
+			<div class="view main-view">
 
-                <!--navbar-->
-                <div class="navbar">
-                    <div class="navbar-inner" data-page="todos">
-                        <div class="left"></div>
-                        <div class="center">
-                            <span class="title">PhiTodo</span> 
-                            <span class="small">for</span>
-                            <img src="img/gmail.png" height="25px" /></span>
-                        </div>
-                        <div class="right"></div>
-                    </div>
-                </div>
-                
-                <!--pages-->
-                <div class="pages navbar-through toolbar-through">
-                        
-                    <!--page 2-->
-                    <div class="page" data-page="home">
-                        <div class="page-content">
+				<!--navbar-->
+				<div class="navbar">
+					<div class="navbar-inner" data-page="todos">
+						<div class="left"></div>
+						<div class="center">
+							<span class="title">PhiTodo</span>
+						</div>
+						<div class="right"></div>
+					</div>
+				</div>
 
-                            <!--tabs-->
-                            <div class="tabs-animated-wrap">
-                                <div class="tabs">
-                                    
-                                    <!--tab 1-->
-                                    <div id="tab1" include="settings-tab" class="active"></div>
-                                    
-                                    <!--tab 2-->
-                                    <div id="tab2" include="todos-tab"></div>
-                                    
-                                    <!--tab 3-->
-                                    <div id="tab3" class="tab"></div>
-                                    
-                                </div>
-                            </div>
-                            <!-- end tabs -->
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                    
-                <!--Toolbar-->
-                <div class="toolbar tabbar tabbar-labels">
-                    <div class="toolbar-inner">
-                        
-                        <a href="#tab1" class="tab-link active">
-                            <i class="icon icon-normal home-icon"></i>
-                            <span class="tabbar-label">Home</span>
-                        </a>
-                        
-                        <a href="#tab2" class="tab-link">
-                            <i class="icon icon-normal todos-icon">
-                                <span class="badge bg-red" ng-show="todos.length">{{todos.length}}</span>
-                            </i>
-                            <span class="tabbar-label">Todos</span>
-                        </a>
-                        
-                        <a href="#tab3" class="tab-link">
-                            <i class="icon icon-normal help-icon"></i>
-                            <span class="tabbar-label">Help</span>
-                        </a>
-                        
-                    </div>
-                </div>
-            
-            </div>
+				<!--pages-->
+				<div class="pages navbar-through toolbar-through">
 
-        </div>
-        <div class="loading-overlay">
-            
-            <div class="loading-header">
-                <div class="title">PhiTodo</div>
-                <div class="small"><span>for </span><img src="img/gmail.png" height="25px" /></div>
-            </div>
-            
-            <div class="loading-content">
-                <div><span style="width:42px; height:42px" class="preloader preloader-white"></span></div>
-                <div>Loading....</div>
-                <div class="log"></div>
-            </div>
-            
-        </div>
-    
-         <script>
-            function start() {
-                var app = new PhiApp();
-                app.start();
-            }
-        </script>
-        <!--JS-->
+					<!--page-->
+					<div class="page" data-page="application">
+						<div class="page-content">
+
+							<!--tabs-->
+							<div class="tabs-animated-wrap">
+								<div class="tabs">
+
+									<!--tab 1-->
+									<div id="tab1" class="tab active">
+										<h1>Tab1</h1>
+									</div>
+
+									<!--tab 2-->
+									<div id="tab2" class="tab">
+										<h1>Tab2</h1>
+									</div>
+
+									<!--tab 3-->
+									<div id="tab3" class="tab">
+										<h1>Tab3</h1>
+									</div>
+
+								</div>
+							</div>
+							<!-- end tabs -->
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<!--Toolbar-->
+				<div class="toolbar tabbar tabbar-labels">
+					<div class="toolbar-inner">
+
+						<a href="#tab1" class="tab-link active">
+							<i class="icon icon-normal home-icon"></i>
+							<span class="tabbar-label">Home</span>
+						</a>
+
+						<a href="#tab2" class="tab-link">
+							<i class="icon icon-normal todos-icon">
+								<span class="badge bg-red" ng-show="todos.length">{{todos.length}}</span>
+							</i>
+							<span class="tabbar-label">Todos</span>
+						</a>
+
+						<a href="#tab3" class="tab-link">
+							<i class="icon icon-normal help-icon"></i>
+							<span class="tabbar-label">Help</span>
+						</a>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>            
+		
+        <!--Core-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="thirdparty/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="thirdparty/framework7.js"></script>
-        <script type="text/javascript" src="thirdparty/angular.js"></script>
         <script type="text/javascript" src="thirdparty/phonegapi.js"></script>
-        <script type="text/javascript" src="build/app-1.0.0.js"></script>
-        <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=start"></script>
-    
-   
+		<script type="text/javascript" src="thirdparty/parse-1.4.0.min.js"></script>
         
+		<!--Angular-->
+		<script type="text/javascript" src="thirdparty/angular.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-ui-router.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-resource.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-filter.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-event.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-keypress.js"></script>
+		<script type="text/javascript" src="thirdparty/angular-animate.js"></script>
+        
+		<script type="text/javascript" src="build/phitodo-2.0.0.js"></script>
+		<script type="text/javascript" src="index.js"></script>
     </body>
 </html>
