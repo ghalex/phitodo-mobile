@@ -19,8 +19,8 @@
         
         $scope.login = function (user) {
             
-            var user = new parse.User({username: user.email, password: user.password});
-            $state.go("application");
+            var parseUser = new parse.User({username: user.email, password: user.password});
+            $state.go("app.home");
             
         };
         

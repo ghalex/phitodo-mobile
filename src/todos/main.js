@@ -3,16 +3,12 @@
 
 'use strict';
 
-var template = require("html-loader!./Todos.html"),
-    controller = require("./TodosCtrl.js"),
-    angular = require("angular"),
-    m = null;
-    
-m = angular.module('app.todos', []);
+var angular = require("angular"),
+    m = angular.module("app.todos", []);
 
-m.controller("TodosCtrl", controller);
-m.run(function ($templateCache) {
-    $templateCache.put("todos-tab", template);
-});
+m.controller("TodosCtrl", require("./TodosCtrl"));
+m.run(["$templateCache", function ($templateCache) {
+    $templateCache.put("todos", require("./Todos.html"));
+}]);
 
 module.exports = m;

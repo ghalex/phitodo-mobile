@@ -1,53 +1,33 @@
-<div class="tab" ng-controller="TodosCtrl">
-    
-    <form class="searchbar no-margin">
-        <div class="searchbar-input">
-            <input type="search" placeholder="Search" ng-model="searchText">
-            <a href="#" class="searchbar-clear"></a>
-        </div>
-    </form>
-    
-    <div class="scroll-block toolbar-through">
-    
-        <div class="list-block inset">
-            <ul>
-                <li>
-                    <a href="#" class="item-link list-button" ng-click="reload()">
-                        <div ng-show="loading" class="todos-preloader"><span class="preloader"></span></div>
-                        <label>Click to reload</label>
-                    </a>
-                </li>
-            </ul>
+<ion-view title="Home" ng-controller="TodosCtrl" class="bg-image">
+    <ion-content has-header="true">
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+        <div class="search-bar">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper" id="search-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="Search" ng-model="query" ng-change="search()">
+                </label>
+            </div>
         </div>
 
-        <div class="list-block inset">
-            
-            <div class="list-group">
-                <ul>
-                    <li class="list-group-title">ghalex@gmail.com</li>
-                    
-                    <li class="item-content todo" ng-repeat="todo in todos">
-                        <div class="item-media" ng-click="done(todo)">
-                            <i ng-class="{'checkbox-done-icon': todo.isDone}" class="icon checkbox-icon"></i>
-                        </div>
-                        <div class="item-inner">
-                            <div class="item-title" ng-class="{'strike':todo.isDone}">
-                                <div>{{todo.subject}}</div>
-                                <div class="todo-snippet">{{todo.snippet}}</div>
-                            </div>
-                            <div class="item-after"></div>
-                        </div>
-                    </li>
-                    
-                    <li ng-show="todos.length == 0">
-                        <div class="center padding5x">No todos! Hurray !</div>
-                    </li>
-                    
-                    
-                </ul>
-            </div>
-            
+        <div class="list list-inset">
+
+            <ion-item class="item-divider">
+                PhiTodo
+            </ion-item>
+
+            <ion-item>Butterfinger</ion-item>
+            <ion-item>Something</ion-item>
+            <ion-item>Oil</ion-item>
+
+            <ion-item class="item-divider">
+                Work
+            </ion-item>
+
+            <ion-item>Do this</ion-item>
+            <ion-item>Work Todo!</ion-item>
         </div>
-    
-    </div>
-</div>
+
+    </ion-content>
+</ion-view>

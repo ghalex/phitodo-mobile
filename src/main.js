@@ -9,7 +9,8 @@
     module.exports = {
         modules: [
 			require("application"),
-			require("login")
+			require("login"),
+			require("todos")
         ]
     };
     

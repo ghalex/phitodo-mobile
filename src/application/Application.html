@@ -1,43 +1,16 @@
-<ion-view class="pane application-view" ng-controller="ApplicationCtrl">
-	<ion-header-bar class="bar-positive">
-		<h1 class="title"><b>Phi</b>Todo</h1>
-	</ion-header-bar>	
-	
-	<ion-tabs class="tabs-background-positive tabs-color-light">
-		
-		<ion-tab title="Home" icon="ion-home">
-			<ion-nav-view name="home-tab" class="pane">
-				<ion-content>
-					<ion-refresher on-refresh="doRefresh()"></ion-refresher>
+<ion-tabs class="tabs-icon-top" animation="slide-left-right" ng-controller="ApplicationCtrl">
 
-					<div class="list list-inset">
+    <ion-tab title="Home" icon="ion-home">
+        <ion-nav-view name="home-tab"></ion-nav-view>
+    </ion-tab>
 
-						<ion-item class="item-divider">
-							PhiTodo
-						</ion-item>
+    <ion-tab title="Todo's" icon="ion-calendar">
+        <ion-nav-view name="todos-tab">
+            <ion-view title="Todos"></ion-view>
+        </ion-nav-view>
+    </ion-tab>
+    <ion-tab title="About" icon="ion-help-buoy">
+        <ion-nav-view></ion-nav-view>
+    </ion-tab>
 
-						<ion-item>Butterfinger</ion-item>
-						<ion-item>Something</ion-item>
-						<ion-item>Oil</ion-item>
-					</div>
-					
-					<div class="list list-inset">
-
-						<ion-item class="item-divider">
-							Work
-						</ion-item>
-
-						<ion-item>Do this</ion-item>
-						<ion-item>Work Todo!</ion-item>
-					</div>
-					
-				</ion-content>
-			</ion-nav-view>
-		</ion-tab>
-		
-		
-		<ion-tab title="Todo's" icon="ion-calendar"></ion-tab>
-		<ion-tab title="About" icon="ion-help-buoy"></ion-tab>
-		
-	</ion-tabs>
-</ion-view>
+</ion-tabs>

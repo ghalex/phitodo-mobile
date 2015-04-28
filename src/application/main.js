@@ -5,7 +5,6 @@
     "use strict";
     
     var angular = require("angular"),
-        parse = require("parse"),
         m = angular.module("app.application", []);
     
     m.controller("ApplicationCtrl", require("./ApplicationCtrl"));

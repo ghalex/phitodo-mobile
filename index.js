@@ -10,20 +10,32 @@
             'ionic',
 			
 			'app.application',
-			'app.login'
+			'app.login',
+			'app.todos'
         ]);
 		
 		app.config(function ($stateProvider, $provide, $urlRouterProvider) {
 
             $stateProvider
-                .state("application", {
-                    url: "/application",
-                    templateUrl: "application"
-                })
-				.state("login", {
+                .state('login', {
                     url: "/login",
                     templateUrl: "login"
+                })
+                .state('app', {
+                    url: "/app",
+                    abstract: true,
+                    templateUrl: "application"
+                })
+                .state('app.home', {
+                    url: "/home",
+                    views: {
+                        'home-tab': {
+                            templateUrl: "todos"
+                        }
+                    }
                 });
+            
+            $urlRouterProvider.otherwise("/app/home");
 
         });
 		
