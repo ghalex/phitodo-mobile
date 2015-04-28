@@ -4,45 +4,29 @@
 (function () {
     'use strict';
     
-	var Device = {};
-	
-	Device.onReady = function (callback) {
-		if (Device.isPhonegap()) {
-			document.addEventListener('deviceready', callback, false);
-		} else {
-			window.onload = callback();
-		}
-	};
-	
-	Device.isPhonegap = function () {
-		return (typeof (cordova) !== 'undefined' || typeof (phonegap) !== 'undefined');
-	};
-	
-    Device.onReady(function () {
-        
-        var app = angular.module('app', [
-            'ngResource',
-            'ngAnimate',
-            'angular.filter',
-            
-            'ui.router',
-            'ui.event',
-            'ui.keypress'
-			
-        ]);
-                
-		app.factory('f7', function () {
-			var f7 = new Framework7();
-			return f7;
-		});
+	$(document).ready(function () {
 		
-        app.run(function ($http, $rootScope, $timeout, $state, f7) {
+		var app = angular.module('app', [
+            'ionic',
 			
-			f7.addView('.main-view');
-			console.log("app ready");
+			'app.application',
+			'app.login'
+        ]);
+		
+		app.config(function ($stateProvider, $provide, $urlRouterProvider) {
+
+            $stateProvider
+                .state("application", {
+                    url: "/application",
+                    templateUrl: "application"
+                })
+				.state("login", {
+                    url: "/login",
+                    templateUrl: "login"
+                });
+
         });
-
+		
         angular.bootstrap(document, ['app']);
-
-    });
+	});
 }());

@@ -1,4 +1,4 @@
-/*jslint vars: true, plusplus: true, white: true */
+/*jslint vars: true, plusplus: true */
 /*global require, module, console */
 
 (function () {
@@ -6,11 +6,11 @@
     
     var angular = require("angular"),
         parse = require("parse"),
-        m = angular.module("app.application", []);
+        m = angular.module("app.login", []);
     
-    m.controller("ApplicationCtrl", require("./ApplicationCtrl"));
+    m.controller("LoginCtrl", require("./LoginCtrl"));
     m.run(["$templateCache", function ($templateCache) {
-        $templateCache.put("application", require("./Application.html"));
+        $templateCache.put("login", require("./Login.html"));
     }]);
     
     module.exports = m;

@@ -1,73 +1,43 @@
-<div class="application-view views" ng-controller="ApplicationCtrl">
+<ion-view class="pane application-view" ng-controller="ApplicationCtrl">
+	<ion-header-bar class="bar-positive">
+		<h1 class="title"><b>Phi</b>Todo</h1>
+	</ion-header-bar>	
 	
-	<!--view 1-->
-	<div class="view main-view">
+	<ion-tabs class="tabs-background-positive tabs-color-light">
+		
+		<ion-tab title="Home" icon="ion-home">
+			<ion-nav-view name="home-tab" class="pane">
+				<ion-content>
+					<ion-refresher on-refresh="doRefresh()"></ion-refresher>
 
-		<!--navbar-->
-		<div class="navbar">
-			<div class="navbar-inner" data-page="todos">
-				<div class="left"></div>
-				<div class="center">
-					<span class="title">PhiTodo</span>
-				</div>
-				<div class="right"></div>
-			</div>
-		</div>
+					<div class="list list-inset">
 
-		<!--pages-->
-		<div class="pages navbar-through toolbar-through">
+						<ion-item class="item-divider">
+							PhiTodo
+						</ion-item>
 
-			<!--page-->
-			<div class="page" data-page="application">
-				<div class="page-content">
-
-					<!--tabs-->
-					<div class="tabs-animated-wrap">
-						<div class="tabs">
-
-							<!--tab 1-->
-							<div id="tab1" include="settings-tab" class="active"></div>
-
-							<!--tab 2-->
-							<div id="tab2" include="todos-tab"></div>
-
-							<!--tab 3-->
-							<div id="tab3" class="tab"></div>
-
-						</div>
+						<ion-item>Butterfinger</ion-item>
+						<ion-item>Something</ion-item>
+						<ion-item>Oil</ion-item>
 					</div>
-					<!-- end tabs -->
+					
+					<div class="list list-inset">
 
-				</div>
-			</div>
+						<ion-item class="item-divider">
+							Work
+						</ion-item>
 
-		</div>
-
-
-		<!--Toolbar-->
-		<div class="toolbar tabbar tabbar-labels">
-			<div class="toolbar-inner">
-
-				<a href="#tab1" class="tab-link active">
-					<i class="icon icon-normal home-icon"></i>
-					<span class="tabbar-label">Home</span>
-				</a>
-
-				<a href="#tab2" class="tab-link">
-					<i class="icon icon-normal todos-icon">
-						<span class="badge bg-red" ng-show="todos.length">{{todos.length}}</span>
-					</i>
-					<span class="tabbar-label">Todos</span>
-				</a>
-
-				<a href="#tab3" class="tab-link">
-					<i class="icon icon-normal help-icon"></i>
-					<span class="tabbar-label">Help</span>
-				</a>
-
-			</div>
-		</div>
-
-	</div>
-
-</div>
+						<ion-item>Do this</ion-item>
+						<ion-item>Work Todo!</ion-item>
+					</div>
+					
+				</ion-content>
+			</ion-nav-view>
+		</ion-tab>
+		
+		
+		<ion-tab title="Todo's" icon="ion-calendar"></ion-tab>
+		<ion-tab title="About" icon="ion-help-buoy"></ion-tab>
+		
+	</ion-tabs>
+</ion-view>

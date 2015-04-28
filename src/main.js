@@ -8,6 +8,8 @@
     
     module.exports = {
         modules: [
+			require("application"),
+			require("login")
         ]
     };
     
