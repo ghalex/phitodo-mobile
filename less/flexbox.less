@@ -1,0 +1,87 @@
+// main: main.less
+
+// --------------------------------------------------
+// @name: Flexbox
+// @version: 1.0.0
+// --------------------------------------------------
+
+.flexbox() {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+}
+
+.flex-direction(@direction) when (@direction = row) {
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -ms-box-orient: horizontal;
+    
+    -webkit-flex-direction: @direction;
+    flex-direction: @direction;
+}
+
+.flex-direction(@direction) when (@direction = column) {
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-box-orient: vertical;
+    
+    -webkit-flex-direction: @direction;
+    flex-direction: @direction;
+}
+
+.flex-grow(@multiplier) {
+    -webkit-box-flex: @multiplier;
+    -webkit-flex-grow: @multiplier;
+    -moz-box-flex: @multiplier;
+    -ms-flex: @multiplier 1 auto;
+    flex-grow: @multiplier;
+}
+
+.flex-align-items(@value) when (@value = flex-start) {
+    -webkit-box-align: start;
+    -webkit-align-items: @value;
+    -moz-align-items: @value;
+    -ms-align-items: @value;
+    align-items: @value;
+}
+
+.flex-align-items(@value) when (@value = flex-end) {
+    -webkit-box-align: end;
+    -webkit-align-items: @value;
+    -moz-align-items: @value;
+    -ms-align-items: @value;
+    align-items: @value;
+}
+
+.flex-align-items(@value) {
+    -webkit-box-align: @value;
+    -webkit-align-items: @value;
+    -moz-align-items: @value;
+    -ms-align-items: @value;
+    align-items: @value;
+}
+
+.flex-justify-content(@value) when (@value = flex-start) {
+    -webkit-box-pack: start;
+    -webkit-justify-content: @value;
+    -moz-justify-content: @value;
+    -ms-justify-content: @value;
+    justify-content: @value;
+}
+
+.flex-justify-content(@value) when (@value = flex-end) {
+    -webkit-box-pack: end;
+    -webkit-justify-content: @value;
+    -moz-justify-content: @value;
+    -ms-justify-content: @value;
+    justify-content: @value;
+}
+
+.flex-justify-content(@value) {
+    -webkit-box-pack: @value;
+    -webkit-justify-content: @value;
+    -moz-justify-content: @value;
+    -ms-justify-content: @value;
+    justify-content: @value;
+}

@@ -1,13 +1,17 @@
-<ion-view title="Home" ng-controller="TodosCtrl" class="bg-image">
-    <ion-content has-header="true">
+<ion-view title="Todos" ng-controller="TodosCtrl" class="todos-view">
+    <ion-header-bar class="bar-positive" align-title="left">
+        <button class="button button-icon icon ion-navicon" ng-click="toggleMenu()"></button>
+        <h1 class="title">Inbox</h1>
+        <button class="button button-icon icon ion-gear-a"></button>
+    </ion-header-bar>
+    
+    <ion-content>
         <ion-refresher on-refresh="doRefresh()"></ion-refresher>
 
-        <div class="search-bar">
-            <div class="item item-input-inset">
-                <label class="item-input-wrapper" id="search-input">
-                    <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" placeholder="Search" ng-model="query" ng-change="search()">
-                </label>
+        <div class="search list list-inset">
+            <div class="item item-input">
+                <i class="icon ion-plus-round placeholder-icon"></i>
+                <input type="text" placeholder="Add todo...">
             </div>
         </div>
 

@@ -3,9 +3,13 @@
 
 'use strict';
 
-var TodosCtrl = function ($scope, $rootScope) {
+var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
+    
+    $scope.toggleMenu = function () {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
 };
     
-TodosCtrl.$inject = ["$scope", "$rootScope"];
+TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate"];
 
 module.exports = TodosCtrl;

@@ -30,15 +30,24 @@
     </head>
 	
     <body>
-		
-        <ion-nav-bar animation="nav-title-slide-ios7"
-                     type="bar-positive" 
-                     back-button-type="button-icon" 
-                     back-button-icon="ion-arrow-left-c">
         
-        </ion-nav-bar>
-        
-        <ion-nav-view animation="slide-left-right"></ion-nav-view>
-		
+        <ion-side-menus>
+            
+            <ion-side-menu-content>
+                <ion-nav-view></ion-nav-view>
+            </ion-side-menu-content>
+            
+            <ion-side-menu side="left">
+                <header class="bar bar-header bar-assertive">
+                    <div class="title">Side Menu</div>
+                </header>
+                <ion-content class="has-header">
+                    <ul class="list">
+                        <a menu-close ui-sref="login" class="item">Logout</a>
+                    </ul>
+                </ion-content>
+            </ion-side-menu>
+        </ion-side-menus>
+            
     </body>
 </html>

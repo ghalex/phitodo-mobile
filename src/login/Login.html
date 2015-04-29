@@ -1,6 +1,10 @@
-<ion-view title="Sign-In" class="login-view" ng-controller="LoginCtrl">
-	<ion-content has-header="true">
-		<div class="list">
+<ion-view title="Sign-In" 
+          class="login-view" 
+          ng-controller="LoginCtrl">
+	
+    <ion-content>
+		
+        <div class="list">
 			<label class="item item-input">
 				<span class="input-label">Username</span>
 				<input type="text" ng-model="user.username">
@@ -10,7 +14,8 @@
 				<input type="password" ng-model="user.password">
 			</label>
 		</div>
-		<div class="padding">
+		
+        <div class="padding">
 			<button class="button button-block button-positive" ng-click="login(user)">
 				Sign-In
 			</button>
@@ -18,5 +23,7 @@
 				<a href="#/forgot-password">Forgot password</a>
 			</p>
 		</div>
+        
 	</ion-content>
+    
 </ion-view>

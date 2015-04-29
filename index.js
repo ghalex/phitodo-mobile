@@ -21,21 +21,12 @@
                     url: "/login",
                     templateUrl: "login"
                 })
-                .state('app', {
-                    url: "/app",
-                    abstract: true,
-                    templateUrl: "application"
-                })
-                .state('app.home', {
-                    url: "/home",
-                    views: {
-                        'home-tab': {
-                            templateUrl: "todos"
-                        }
-                    }
+                .state('todos', {
+                    url: "/todos",
+                    templateUrl: "todos"
                 });
             
-            $urlRouterProvider.otherwise("/app/home");
+            $urlRouterProvider.otherwise("/login");
 
         });
 		
