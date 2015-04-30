@@ -1,0 +1,29 @@
+<div class="smartlist-view" ng-controller="SmartListsCtrl">
+	
+    <div class="list">
+        
+		<div class="item item-divider">
+			Smart Lists
+		</div>
+		
+        <div class="item"
+             ng-click="deselectAllLists()"
+             ng-class="{active: selectedList == null && selectedSmartList == null}">
+            
+                <i class="icon ion-contrast"></i>
+                <span>All</span>
+        </div>
+        
+        <div class="item"
+             ng-repeat="list in smartlists"
+             ng-click="selectSmartList(list)"
+             ng-class="{active: selectedSmartList.id == list.id}">
+            
+			<i class="icon ion-{{list.icon}}"></i>
+			<span>{{list.title}}</span>
+			
+        </div>
+        
+    </div>
+	
+</div>

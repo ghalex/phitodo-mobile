@@ -38,14 +38,11 @@
             </ion-side-menu-content>
             
             <ion-side-menu side="left">
-                <header class="bar bar-header bar-assertive">
-                    <div class="title">Side Menu</div>
-                </header>
-                <ion-content class="has-header">
-                    <ul class="list">
-                        <a menu-close ui-sref="login" class="item">Logout</a>
-                    </ul>
-                </ion-content>
+				<ion-view>
+					<div include="'user-info'"></div>
+					<div include="'smart-lists'"></div>
+					<div include="'lists'"></div>
+				</ion-view>
             </ion-side-menu>
         </ion-side-menus>
             

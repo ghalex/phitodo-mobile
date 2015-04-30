@@ -1,0 +1,20 @@
+<div class="lists-view" ng-controller="ListsCtrl">
+    
+    <div class="list">
+        
+        <div class="item item-divider">
+			Lists
+		</div>
+		
+        <div class="item"
+             ng-repeat="list in lists.toArray()"
+             ng-click="selectList(list)"
+             ng-class="{active: list.id == selectedList.id}">
+            
+			<i class="color-box {{list.attributes.color}}"></i>
+			<span>{{list.attributes.title}}</span>
+			
+        </div>
+        
+    </div>
+</div>

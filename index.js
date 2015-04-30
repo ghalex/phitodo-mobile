@@ -9,9 +9,14 @@
 		var app = angular.module('app', [
             'ionic',
 			
+			'app.components',
 			'app.application',
 			'app.login',
-			'app.todos'
+			'app.todos',
+			'app.userinfo',
+			'app.lists',
+			'app.smartlists'
+			
         ]);
 		
 		app.config(function ($stateProvider, $provide, $urlRouterProvider) {

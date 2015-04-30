@@ -54,10 +54,10 @@
 /******/ 		
 
 /******/ 	
-/******/ 	/*global "c736e909bc1808d8bf8e" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
+/******/ 	/*global "b1abf32d4b1b4512aee9" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c736e909bc1808d8bf8e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b1abf32d4b1b4512aee9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,8 +546,12 @@
 	    module.exports = {
 	        modules: [
 				__webpack_require__(1),
+				__webpack_require__(2),
+				__webpack_require__(4),
 				__webpack_require__(3),
-				__webpack_require__(2)
+				__webpack_require__(5),
+				__webpack_require__(6),
+				__webpack_require__(7)
 	        ]
 	    };
 	    
@@ -557,19 +561,17 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*jslint vars: true, plusplus: true, white: true */
+	/*jslint vars: true, plusplus: true */
 	/*global require, module, console */
 
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(4),
-	        m = angular.module("app.application", []);
+	    var angular = __webpack_require__(8),
+	        Include = __webpack_require__(10),
+	        m = angular.module("app.components", []);
 	    
-	    m.controller("ApplicationCtrl", __webpack_require__(7));
-	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("application", __webpack_require__(10));
-	    }]);
+	    m.directive("include", Include);
 	    
 	    module.exports = m;
 	    
@@ -579,23 +581,45 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint vars: true, plusplus: true, white: true */
+	/*global require, module, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.application", []);
+	    
+	    m.controller("ApplicationCtrl", __webpack_require__(11));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("application", __webpack_require__(16));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/*jslint plusplus: true, node: true */
 	/*global require, module */
 
 	'use strict';
 
-	var angular = __webpack_require__(4),
+	var angular = __webpack_require__(8),
 	    m = angular.module("app.todos", []);
 
-	m.controller("TodosCtrl", __webpack_require__(6));
+	m.controller("TodosCtrl", __webpack_require__(12));
 	m.run(["$templateCache", function ($templateCache) {
-	    $templateCache.put("todos", __webpack_require__(9));
+	    $templateCache.put("todos", __webpack_require__(17));
 	}]);
 
 	module.exports = m;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint vars: true, plusplus: true */
@@ -604,13 +628,13 @@
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(4),
-	        parse = __webpack_require__(5),
+	    var angular = __webpack_require__(8),
+	        parse = __webpack_require__(9),
 	        m = angular.module("app.login", []);
 	    
-	    m.controller("LoginCtrl", __webpack_require__(8));
+	    m.controller("LoginCtrl", __webpack_require__(13));
 	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("login", __webpack_require__(11));
+	        $templateCache.put("login", __webpack_require__(18));
 	    }]);
 	    
 	    module.exports = m;
@@ -618,39 +642,119 @@
 	}());
 
 /***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = angular;
-
-/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = Parse;
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.lists", []);
+	    
+	    m.controller("ListsCtrl", __webpack_require__(14));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("lists", __webpack_require__(19));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
 
 /***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console */
 
-	'use strict';
-
-	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
+	(function () {
+	    "use strict";
 	    
-	    $scope.toggleMenu = function () {
-	        $ionicSideMenuDelegate.toggleLeft();
-	    };
-	};
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.userinfo", []);
 	    
-	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate"];
-
-	module.exports = TodosCtrl;
+	    //m.controller("SmartListsCtrl", require("./SmartListsCtrl"));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("user-info", __webpack_require__(20));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.smartlists", []);
+	    
+	    m.controller("SmartListsCtrl", __webpack_require__(15));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("smart-lists", __webpack_require__(21));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = angular;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = Parse;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console, angular */
+
+	(function () {
+	    "use strict";
+
+	    var IncludeDirective = function ($http, $templateCache, $compile) {
+	        
+	        return {
+	            
+	            restrict: 'A',
+	            link: function (scope, element, attributes) {
+	            
+	                var templateUrl = scope.$eval(attributes.include);
+
+	                $http.get(templateUrl, {cache: $templateCache}).success(
+	                    function (tplContent) {
+	                        element.replaceWith($compile(tplContent)(scope));
+	                    }
+	                );
+	            }
+	        };
+	    };
+
+	    IncludeDirective.$inject = ["$http", "$templateCache", "$compile"];
+	    
+	    module.exports = IncludeDirective;
+	    
+	}());
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint vars: true, plusplus: true */
@@ -682,7 +786,27 @@
 	}());
 
 /***/ },
-/* 8 */
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
+	    
+	    $scope.toggleMenu = function () {
+	        $ionicSideMenuDelegate.toggleLeft();
+	    };
+	};
+	    
+	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate"];
+
+	module.exports = TodosCtrl;
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint vars: true, plusplus: true */
@@ -691,7 +815,7 @@
 	(function () {
 	    "use strict";
 	    
-	    var parse = __webpack_require__(5);
+	    var parse = __webpack_require__(9);
 	    
 	    var LoginCtrl = function ($scope, $rootScope, $state) {
 	        
@@ -720,22 +844,224 @@
 	}());
 
 /***/ },
-/* 9 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    <ion-header-bar class=\"bar-positive\" align-title=\"left\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <button class=\"button button-icon icon ion-gear-a\"></button>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content>\r\n        <ion-refresher on-refresh=\"doRefresh()\"></ion-refresher>\r\n\r\n        <div class=\"search list list-inset\">\r\n            <div class=\"item item-input\">\r\n                <i class=\"icon ion-plus-round placeholder-icon\"></i>\r\n                <input type=\"text\" placeholder=\"Add todo...\">\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n\r\n            <ion-item class=\"item-divider\">\r\n                PhiTodo\r\n            </ion-item>\r\n\r\n            <ion-item>Butterfinger</ion-item>\r\n            <ion-item>Something</ion-item>\r\n            <ion-item>Oil</ion-item>\r\n\r\n            <ion-item class=\"item-divider\">\r\n                Work\r\n            </ion-item>\r\n\r\n            <ion-item>Do this</ion-item>\r\n            <ion-item>Work Todo!</ion-item>\r\n        </div>\r\n\r\n    </ion-content>\r\n</ion-view>";
+	/*jslint vars: true, plusplus: true */
+	/*global module, require, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var ListsCtrl = function ($scope, $rootScope) {
+	        
+	        // region #Vars
+	        
+	        $scope.lists = [];
+	        $scope.selectedList = null;
+	        $scope.currentUser = null;
+	        $scope.todos = [];
+	        
+	        // endregion
+	        
+	        // region #Public Functions
+	        
+	        $scope.selectList = function (list) {
+	            $rootScope.$broadcast('listSelected', list);
+	            
+	            $rootScope.$broadcast('smartListSelected', null);
+	            $rootScope.$broadcast('todoSelected', null);
+	        };
+	        
+	        $scope.editList = function (list) {
+	            $rootScope.$broadcast('editList', list);
+	        };
+	        
+	        $scope.newList = function () {
+	            $rootScope.$broadcast('newList');
+	        };
+	        
+	        $scope.deleteList = function (list) {
+	            
+	            /*$alert.open({
+	                message: "Are you sure do you want to delete <br/> list <b>'" + list.attributes.title + "'</b> ?",
+	                yes: function () {
+	                    list.destroy().then(function () {
+	                        $scope.todos.fetch();
+	                        
+	                        $rootScope.$broadcast('listSelected', null);
+	                        $rootScope.$apply();
+	                    });
+	                }
+	            });*/
+	        };
+	        
+	        // endregion
+	        
+	        // region #Events
+	        
+	        $rootScope.$on('newLists', function (event, data) {
+	            $scope.lists = data;
+	        });
+	        
+	        $rootScope.$on('listSelected', function (event, data) {
+	            $scope.selectedList = data;
+	        });
+	        
+	        $rootScope.$on('userLogIn', function (event, data) {
+	            $scope.currentUser = data;
+	        });
+	        
+	        $rootScope.$on('newTodos', function (event, data) {
+	            $scope.todos = data;
+	        });
+	        
+	        // endregion
+	    };
+	    
+	    ListsCtrl.$inject = ["$scope", "$rootScope"];
+	    
+	    module.exports = ListsCtrl;
+	    
+	}());
 
 /***/ },
-/* 10 */
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint vars: true, plusplus: true */
+	/*global module, require, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var SmartListsCtrl = function ($scope, $rootScope) {
+	        
+	        // region #Vars
+	        
+	        $scope.todos = [];
+	        $scope.selectedList = null;
+	        $scope.selectedSmartList = null;
+	        $scope.smartlists = [
+	            {
+	                id: 1,
+	                title: 'Inbox',
+	                icon: 'archive',
+	                filter: function (todo) {
+	                    return !todo.attributes.list;
+	                }
+	            },
+	            {
+	                id: 2,
+	                title: 'Today',
+	                icon: 'calendar',
+	                filter: function (todo) {
+	                    return todo.isToday() || todo.daysLeft() < 0;
+	                }
+	            },
+	            {
+	                id: 3,
+	                title: 'Tomorrow',
+	                icon: 'android-alarm-clock',
+	                filter: function (todo) {
+	                    return todo.isTomorrow();
+	                }
+	            },
+	            {
+	                id: 4,
+	                title: 'Starred',
+	                icon: 'android-star-half',
+	                filter: function (todo) {
+	                    return todo.attributes.isStarred;
+	                }
+	            }
+	        ];
+	        
+	        // endregion
+	        
+	        // region #Public function
+	        
+	        $scope.count = function (todos, filter) {
+	            return todos.filter(filter).filter(function (todo) { return !todo.get('isDone'); }).length;
+	        };
+	        
+	        $scope.deselectAllLists = function () {
+	            
+	            // Deselect lists
+	            $rootScope.$broadcast('listSelected', null);
+	            $rootScope.$broadcast('smartListSelected', null);
+	            
+	            // Deselect todo
+	            $rootScope.$broadcast('todoSelected', null);
+	        };
+	        
+	        $scope.selectSmartList = function (list) {
+	            
+	            $scope.deselectAllLists();
+	            
+	            $scope.selectedSmartList = list;
+	            $rootScope.$broadcast('smartListSelected', list);
+	        };
+	        
+	        // endregion
+	        
+	        // region #Events
+	        
+	        $rootScope.$on('listSelected', function (event, data) {
+	            $scope.selectedList = data;
+	        });
+	        
+	        $rootScope.$on('smartListSelected', function (event, data) {
+	            $scope.selectedSmartList = data;
+	        });
+	        
+	        $rootScope.$on('newTodos', function (event, data) {
+	            $scope.todos = data;
+	        });
+	        
+	        // endregion
+	    };
+	    
+	    SmartListsCtrl.$inject = ["$scope", "$rootScope"];
+	    module.exports = SmartListsCtrl;
+	    
+	}());
+
+/***/ },
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = "<ion-tabs class=\"tabs-icon-top\" animation=\"slide-left-right\" ng-controller=\"ApplicationCtrl\">\r\n\r\n    <ion-tab title=\"Home\" icon=\"ion-home\">\r\n        <ion-nav-view name=\"home-tab\"></ion-nav-view>\r\n    </ion-tab>\r\n\r\n    <ion-tab title=\"Todo's\" icon=\"ion-calendar\">\r\n        <ion-nav-view name=\"todos-tab\">\r\n            <ion-view title=\"Todos\"></ion-view>\r\n        </ion-nav-view>\r\n    </ion-tab>\r\n    <ion-tab title=\"About\" icon=\"ion-help-buoy\">\r\n        <ion-nav-view></ion-nav-view>\r\n    </ion-tab>\r\n\r\n</ion-tabs>";
 
 /***/ },
-/* 11 */
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    <ion-header-bar class=\"bar-positive\" align-title=\"left\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content>\r\n        <ion-refresher on-refresh=\"doRefresh()\"></ion-refresher>\r\n\r\n        <div class=\"search list list-inset\">\r\n            <div class=\"item item-input\">\r\n                <i class=\"icon ion-plus-round placeholder-icon\"></i>\r\n                <input type=\"text\" placeholder=\"Add todo...\">\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n\r\n            <ion-item class=\"item-divider\">\r\n                PhiTodo\r\n            </ion-item>\r\n\r\n            <ion-item>Butterfinger</ion-item>\r\n            <ion-item>Something</ion-item>\r\n            <ion-item>Oil</ion-item>\r\n\r\n            <ion-item class=\"item-divider\">\r\n                Work\r\n            </ion-item>\r\n\r\n            <ion-item>Do this</ion-item>\r\n            <ion-item>Work Todo!</ion-item>\r\n        </div>\r\n\r\n    </ion-content>\r\n</ion-view>";
+
+/***/ },
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = "<ion-view title=\"Sign-In\" \r\n          class=\"login-view\" \r\n          ng-controller=\"LoginCtrl\">\r\n\t\r\n    <ion-content>\r\n\t\t\r\n        <div class=\"list\">\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Username</span>\r\n\t\t\t\t<input type=\"text\" ng-model=\"user.username\">\r\n\t\t\t</label>\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Password</span>\r\n\t\t\t\t<input type=\"password\" ng-model=\"user.password\">\r\n\t\t\t</label>\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"padding\">\r\n\t\t\t<button class=\"button button-block button-positive\" ng-click=\"login(user)\">\r\n\t\t\t\tSign-In\r\n\t\t\t</button>\r\n\t\t\t<p class=\"text-center\">\r\n\t\t\t\t<a href=\"#/forgot-password\">Forgot password</a>\r\n\t\t\t</p>\r\n\t\t</div>\r\n        \r\n\t</ion-content>\r\n    \r\n</ion-view>";
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"lists-view\" ng-controller=\"ListsCtrl\">\r\n    \r\n    <div class=\"list\">\r\n        \r\n        <div class=\"item item-divider\">\r\n\t\t\tLists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-repeat=\"list in lists.toArray()\"\r\n             ng-click=\"selectList(list)\"\r\n             ng-class=\"{active: list.id == selectedList.id}\">\r\n            \r\n\t\t\t<i class=\"color-box {{list.attributes.color}}\"></i>\r\n\t\t\t<span>{{list.attributes.title}}</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n</div>";
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"userinfo-view\">\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-avatar\">\r\n\t\t\t<img ng-src=\"images/avatars/avatar0.png\">\r\n\t\t\t<h2>Ghiura Alexandru</h2>\r\n\t\t\t<p>ghalex@gmail.com</p>\r\n\t\t\t<button class=\"button button-icon icon ion-gear-a\"></button>\r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n</div>";
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"smartlist-view\" ng-controller=\"SmartListsCtrl\">\r\n\t\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-divider\">\r\n\t\t\tSmart Lists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-click=\"deselectAllLists()\"\r\n             ng-class=\"{active: selectedList == null && selectedSmartList == null}\">\r\n            \r\n                <i class=\"icon ion-contrast\"></i>\r\n                <span>All</span>\r\n        </div>\r\n        \r\n        <div class=\"item\"\r\n             ng-repeat=\"list in smartlists\"\r\n             ng-click=\"selectSmartList(list)\"\r\n             ng-class=\"{active: selectedSmartList.id == list.id}\">\r\n            \r\n\t\t\t<i class=\"icon ion-{{list.icon}}\"></i>\r\n\t\t\t<span>{{list.title}}</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n\t\r\n</div>";
 
 /***/ }
 /******/ ]);
