@@ -13,17 +13,12 @@
         Ghiura Alexandru
     </author>
 	
-	<preference name="fullscreen"                 value="true" />
-	<preference name="android-minSdkVersion"      value="7" />
-    <preference name="android-installLocation"    value="auto" />
+	<preference name="android-minSdkVersion" value="7" />
+    <preference name="android-installLocation" value="auto" />
 	
 	<gap:plugin name="org.apache.cordova.inappbrowser" />
-	<gap:plugin name="org.apache.cordova.contacts" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
-	<gap:plugin name="org.apache.cordova.vibration" />
 	
-	<platform name="android">
-        <allow-intent href="market:*" />
-    </platform>
+	<gap:platform name="android" />
 
 </widget>

@@ -54,10 +54,10 @@
 /******/ 		
 
 /******/ 	
-/******/ 	/*global "b1abf32d4b1b4512aee9" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
+/******/ 	/*global "8c06ea3b6e2b87eeddb2" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b1abf32d4b1b4512aee9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8c06ea3b6e2b87eeddb2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1061,7 +1061,7 @@
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"smartlist-view\" ng-controller=\"SmartListsCtrl\">\r\n\t\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-divider\">\r\n\t\t\tSmart Lists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-click=\"deselectAllLists()\"\r\n             ng-class=\"{active: selectedList == null && selectedSmartList == null}\">\r\n            \r\n                <i class=\"icon ion-contrast\"></i>\r\n                <span>All</span>\r\n        </div>\r\n        \r\n        <div class=\"item\"\r\n             ng-repeat=\"list in smartlists\"\r\n             ng-click=\"selectSmartList(list)\"\r\n             ng-class=\"{active: selectedSmartList.id == list.id}\">\r\n            \r\n\t\t\t<i class=\"icon ion-{{list.icon}}\"></i>\r\n\t\t\t<span>{{list.title}}</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n\t\r\n</div>";
+	module.exports = "<div class=\"smartlist-view\" ng-controller=\"SmartListsCtrl\">\r\n\t\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-divider\">\r\n\t\t\tSmart Lists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-click=\"deselectAllLists()\"\r\n             ng-class=\"{active: selectedList == null && selectedSmartList == null}\">\r\n            \r\n                <i class=\"icon ion-contrast\"></i>\r\n                <span>All</span>\r\n        </div>\r\n        \r\n        <div class=\"item\"\r\n             ng-repeat=\"list in smartlists\"\r\n             ng-click=\"selectSmartList(list)\"\r\n             ng-class=\"{active: selectedSmartList.id == list.id}\">\r\n            \r\n\t\t\t<i class=\"icon ion-{{list.icon}}\"></i>\r\n\t\t\t<span>{{list.title}}</span>\r\n\t\t\t<span class=\"badge badge-positive\" ng-show=\"list.id == 2 || list.id == 3\">0</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n\t\r\n</div>";
 
 /***/ }
 /******/ ]);
