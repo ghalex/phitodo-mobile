@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets"
-		xmlns:gap="http://phonegap.com/ns/1.0"
-		id="com.phi.todo"
-		versionCode="1"
-		version="2.0.0">
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.phi.todo"
+        version   = "1.0.0">
 
     <name>PhiTodo</name>
     <description>
-        To-Do List & Task Management
+        To-Do List and Task Management
     </description>
 
-    <author email="ghalex@gmail.com">
+    <author href="http://phonegap.com" email="ghalex@gmail.com">
         Ghiura Alexandru
     </author>
+	
+	<preference name="fullscreen"                 value="true" />
+	<preference name="android-minSdkVersion"      value="7" />
+    <preference name="android-installLocation"    value="auto" />
+	
+	<gap:plugin name="org.apache.cordova.inappbrowser" />
+	<gap:plugin name="org.apache.cordova.contacts" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	
+	<platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
 
 </widget>
