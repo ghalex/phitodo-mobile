@@ -69,6 +69,7 @@ BODY {
 }
 .todos-view .bar {
   background-color: transparent;
+  border: none;
 }
 .todos-view .item.todo {
   display: -webkit-box;

@@ -29,6 +29,21 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
         }
     ];
     
+    $scope.newTodo = function (title) {
+      
+        var todo = {
+            attributes: {
+                "title": title,
+                "isDone": false
+            }
+        };
+        
+        
+        $scope.todos.push(todo);
+        $scope.todoTitle = "";
+        
+    };
+    
     $scope.toggleMenu = function () {
         $ionicSideMenuDelegate.toggleLeft();
     };

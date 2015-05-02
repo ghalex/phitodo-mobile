@@ -9,6 +9,7 @@
 		var app = angular.module('app', [
             'ionic',
 			'angular.filter',
+            'ui.keypress',
             
 			'app.components',
 			'app.login',

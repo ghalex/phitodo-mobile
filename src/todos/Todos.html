@@ -13,7 +13,7 @@
 
             <div class="item item-input search">
                 <i class="icon ion-plus-round placeholder-icon"></i>
-                <input type="text" placeholder="Add todo...">
+                <input type="text" placeholder="Add todo..." ng-model="todoTitle" ui-keypress="{enter: 'newTodo(todoTitle)'}">
             </div>
             
             <div ng-repeat="todo in (filteredTodos = (todos | filter: !isDone))" 
