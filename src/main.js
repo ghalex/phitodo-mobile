@@ -9,12 +9,12 @@
     module.exports = {
         modules: [
 			require("components"),
-			require("application"),
 			require("login"),
 			require("todos"),
 			require("lists"),
 			require("user-info"),
-			require("smart-lists")
+			require("smart-lists"),
+			require("settings")
         ]
     };
     

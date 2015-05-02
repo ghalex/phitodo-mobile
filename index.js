@@ -8,14 +8,15 @@
 		
 		var app = angular.module('app', [
             'ionic',
-			
+			'angular.filter',
+            
 			'app.components',
-			'app.application',
 			'app.login',
 			'app.todos',
 			'app.userinfo',
 			'app.lists',
-			'app.smartlists'
+			'app.smartlists',
+			'app.settings'
 			
         ]);
 		
@@ -29,6 +30,10 @@
                 .state('todos', {
                     url: "/todos",
                     templateUrl: "todos"
+                })
+                .state('settings', {
+                    url: "/settings",
+                    templateUrl: "settings"
                 });
             
             $urlRouterProvider.otherwise("/login");

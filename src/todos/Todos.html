@@ -1,36 +1,67 @@
 <ion-view title="Todos" ng-controller="TodosCtrl" class="todos-view">
-    <ion-header-bar class="bar-positive" align-title="left">
+    
+    <div class="bar bar-header bar-positive">
         <button class="button button-icon icon ion-navicon" ng-click="toggleMenu()"></button>
         <h1 class="title">Inbox</h1>
-    </ion-header-bar>
+        <button class="button button-icon icon ion-gear-a" ui-sref='settings'></button>
+    </div>
     
-    <ion-content>
-        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
-
-        <div class="search list list-inset">
-            <div class="item item-input">
-                <i class="icon ion-plus-round placeholder-icon"></i>
-                <input type="text" placeholder="Add todo...">
-            </div>
-        </div>
+    <ion-content class="has-header">
+        <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to sync todos..."></ion-refresher>
 
         <div class="list list-inset">
 
-            <ion-item class="item-divider">
-                PhiTodo
-            </ion-item>
-
-            <ion-item>Butterfinger</ion-item>
-            <ion-item>Something</ion-item>
-            <ion-item>Oil</ion-item>
-
-            <ion-item class="item-divider">
-                Work
-            </ion-item>
-
-            <ion-item>Do this</ion-item>
-            <ion-item>Work Todo!</ion-item>
+            <div class="item item-input search">
+                <i class="icon ion-plus-round placeholder-icon"></i>
+                <input type="text" placeholder="Add todo...">
+            </div>
+            
+            <div ng-repeat="todo in (filteredTodos = (todos | filter: !isDone))" 
+                 class="item todo"
+                 ng-class="{done: todo.attributes.isDone}"
+                 ng-class-odd="'odd'">
+                
+                <div class="checkbox" ng-class="{checked: todo.attributes.isDone}" ng-click="doneTodo(todo, $event)"></div>
+                <div class="drag"></div>
+                <div class="title">
+                    <span>{{todo.attributes.title}}</span>
+                    <span ng-show="todo.attributes.progress > 0 && !todo.attributes.isDone" class="inprogress">( {{todo.attributes.progress}}% )</span>
+                </div>
+                
+                <!--Star-->
+                <div class="star" 
+                     ng-click="starTodo(todo, $event)"
+                     ng-class="{starred: todo.attributes.isStarred}">
+                    <i class="icon ion-android-star"></i>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <div class="completed">
+            <span>{{doneTodos.length}} completed <b>todo's</b></span>
         </div>
 
+        <div class="list list-inset">
+            <div ng-repeat="todo in (doneTodos = (todos | filter: isDone))" 
+                 class="item todo done"
+                 ng-class-odd="'odd'">
+
+                <div class="checkbox" ng-class="{checked: todo.attributes.isDone}" ng-click="doneTodo(todo, $event)"></div>
+                <div class="drag"></div>
+                <div class="title">
+                    <span>{{todo.attributes.title}}</span>
+                </div>
+
+                <!--Star-->
+                <div class="star" 
+                     ng-click="starTodo(todo, $event)"
+                     ng-class="{starred: todo.attributes.isStarred}">
+                    <i class="icon ion-android-star"></i>
+                </div>
+
+            </div>
+        </div>
     </ion-content>
 </ion-view>

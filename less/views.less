@@ -1,18 +1,122 @@
 // main: main.less
 
+@primaryColor: #2B88D9;
+
 .todos-view {
-    .search {
+    
+    background-image: url('../images/bg.jpg');
+    background-size:  cover;
+    
+    .list-inset { background-color: transparent; }
+    .ionic-refresher-content { color: white; }
+    .spinner { stroke: white; }
+    .bar { background-color: transparent; }
+    
+    .item.todo {
+        .flexbox();
+        .flex-direction(row);
+        .flex-align-items(center);
+        .border-radius();
         
-        .item {
-            padding: 0px 10px;
+        padding: 0px 0px 0px 0px;
+        font-size: 14px;
+        margin-bottom: 5px;
+        border: none;
+        
+        .drag {
+            height: 34px;
+            width: 2px;
+            background: url("../images/bar.png") no-repeat center center;
+            margin-right: 10px;
+        }
+        
+        .inprogress {
+            margin: 6px;
+            color: #777;
+            font-style: italic;
+            font-size: 11px;
+        }
+        
+        .star
+        {
+            margin: 0px 10px;
+            color: #B6B6B6;                            
+
+            &:hover {
+                color: #787878;
+            }
+
+            &.starred {
+                color: #FFC900;
+            }
+        }
+        
+        .title
+        {
+            .flex-grow(1);
+            text-shadow: 0 1px 0 #FFF;
+        }
+        
+        &.odd { background-color: #f6f6f9; } 
+        &.done {
+            opacity: 0.7;
+            .title { text-decoration: line-through; }
+        }
+    }
+    
+    .search.item { 
+        .border-radius();
+
+        padding: 4px 10px;
+        margin-bottom: 10px;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.35);
+
+        > * {
+            color: white;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #FFF;
+        }
+    }
+    
+    .completed {
+        text-align: center;
+        span {
+            padding: 6px 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.38);
+            color: white;
         }
     }
 }
 
 .userinfo-view {
-	.item-avatar > button {
-		position: absolute;
-		top: 10px;
-		right: 5px;
-	}
+}
+
+.settings-view {
+    
+    .list .icon {
+        font-size: 22px;
+        color: #777;
+    }
+    
+    .bar-user {
+        margin-top: 44px;
+        background-color: #387ef5;
+        text-align: center;
+        padding: 0px 15px 15px 15px;
+        color: #FFF;
+        font-family: "Lato", "Helvetica", "Tahoma", "Verdana", "Arial";
+        font-size: 16px;
+        
+        .title {
+            margin: 5px 0px;
+        }
+    }
+    
+    .has-subheader {
+        top: 120px;
+    }
 }

@@ -1,0 +1,39 @@
+<div class="settings-view" ng-controller="SettingsCtrl">
+
+    <div class="bar bar-header bar-positive">
+        <button class="button button-icon icon ion-android-arrow-back" ui-sref="todos"></button>
+        <h1 class="title">Settings</h1>
+    </div>
+    
+    <!--<div class="bar-user bar-positive">
+        <div><img ng-src="images/avatars/avatar0.png"></div>
+        <div class="title">Ghiura Alexandru</div>
+    </div>-->
+    
+    <ion-content class="has-header">
+        <div class="list list-inset">
+
+            <div class="item item-icon-left" ng-click="changeAvatar()">            
+                <i class="icon ion-image"></i>
+                <span>Change Avatar</span>
+            </div>
+
+            <div class="item item-icon-left">            
+                <i class="icon ion-person"></i>
+                <span>Change Name</span>
+                <span class="item-note"></span>
+            </div>
+
+            <div class="item item-icon-left">            
+                <i class="icon ion-android-lock"></i>
+                <span>Change Password</span>
+            </div>
+
+            <div class="item item-icon-left" ng-click="logout()">            
+                <i class="icon ion-android-exit"></i>
+                <span>Sign Out</span>
+            </div>
+        </div>
+	</ion-content>
+    
+</div>
