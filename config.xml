@@ -15,6 +15,7 @@
 	
 	<preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="permissions" value="none" />
 	
 	<gap:plugin name="org.apache.cordova.inappbrowser" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />

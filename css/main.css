@@ -61,11 +61,14 @@ BODY {
 .todos-view .ionic-refresher-content {
   color: white;
 }
+.todos-view .ionic-scroll {
+  border: none;
+}
 .todos-view .spinner {
   stroke: white;
 }
 .todos-view .bar.bar-positive {
-  border: 0px;
+  border: none;
   background-color: transparent;
 }
 .todos-view .item.todo {
