@@ -3,7 +3,7 @@
 
 'use strict';
 
-var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
+var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
     
     
     $scope.todos = [
@@ -53,8 +53,17 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
     $scope.isDone = function (todo) {
         return todo.attributes.isDone;
     };
+    
+    $scope.doRefresh = function () {
+        $timeout(function () {
+          
+            //Stop the ion-refresher from spinning
+            $scope.$broadcast('scroll.refreshComplete');
+            
+        }, 1000);
+    };
 };
     
-TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate"];
+TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout"];
 
 module.exports = TodosCtrl;

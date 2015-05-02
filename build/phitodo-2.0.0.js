@@ -54,10 +54,10 @@
 /******/ 		
 
 /******/ 	
-/******/ 	/*global "97ca593ebbd3246ed038" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
+/******/ 	/*global "ef3c7b6e87d5e8f42a39" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "97ca593ebbd3246ed038"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ef3c7b6e87d5e8f42a39"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -722,7 +722,7 @@
 
 	'use strict';
 
-	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
+	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
 	    
 	    
 	    $scope.todos = [
@@ -772,9 +772,18 @@
 	    $scope.isDone = function (todo) {
 	        return todo.attributes.isDone;
 	    };
+	    
+	    $scope.doRefresh = function () {
+	        $timeout(function () {
+	          
+	            //Stop the ion-refresher from spinning
+	            $scope.$broadcast('scroll.refreshComplete');
+	            
+	        }, 1000);
+	    };
 	};
 	    
-	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate"];
+	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout"];
 
 	module.exports = TodosCtrl;
 

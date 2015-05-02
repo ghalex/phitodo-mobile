@@ -70,6 +70,7 @@ BODY {
 .todos-view .bar.bar-positive {
   border: none;
   background-color: transparent;
+  background-size: 100% 0px;
 }
 .todos-view .item.todo {
   display: -webkit-box;
