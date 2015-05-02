@@ -1,20 +1,21 @@
 <ion-view title="Todos" ng-controller="TodosCtrl" class="todos-view">
     
-    <div class="bar bar-header bar-positive">
+    <div class="bar bar-header bar-positive transparent-nav">
         <button class="button button-icon icon ion-navicon" ng-click="toggleMenu()"></button>
         <h1 class="title">Inbox</h1>
         <button class="button button-icon icon ion-gear-a" ui-sref='settings'></button>
     </div>
     
     <ion-content class="has-header">
-        <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to sync todos..."></ion-refresher>
 
         <div class="list list-inset">
 
-            <div class="item item-input search">
-                <i class="icon ion-plus-round placeholder-icon"></i>
-                <input type="text" placeholder="Add todo..." ng-model="todoTitle" ui-keypress="{enter: 'newTodo(todoTitle)'}">
-            </div>
+            <form name="newTodoForm" ng-submit="newTodo(todoTitle); todoTitle = '';">
+                <div class="item item-input search">
+                    <i class="icon ion-plus-round placeholder-icon"></i>
+                    <input type="text" placeholder="Add todo..." ng-model="todoTitle">
+                </div>
+            </form>
             
             <div ng-repeat="todo in (filteredTodos = (todos | filter: !isDone))" 
                  class="item todo"

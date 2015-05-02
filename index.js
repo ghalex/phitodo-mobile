@@ -9,7 +9,9 @@
 		var app = angular.module('app', [
             'ionic',
 			'angular.filter',
+            
             'ui.keypress',
+            'ui.event',
             
 			'app.components',
 			'app.login',

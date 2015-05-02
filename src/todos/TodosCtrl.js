@@ -40,8 +40,6 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate) {
         
         
         $scope.todos.push(todo);
-        $scope.todoTitle = "";
-        
     };
     
     $scope.toggleMenu = function () {

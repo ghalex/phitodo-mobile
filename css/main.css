@@ -12,9 +12,6 @@ BODY {
 .bar .button.button-icon:before {
   font-size: 26px;
 }
-.bar.bar-positive {
-  background-color: #2B88D9;
-}
 .item-avatar img:first-child {
   border-radius: 5px;
 }
@@ -67,13 +64,9 @@ BODY {
 .todos-view .spinner {
   stroke: white;
 }
-.todos-view .bar {
-  background-color: transparent;
-  border: none;
-}
 .todos-view .bar.bar-positive {
-  border: none;
-  border-color: transparent;
+  border: 0px;
+  background-color: transparent;
 }
 .todos-view .item.todo {
   display: -webkit-box;
@@ -97,7 +90,7 @@ BODY {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   padding: 0px 0px 0px 0px;
-  font-size: 14px;
+  font-size: 15px;
   margin-bottom: 5px;
   border: none;
 }
