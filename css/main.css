@@ -71,6 +71,10 @@ BODY {
   background-color: transparent;
   border: none;
 }
+.todos-view .bar.bar-positive {
+  border: none;
+  border-color: transparent;
+}
 .todos-view .item.todo {
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
