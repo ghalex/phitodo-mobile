@@ -42,12 +42,17 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
         $scope.todos.push(todo);
     };
     
+    
     $scope.toggleMenu = function () {
         $ionicSideMenuDelegate.toggleLeft();
     };
     
     $scope.doneTodo = function (todo) {
         todo.attributes.isDone = !todo.attributes.isDone;
+    };
+    
+    $scope.starTodo = function (todo, $event) {
+        todo.attributes.isStarred = !todo.attributes.isStarred;
     };
     
     $scope.isDone = function (todo) {

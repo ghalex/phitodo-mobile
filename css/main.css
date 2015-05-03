@@ -5,7 +5,7 @@ BODY {
   font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 .sidebar {
-  background: #43444f url("../images/sidebar/background.png");
+  background: #43444F;
 }
 .sidebar .list .item {
   background-color: transparent;
@@ -99,6 +99,9 @@ BODY {
 .todos-view .spinner {
   stroke: white;
 }
+.todos-view .padding-top {
+  padding-top: 3px;
+}
 .todos-view .bar.bar-positive {
   border: none;
   background-color: transparent;
@@ -126,7 +129,6 @@ BODY {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   padding: 0px 0px 0px 0px;
-  font-size: 15px;
   margin-bottom: 5px;
   border: none;
 }
@@ -143,8 +145,10 @@ BODY {
   font-size: 11px;
 }
 .todos-view .item.todo .star {
-  margin: 0px 10px;
   color: #B6B6B6;
+  height: 36px;
+  width: 36px;
+  padding: 8px;
 }
 .todos-view .item.todo .star:hover {
   color: #787878;

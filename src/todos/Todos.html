@@ -23,7 +23,9 @@
                  ng-class="{done: todo.attributes.isDone}"
                  ng-class-odd="'odd'">
                 
-                <div class="checkbox" ng-class="{checked: todo.attributes.isDone}" ng-click="doneTodo(todo, $event)"></div>
+                <div on-tap="doneTodo(todo, $event)" class="padding-top">
+                    <div class="checkbox" ng-class="{checked: todo.attributes.isDone}"></div>
+                </div>
                 <div class="drag"></div>
                 <div class="title">
                     <span>{{todo.attributes.title}}</span>
@@ -32,7 +34,7 @@
                 
                 <!--Star-->
                 <div class="star" 
-                     ng-click="starTodo(todo, $event)"
+                     on-tap="starTodo(todo, $event)"
                      ng-class="{starred: todo.attributes.isStarred}">
                     <i class="icon ion-android-star"></i>
                 </div>
@@ -58,7 +60,6 @@
 
                 <!--Star-->
                 <div class="star" 
-                     ng-click="starTodo(todo, $event)"
                      ng-class="{starred: todo.attributes.isStarred}">
                     <i class="icon ion-android-star"></i>
                 </div>
