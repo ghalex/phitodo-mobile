@@ -4,6 +4,38 @@ BODY {
   height: 100%;
   font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
+.sidebar {
+  background: #43444f url("../images/sidebar/background.png");
+}
+.sidebar .list .item {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+.sidebar .list.list-inset {
+  margin: 10px;
+  background-color: transparent;
+}
+.sidebar .list.list-inset .item {
+  padding: 10px;
+}
+.sidebar .list.list-inset .item .icon {
+  margin-right: 5px;
+}
+.sidebar .list.list-inset .item .badge {
+  top: 10px;
+  right: 0px;
+  background: #999;
+  font-weight: 400;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+.sidebar .list.list-inset .item-divider {
+  text-transform: uppercase;
+}
 .bar .title {
   font-weight: normal;
   font-size: 19px;
@@ -160,6 +192,28 @@ BODY {
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.38);
   color: white;
+}
+.userinfo-view {
+  background-color: #3C3D47;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+}
+.userinfo-view h2 {
+  color: white;
+  margin-bottom: 0px;
+}
+.userinfo-view p {
+  color: #8a8b91;
+}
+.userinfo-view .item-avatar {
+  padding: 8px 8px 8px 55px;
+  min-height: 0px;
+}
+.userinfo-view .item-avatar img:first-child {
+  top: 8px;
+  left: 8px;
 }
 .settings-view .list .icon {
   font-size: 22px;

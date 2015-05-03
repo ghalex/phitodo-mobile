@@ -6,3 +6,40 @@ BODY {
     font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
+.sidebar {
+    background: #43444F url("../images/sidebar/background.png");
+    
+    .list .item { 
+        background-color: transparent; 
+        border: none;
+        color: white;        
+    }
+    
+    .list.list-inset {
+        margin: 10px;
+        background-color: transparent;
+        
+        .item {
+            padding: 10px;
+            
+            .icon {
+                margin-right: 5px;
+            }
+        }
+        
+        .item .badge {
+            top: 10px;
+            right: 0px;
+            background: #999;
+            font-weight: 400;
+            font-size: 11px;
+            padding: 2px 8px;
+            
+            .border-radius();
+        }
+        
+        .item-divider {
+            text-transform: uppercase;
+        }
+    }
+}
