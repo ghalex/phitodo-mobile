@@ -54,10 +54,10 @@
 /******/ 		
 
 /******/ 	
-/******/ 	/*global "184f773e604a01b99434" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
+/******/ 	/*global "0b17dbe356aa5010c8c9" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "184f773e604a01b99434"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0b17dbe356aa5010c8c9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -725,17 +725,21 @@
 	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
 	    
 	    
+	    // region Fields
+	    
 	    $scope.todos = [
 	        {
 	            attributes: {
 	                "title": "Welcome to PhiTodo!",
+	                "progress": 0,
+	                "isStarred": false,
 	                "isDone": false
 	            }
 	        },
 	        {
 	            attributes: {
 	                "title": "Do this today!",
-	                "progress": "30",
+	                "progress": 30,
 	                "isStarred": true,
 	                "isDone": false
 	            }
@@ -743,10 +747,32 @@
 	        {
 	            attributes: {
 	                "title": "This is a done todo, for today.",
+	                "progress": 0,
+	                "isStarred": false,
 	                "isDone": true
 	            }
 	        }
 	    ];
+	    
+	    // endregion
+	    
+	    $scope.doneTodos = function () {
+	        var todos = $scope.todos.concat();
+	        return todos.filter(function (todo) { return todo.attributes.isDone; });
+	    };
+	    
+	    $scope.filteredTodos = function () {
+	        var todos = $scope.todos.concat();
+	        
+	        return todos.filter(function (todo) {
+	            
+	            if (todo.attributes.isDone) {
+	                return false;
+	            }
+	            
+	            return true;
+	        });
+	    };
 	    
 	    $scope.newTodo = function (title) {
 	      
@@ -756,7 +782,6 @@
 	                "isDone": false
 	            }
 	        };
-	        
 	        
 	        $scope.todos.push(todo);
 	    };
@@ -772,10 +797,6 @@
 	    
 	    $scope.starTodo = function (todo, $event) {
 	        todo.attributes.isStarred = !todo.attributes.isStarred;
-	    };
-	    
-	    $scope.isDone = function (todo) {
-	        return todo.attributes.isDone;
 	    };
 	    
 	    $scope.doRefresh = function () {
@@ -1098,7 +1119,7 @@
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n\r\n            <form name=\"newTodoForm\" ng-submit=\"newTodo(todoTitle); todoTitle = '';\">\r\n                <div class=\"item item-input search\">\r\n                    <i class=\"icon ion-plus-round placeholder-icon\"></i>\r\n                    <input type=\"text\" placeholder=\"Add todo...\" ng-model=\"todoTitle\">\r\n                </div>\r\n            </form>\r\n            \r\n            <div ng-repeat=\"todo in (filteredTodos = (todos | filter: !isDone))\" \r\n                 class=\"item todo\"\r\n                 ng-class=\"{done: todo.attributes.isDone}\"\r\n                 ng-class-odd=\"'odd'\">\r\n                \r\n                <div on-tap=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos.length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in (doneTodos = (todos | filter: isDone))\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\" ng-click=\"doneTodo(todo, $event)\"></div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n</ion-view>";
+	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n\r\n            <form name=\"newTodoForm\" ng-submit=\"newTodo(todoTitle); todoTitle = '';\">\r\n                <div class=\"item item-input search\">\r\n                    <i class=\"icon ion-plus-round placeholder-icon\"></i>\r\n                    <input type=\"text\" placeholder=\"Add todo...\" ng-model=\"todoTitle\">\r\n                </div>\r\n            </form>\r\n            \r\n            <div ng-repeat=\"todo in filteredTodos()\" \r\n                 class=\"item todo\"\r\n                 ng-class=\"{done: todo.attributes.isDone}\"\r\n                 ng-class-odd=\"'odd'\">\r\n                \r\n                <div on-tap=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos().length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in doneTodos()\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div on-tap=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n</ion-view>";
 
 /***/ },
 /* 17 */
@@ -1128,7 +1149,7 @@
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"settings-view\" ng-controller=\"SettingsCtrl\">\r\n\r\n    <div class=\"bar bar-header bar-positive\">\r\n        <button class=\"button button-icon icon ion-android-arrow-back\" ui-sref=\"todos\"></button>\r\n        <h1 class=\"title\">Settings</h1>\r\n    </div>\r\n    \r\n    <!--<div class=\"bar-user bar-positive\">\r\n        <div><img ng-src=\"images/avatars/avatar0.png\"></div>\r\n        <div class=\"title\">Ghiura Alexandru</div>\r\n    </div>-->\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <div class=\"list list-inset\">\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"changeAvatar()\">            \r\n                <i class=\"icon ion-image\"></i>\r\n                <span>Change Avatar</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-person\"></i>\r\n                <span>Change Name</span>\r\n                <span class=\"item-note\"></span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-android-lock\"></i>\r\n                <span>Change Password</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"logout()\">            \r\n                <i class=\"icon ion-android-exit\"></i>\r\n                <span>Sign Out</span>\r\n            </div>\r\n        </div>\r\n\t</ion-content>\r\n    \r\n</div>";
+	module.exports = "<div class=\"settings-view\" ng-controller=\"SettingsCtrl\">\r\n\r\n    <div class=\"bar bar-header bar-positive\">\r\n        <button class=\"button button-icon icon ion-android-arrow-back\" ui-sref=\"todos\"></button>\r\n    </div>\r\n    \r\n    <div class=\"bar-user\">\r\n        <img ng-src=\"images/avatars/avatar0.png\">\r\n        <div class=\"title\">Ghiura Alexandru</div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header has-subheader\">\r\n        <div class=\"list\">\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"changeAvatar()\">            \r\n                <i class=\"icon ion-image\"></i>\r\n                <span>Change Avatar</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-person\"></i>\r\n                <span>Change Name</span>\r\n                <span class=\"item-note\"></span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-android-lock\"></i>\r\n                <span>Change Password</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"logout()\">            \r\n                <i class=\"icon ion-android-exit\"></i>\r\n                <span>Sign Out</span>\r\n            </div>\r\n        </div>\r\n\t</ion-content>\r\n    \r\n</div>";
 
 /***/ },
 /* 22 */

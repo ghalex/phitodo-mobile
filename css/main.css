@@ -13,7 +13,7 @@ BODY {
   color: white;
 }
 .sidebar .list.list-inset {
-  margin: 10px;
+  margin: 0px;
   background-color: transparent;
 }
 .sidebar .list.list-inset .item {
@@ -22,9 +22,12 @@ BODY {
 .sidebar .list.list-inset .item .icon {
   margin-right: 5px;
 }
+.sidebar .list.list-inset .item.active {
+  background-color: #35363C;
+}
 .sidebar .list.list-inset .item .badge {
   top: 10px;
-  right: 0px;
+  right: 10px;
   background: #999;
   font-weight: 400;
   font-size: 11px;
@@ -104,7 +107,7 @@ BODY {
 }
 .todos-view .bar.bar-positive {
   border: none;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.25);
   background-size: 100% 0px;
 }
 .todos-view .item.todo {
@@ -165,7 +168,7 @@ BODY {
   text-shadow: 0 1px 0 #FFF;
 }
 .todos-view .item.todo.odd {
-  background-color: #f6f6f9;
+  background-color: #EFEFEF;
 }
 .todos-view .item.todo.done {
   opacity: 0.7;
@@ -219,13 +222,24 @@ BODY {
   top: 8px;
   left: 8px;
 }
+.settings-view {
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
+}
+.settings-view .bar.bar-positive {
+  border: none;
+  background-color: transparent;
+  background-size: 100% 0px;
+}
+.settings-view .list {
+  border: none;
+}
 .settings-view .list .icon {
   font-size: 22px;
   color: #777;
 }
 .settings-view .bar-user {
   margin-top: 44px;
-  background-color: #387ef5;
   text-align: center;
   padding: 0px 15px 15px 15px;
   color: #FFF;
@@ -235,6 +249,12 @@ BODY {
 .settings-view .bar-user .title {
   margin: 5px 0px;
 }
+.settings-view .bar-user img:first-child {
+  max-width: 50px;
+  max-height: 50px;
+  width: 100%;
+  height: 100%;
+}
 .settings-view .has-subheader {
-  top: 120px;
+  top: 145px;
 }

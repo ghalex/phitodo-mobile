@@ -18,7 +18,7 @@
                 </div>
             </form>
             
-            <div ng-repeat="todo in (filteredTodos = (todos | filter: !isDone))" 
+            <div ng-repeat="todo in filteredTodos()" 
                  class="item todo"
                  ng-class="{done: todo.attributes.isDone}"
                  ng-class-odd="'odd'">
@@ -44,15 +44,17 @@
         </div>
         
         <div class="completed">
-            <span>{{doneTodos.length}} completed <b>todo's</b></span>
+            <span>{{doneTodos().length}} completed <b>todo's</b></span>
         </div>
 
         <div class="list list-inset">
-            <div ng-repeat="todo in (doneTodos = (todos | filter: isDone))" 
+            <div ng-repeat="todo in doneTodos()" 
                  class="item todo done"
                  ng-class-odd="'odd'">
 
-                <div class="checkbox" ng-class="{checked: todo.attributes.isDone}" ng-click="doneTodo(todo, $event)"></div>
+                <div on-tap="doneTodo(todo, $event)" class="padding-top">
+                    <div class="checkbox" ng-class="{checked: todo.attributes.isDone}"></div>
+                </div>
                 <div class="drag"></div>
                 <div class="title">
                     <span>{{todo.attributes.title}}</span>

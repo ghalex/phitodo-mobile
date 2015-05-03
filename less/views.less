@@ -15,7 +15,7 @@
     
     .bar.bar-positive {
         border: none;
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, 0.25);
         background-size: 100% 0px;
     }
     
@@ -66,7 +66,7 @@
             text-shadow: 0 1px 0 #FFF;
         }
         
-        &.odd { background-color: #f6f6f9; } 
+        &.odd { background-color: #EFEFEF; }
         &.done {
             opacity: 0.7;
             .title { text-decoration: line-through; }
@@ -122,14 +122,26 @@
 
 .settings-view {
     
-    .list .icon {
-        font-size: 22px;
-        color: #777;
+    background-image: url('../images/bg.jpg');
+    background-size:  cover;
+    
+    .bar.bar-positive {
+        border: none;
+        background-color: transparent;
+        background-size: 100% 0px;
+    }
+    
+    .list {
+        border: none;
+        
+        .icon {
+            font-size: 22px;
+            color: #777;
+        }
     }
     
     .bar-user {
         margin-top: 44px;
-        background-color: #387ef5;
         text-align: center;
         padding: 0px 15px 15px 15px;
         color: #FFF;
@@ -139,9 +151,16 @@
         .title {
             margin: 5px 0px;
         }
+        
+        img:first-child {
+            max-width: 50px;
+            max-height: 50px;
+            width: 100%;
+            height: 100%;
+        }
     }
     
     .has-subheader {
-        top: 120px;
+        top: 145px;
     }
 }

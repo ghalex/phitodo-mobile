@@ -6,17 +6,21 @@
 var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
     
     
+    // region Fields
+    
     $scope.todos = [
         {
             attributes: {
                 "title": "Welcome to PhiTodo!",
+                "progress": 0,
+                "isStarred": false,
                 "isDone": false
             }
         },
         {
             attributes: {
                 "title": "Do this today!",
-                "progress": "30",
+                "progress": 30,
                 "isStarred": true,
                 "isDone": false
             }
@@ -24,10 +28,32 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
         {
             attributes: {
                 "title": "This is a done todo, for today.",
+                "progress": 0,
+                "isStarred": false,
                 "isDone": true
             }
         }
     ];
+    
+    // endregion
+    
+    $scope.doneTodos = function () {
+        var todos = $scope.todos.concat();
+        return todos.filter(function (todo) { return todo.attributes.isDone; });
+    };
+    
+    $scope.filteredTodos = function () {
+        var todos = $scope.todos.concat();
+        
+        return todos.filter(function (todo) {
+            
+            if (todo.attributes.isDone) {
+                return false;
+            }
+            
+            return true;
+        });
+    };
     
     $scope.newTodo = function (title) {
       
@@ -37,7 +63,6 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
                 "isDone": false
             }
         };
-        
         
         $scope.todos.push(todo);
     };
@@ -53,10 +78,6 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
     
     $scope.starTodo = function (todo, $event) {
         todo.attributes.isStarred = !todo.attributes.isStarred;
-    };
-    
-    $scope.isDone = function (todo) {
-        return todo.attributes.isDone;
     };
     
     $scope.doRefresh = function () {
