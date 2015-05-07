@@ -72,6 +72,11 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
         $ionicSideMenuDelegate.toggleLeft();
     };
     
+    $scope.selectTodo = function (todo) {
+        //$ionicSideMenuDelegate.toggleRight();
+        $scope.openDrawer();
+    };
+    
     $scope.doneTodo = function (todo) {
         todo.attributes.isDone = !todo.attributes.isDone;
     };

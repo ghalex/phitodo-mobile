@@ -20,10 +20,11 @@
             
             <div ng-repeat="todo in filteredTodos()" 
                  class="item todo"
+                 ng-click="selectTodo(todo)"
                  ng-class="{done: todo.attributes.isDone}"
                  ng-class-odd="'odd'">
                 
-                <div on-tap="doneTodo(todo, $event)" class="padding-top">
+                <div ng-click="doneTodo(todo, $event)" class="padding-top">
                     <div class="checkbox" ng-class="{checked: todo.attributes.isDone}"></div>
                 </div>
                 <div class="drag"></div>
@@ -52,7 +53,7 @@
                  class="item todo done"
                  ng-class-odd="'odd'">
 
-                <div on-tap="doneTodo(todo, $event)" class="padding-top">
+                <div ng-click="doneTodo(todo, $event)" class="padding-top">
                     <div class="checkbox" ng-class="{checked: todo.attributes.isDone}"></div>
                 </div>
                 <div class="drag"></div>
@@ -69,4 +70,9 @@
             </div>
         </div>
     </ion-content>
+    <drawer side="right">
+        <ion-content>
+            <div include="'smart-lists'"></div>
+        </ion-content>
+    </drawer>
 </ion-view>

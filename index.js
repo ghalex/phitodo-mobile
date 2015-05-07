@@ -8,6 +8,7 @@
 		
 		var app = angular.module('app', [
             'ionic',
+            'ionic.contrib.drawer',
 			'angular.filter',
             
             'ui.keypress',

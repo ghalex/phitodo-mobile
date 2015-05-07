@@ -4,6 +4,10 @@ BODY {
   height: 100%;
   font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
+.menu-content {
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
+}
 .sidebar {
   background: #43444F;
 }
@@ -137,8 +141,7 @@ BODY {
   background: url("../images/checkbox.png") no-repeat 0px -16px;
 }
 .todos-view {
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
+  background: transparent;
 }
 .todos-view .list-inset {
   background-color: transparent;
@@ -273,8 +276,7 @@ BODY {
   left: 8px;
 }
 .settings-view {
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
+  background: transparent;
 }
 .settings-view .bar.bar-positive {
   border: none;
