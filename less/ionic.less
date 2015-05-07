@@ -12,20 +12,42 @@
     }
 }
 
+.item {
+    a {
+        text-decoration: none;
+        color: @primaryColor;
+    }
+}
+
 .item-avatar {
 	img:first-child {
 		border-radius: 5px;
 	}	
 }
 
+.item-stacked {
+    .flexbox();
+    .flex-direction(column);
+}
+
+.item-with-note {
+    .flexbox();
+    .flex-direction(row);
+    .flex-align-items(center);
+}
+
 .modal {
     top: 20%;
     right: 10%;
-    bottom: 20%;
     left: 10%;
-    min-height: 240px;
+    min-height: 140px;
     width: 80%;
     border-radius: 5px;
+    
+    h1.title {
+        border-bottom: 2px solid @primaryColor;
+        margin: 0px;
+    }
 }
 
 .modal-backdrop-bg {

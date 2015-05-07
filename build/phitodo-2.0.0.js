@@ -1,63 +1,60 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	var parentHotUpdateCallback = this["webpackHotUpdate"];
 /******/ 	this["webpackHotUpdate"] = 
-/******/ 			/*globals hotAddUpdateChunk parentHotUpdateCallback document XMLHttpRequest __webpack_require__ "" + chunkId + "." + hotCurrentHash + ".hot-update.js" "" + hotCurrentHash + ".hot-update.json" */
-/******/ 			function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
-/******/ 				hotAddUpdateChunk(chunkId, moreModules);
-/******/ 				if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
-/******/ 			}
+/******/ 	function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
+/******/ 		hotAddUpdateChunk(chunkId, moreModules);
+/******/ 		if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
+/******/ 	}
 /******/ 	
-/******/ 			function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
-/******/ 				var head = document.getElementsByTagName("head")[0];
-/******/ 				var script = document.createElement("script");
-/******/ 				script.type = "text/javascript";
-/******/ 				script.charset = "utf-8";
-/******/ 				script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 				head.appendChild(script);
-/******/ 			}
+/******/ 	function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
+/******/ 		var head = document.getElementsByTagName("head")[0];
+/******/ 		var script = document.createElement("script");
+/******/ 		script.type = "text/javascript";
+/******/ 		script.charset = "utf-8";
+/******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
+/******/ 		head.appendChild(script);
+/******/ 	}
 /******/ 	
-/******/ 			function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
-/******/ 				if(typeof XMLHttpRequest === "undefined")
-/******/ 					return callback(new Error("No browser support"));
+/******/ 	function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
+/******/ 		if(typeof XMLHttpRequest === "undefined")
+/******/ 			return callback(new Error("No browser support"));
+/******/ 		try {
+/******/ 			var request = new XMLHttpRequest();
+/******/ 			var requestPath = __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json";
+/******/ 			request.open("GET", requestPath, true);
+/******/ 			request.timeout = 10000;
+/******/ 			request.send(null);
+/******/ 		} catch(err) {
+/******/ 			return callback(err);
+/******/ 		}
+/******/ 		request.onreadystatechange = function() {
+/******/ 			if(request.readyState !== 4) return;
+/******/ 			if(request.status === 0) {
+/******/ 				// timeout
+/******/ 				callback(new Error("Manifest request to " + requestPath + " timed out."));
+/******/ 			} else if(request.status === 404) {
+/******/ 				// no update available
+/******/ 				callback();
+/******/ 			} else if(request.status !== 200 && request.status !== 304) {
+/******/ 				// other failure
+/******/ 				callback(new Error("Manifest request to " + requestPath + " failed."));
+/******/ 			} else {
+/******/ 				// success
 /******/ 				try {
-/******/ 					var request = new XMLHttpRequest();
-/******/ 					var requestPath = __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json";
-/******/ 					request.open("GET", requestPath, true);
-/******/ 					request.timeout = 10000;
-/******/ 					request.send(null);
-/******/ 				} catch(err) {
-/******/ 					return callback(err);
+/******/ 					var update = JSON.parse(request.responseText);
+/******/ 				} catch(e) {
+/******/ 					callback(e);
+/******/ 					return;
 /******/ 				}
-/******/ 				request.onreadystatechange = function() {
-/******/ 					if(request.readyState !== 4) return;
-/******/ 					if(request.status === 0) {
-/******/ 						// timeout
-/******/ 						callback(new Error("Manifest request to " + requestPath + " timed out."));
-/******/ 					} else if(request.status === 404) {
-/******/ 						// no update available
-/******/ 						callback();
-/******/ 					} else if(request.status !== 200 && request.status !== 304) {
-/******/ 						// other failure
-/******/ 						callback(new Error("Manifest request to " + requestPath + " failed."));
-/******/ 					} else {
-/******/ 						// success
-/******/ 						try {
-/******/ 							var update = JSON.parse(request.responseText);
-/******/ 						} catch(e) {
-/******/ 							callback(e);
-/******/ 							return;
-/******/ 						}
-/******/ 						callback(null, update);
-/******/ 					}
-/******/ 				};
+/******/ 				callback(null, update);
 /******/ 			}
-/******/ 		
+/******/ 		};
+/******/ 	}
 
 /******/ 	
-/******/ 	/*global "0b17dbe356aa5010c8c9" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0b17dbe356aa5010c8c9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "aa1fc4c28a5f640ae0a7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -545,13 +542,13 @@
 	    
 	    module.exports = {
 	        modules: [
-				__webpack_require__(1),
 				__webpack_require__(3),
 				__webpack_require__(2),
-				__webpack_require__(5),
+				__webpack_require__(1),
 				__webpack_require__(4),
-				__webpack_require__(7),
-				__webpack_require__(8)
+				__webpack_require__(5),
+				__webpack_require__(6),
+				__webpack_require__(7)
 	        ]
 	    };
 	    
@@ -561,40 +558,43 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint plusplus: true, node: true */
+	/*global require, module */
+
+	'use strict';
+
+	var angular = __webpack_require__(8),
+	    m = angular.module("app.todos", []);
+
+	m.controller("TodosCtrl", __webpack_require__(10));
+	m.run(["$templateCache", function ($templateCache) {
+	    $templateCache.put("todos", __webpack_require__(16));
+	}]);
+
+	module.exports = m;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/*jslint vars: true, plusplus: true */
 	/*global require, module, console */
 
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(6),
-	        Include = __webpack_require__(11),
-	        m = angular.module("app.components", []);
+	    var angular = __webpack_require__(8),
+	        parse = __webpack_require__(9),
+	        m = angular.module("app.login", []);
 	    
-	    m.directive("include", Include);
+	    m.controller("LoginCtrl", __webpack_require__(11));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("login", __webpack_require__(17));
+	    }]);
 	    
 	    module.exports = m;
 	    
 	}());
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint plusplus: true, node: true */
-	/*global require, module */
-
-	'use strict';
-
-	var angular = __webpack_require__(6),
-	    m = angular.module("app.todos", []);
-
-	m.controller("TodosCtrl", __webpack_require__(9));
-	m.run(["$templateCache", function ($templateCache) {
-	    $templateCache.put("todos", __webpack_require__(16));
-	}]);
-
-	module.exports = m;
 
 /***/ },
 /* 3 */
@@ -606,14 +606,11 @@
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(6),
-	        parse = __webpack_require__(10),
-	        m = angular.module("app.login", []);
+	    var angular = __webpack_require__(8),
+	        Include = __webpack_require__(12),
+	        m = angular.module("app.components", []);
 	    
-	    m.controller("LoginCtrl", __webpack_require__(12));
-	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("login", __webpack_require__(18));
-	    }]);
+	    m.directive("include", Include);
 	    
 	    module.exports = m;
 	    
@@ -629,12 +626,12 @@
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(6),
-	        m = angular.module("app.userinfo", []);
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.lists", []);
 	    
-	    //m.controller("SmartListsCtrl", require("./SmartListsCtrl"));
+	    m.controller("ListsCtrl", __webpack_require__(13));
 	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("user-info", __webpack_require__(17));
+	        $templateCache.put("lists", __webpack_require__(18));
 	    }]);
 	    
 	    module.exports = m;
@@ -651,12 +648,12 @@
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(6),
-	        m = angular.module("app.lists", []);
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.userinfo", []);
 	    
-	    m.controller("ListsCtrl", __webpack_require__(13));
+	    //m.controller("SmartListsCtrl", require("./SmartListsCtrl"));
 	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("lists", __webpack_require__(19));
+	        $templateCache.put("user-info", __webpack_require__(19));
 	    }]);
 	    
 	    module.exports = m;
@@ -667,7 +664,23 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = angular;
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.smartlists", []);
+	    
+	    m.controller("SmartListsCtrl", __webpack_require__(15));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("smart-lists", __webpack_require__(21));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
 
 /***/ },
 /* 7 */
@@ -679,12 +692,12 @@
 	(function () {
 	    "use strict";
 	    
-	    var angular = __webpack_require__(6),
-	        m = angular.module("app.smartlists", []);
+	    var angular = __webpack_require__(8),
+	        m = angular.module("app.settings", []);
 	    
-	    m.controller("SmartListsCtrl", __webpack_require__(14));
+	    m.controller("SettingsCtrl", __webpack_require__(14));
 	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("smart-lists", __webpack_require__(20));
+	        $templateCache.put("settings", __webpack_require__(20));
 	    }]);
 	    
 	    module.exports = m;
@@ -695,26 +708,16 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*jslint vars: true, plusplus: true */
-	/*global require, module, console */
-
-	(function () {
-	    "use strict";
-	    
-	    var angular = __webpack_require__(6),
-	        m = angular.module("app.settings", []);
-	    
-	    m.controller("SettingsCtrl", __webpack_require__(15));
-	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("settings", __webpack_require__(21));
-	    }]);
-	    
-	    module.exports = m;
-	    
-	}());
+	module.exports = angular;
 
 /***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = Parse;
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true */
@@ -814,13 +817,45 @@
 	module.exports = TodosCtrl;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = Parse;
+	/*jslint vars: true, plusplus: true */
+	/*global module, require, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var parse = __webpack_require__(9);
+	    
+	    var LoginCtrl = function ($scope, $rootScope, $state) {
+	        
+	        // region #Vars
+	        
+			$scope.error = false;
+	        $scope.busy = false;
+	        
+	        // endregion
+	        
+	        // region #Public function
+	        
+	        $scope.login = function (user) {
+	            
+	            //var parseUser = new parse.User({username: user.email, password: user.password});
+	            $state.go("todos");
+	            
+	        };
+	        
+	        // endregion
+	    };
+	    
+	    LoginCtrl.$inject = ["$scope", "$rootScope", "$state"];
+	    module.exports = LoginCtrl;
+	    
+	}());
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint vars: true, plusplus: true */
@@ -850,44 +885,6 @@
 	    IncludeDirective.$inject = ["$http", "$templateCache", "$compile"];
 	    
 	    module.exports = IncludeDirective;
-	    
-	}());
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint vars: true, plusplus: true */
-	/*global module, require, console */
-
-	(function () {
-	    "use strict";
-	    
-	    var parse = __webpack_require__(10);
-	    
-	    var LoginCtrl = function ($scope, $rootScope, $state) {
-	        
-	        // region #Vars
-	        
-			$scope.error = false;
-	        $scope.busy = false;
-	        
-	        // endregion
-	        
-	        // region #Public function
-	        
-	        $scope.login = function (user) {
-	            
-	            //var parseUser = new parse.User({username: user.email, password: user.password});
-	            $state.go("todos");
-	            
-	        };
-	        
-	        // endregion
-	    };
-	    
-	    LoginCtrl.$inject = ["$scope", "$rootScope", "$state"];
-	    module.exports = LoginCtrl;
 	    
 	}());
 
@@ -975,6 +972,46 @@
 
 /***/ },
 /* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint vars: true, plusplus: true */
+	/*global module, require, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var SettingsCtrl = function ($scope, $rootScope, $state, $ionicModal) {
+	        
+	        // region #Vars
+	    
+	        $scope.avatarModal = $ionicModal.fromTemplate(__webpack_require__(22), {scope: $scope, animation: 'slide-in-up'});
+	        
+	        // endregion
+	        
+	        // region #Public function
+	        
+	        $scope.logout = function () {
+	            $state.go("login");
+	        };
+	        
+	        $scope.changeAvatar = function () {
+	            $scope.avatarModal.show();
+	        };
+	        
+	        // endregion
+	        
+	        // region #Events
+	        
+	        // endregion
+	    };
+	    
+	    SettingsCtrl.$inject = ["$scope", "$rootScope", "$state", "$ionicModal"];
+	    module.exports = SettingsCtrl;
+	    
+	}());
+
+/***/ },
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint vars: true, plusplus: true */
@@ -1076,46 +1113,6 @@
 	}());
 
 /***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint vars: true, plusplus: true */
-	/*global module, require, console */
-
-	(function () {
-	    "use strict";
-	    
-	    var SettingsCtrl = function ($scope, $rootScope, $state, $ionicModal) {
-	        
-	        // region #Vars
-	    
-	        $scope.avatarModal = $ionicModal.fromTemplate(__webpack_require__(22), {scope: $scope, animation: 'slide-in-up'});
-	        
-	        // endregion
-	        
-	        // region #Public function
-	        
-	        $scope.logout = function () {
-	            $state.go("login");
-	        };
-	        
-	        $scope.changeAvatar = function () {
-	            $scope.avatarModal.show();
-	        };
-	        
-	        // endregion
-	        
-	        // region #Events
-	        
-	        // endregion
-	    };
-	    
-	    SettingsCtrl.$inject = ["$scope", "$rootScope", "$state", "$ionicModal"];
-	    module.exports = SettingsCtrl;
-	    
-	}());
-
-/***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1125,37 +1122,37 @@
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"userinfo-view\">\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-avatar\">\r\n\t\t\t<img ng-src=\"images/avatars/avatar0.png\">\r\n\t\t\t<h2>Ghiura Alexandru</h2>\r\n\t\t\t<p>ghalex@gmail.com</p>\r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n</div>";
+	module.exports = "<ion-view title=\"Sign-In\" \r\n          class=\"login-view\" \r\n          ng-controller=\"LoginCtrl\">\r\n\t\r\n    <ion-content>\r\n\t\t\r\n        <div class=\"list\">\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Username</span>\r\n\t\t\t\t<input type=\"text\" ng-model=\"user.username\">\r\n\t\t\t</label>\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Password</span>\r\n\t\t\t\t<input type=\"password\" ng-model=\"user.password\">\r\n\t\t\t</label>\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"padding\">\r\n\t\t\t<button class=\"button button-block button-positive\" ng-click=\"login(user)\">\r\n\t\t\t\tSign-In\r\n\t\t\t</button>\r\n\t\t\t<p class=\"text-center\">\r\n\t\t\t\t<a href=\"#/forgot-password\">Forgot password</a>\r\n\t\t\t</p>\r\n\t\t</div>\r\n        \r\n\t</ion-content>\r\n    \r\n</ion-view>";
 
 /***/ },
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Sign-In\" \r\n          class=\"login-view\" \r\n          ng-controller=\"LoginCtrl\">\r\n\t\r\n    <ion-content>\r\n\t\t\r\n        <div class=\"list\">\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Username</span>\r\n\t\t\t\t<input type=\"text\" ng-model=\"user.username\">\r\n\t\t\t</label>\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Password</span>\r\n\t\t\t\t<input type=\"password\" ng-model=\"user.password\">\r\n\t\t\t</label>\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"padding\">\r\n\t\t\t<button class=\"button button-block button-positive\" ng-click=\"login(user)\">\r\n\t\t\t\tSign-In\r\n\t\t\t</button>\r\n\t\t\t<p class=\"text-center\">\r\n\t\t\t\t<a href=\"#/forgot-password\">Forgot password</a>\r\n\t\t\t</p>\r\n\t\t</div>\r\n        \r\n\t</ion-content>\r\n    \r\n</ion-view>";
+	module.exports = "<div class=\"lists-view\" ng-controller=\"ListsCtrl\">\r\n    \r\n    <div class=\"list list-inset\">\r\n        \r\n        <div class=\"item item-divider\">\r\n\t\t\tLists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-repeat=\"list in lists.toArray()\"\r\n             ng-click=\"selectList(list)\"\r\n             ng-class=\"{active: list.id == selectedList.id}\">\r\n            \r\n\t\t\t<i class=\"color-box {{list.attributes.color}}\"></i>\r\n\t\t\t<span>{{list.attributes.title}}</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n</div>";
 
 /***/ },
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"lists-view\" ng-controller=\"ListsCtrl\">\r\n    \r\n    <div class=\"list list-inset\">\r\n        \r\n        <div class=\"item item-divider\">\r\n\t\t\tLists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-repeat=\"list in lists.toArray()\"\r\n             ng-click=\"selectList(list)\"\r\n             ng-class=\"{active: list.id == selectedList.id}\">\r\n            \r\n\t\t\t<i class=\"color-box {{list.attributes.color}}\"></i>\r\n\t\t\t<span>{{list.attributes.title}}</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n</div>";
+	module.exports = "<div class=\"userinfo-view\">\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-avatar\">\r\n\t\t\t<img ng-src=\"images/avatars/avatar0.png\">\r\n\t\t\t<h2>Ghiura Alexandru</h2>\r\n\t\t\t<p>ghalex@gmail.com</p>\r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n</div>";
 
 /***/ },
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"smartlist-view\" ng-controller=\"SmartListsCtrl\">\r\n\t\r\n    <div class=\"list list-inset\">\r\n        \r\n\t\t<div class=\"item item-divider\">\r\n\t\t\tSmart Lists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-click=\"deselectAllLists()\"\r\n             ng-class=\"{active: selectedList == null && selectedSmartList == null}\">\r\n            \r\n                <i class=\"icon ion-contrast\"></i>\r\n                <span>All</span>\r\n        </div>\r\n        \r\n        <div class=\"item\"\r\n             ng-repeat=\"list in smartlists\"\r\n             ng-click=\"selectSmartList(list)\"\r\n             ng-class=\"{active: selectedSmartList.id == list.id}\">\r\n            \r\n\t\t\t<i class=\"icon ion-{{list.icon}}\"></i>\r\n\t\t\t<span>{{list.title}}</span>\r\n\t\t\t<span class=\"badge badge-positive\" ng-show=\"list.id == 2 || list.id == 3\">0</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n\t\r\n</div>";
+	module.exports = "<div class=\"settings-view\" ng-controller=\"SettingsCtrl\">\r\n\r\n    <div class=\"bar bar-header bar-positive\">\r\n        <button class=\"button button-icon icon ion-android-arrow-back\" ui-sref=\"todos\"></button>\r\n        <h1 class=\"title\">Settings</h1>\r\n    </div>\r\n    \r\n    <div class=\"bar-user\">\r\n        <img ng-src=\"images/avatars/avatar0.png\">\r\n        <div class=\"title\">Ghiura Alexandru</div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header has-subheader\">\r\n        <div class=\"list\">\r\n\r\n            <div class=\"item item-icon-left item-with-note\" ng-click=\"changeAvatar()\">            \r\n                <i class=\"icon ion-image\"></i>\r\n                <span class=\"grow\">Change Avatar</span>\r\n                <span>\r\n                    <img ng-src=\"images/avatars/avatar0.png\">\r\n                </span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left item-stacked\">\r\n                <i class=\"icon ion-person\"></i>\r\n                <span>Change Name</span>\r\n                <a>Ghiura Alexandru</a>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-android-lock\"></i>\r\n                <span>Change Password</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"logout()\">            \r\n                <i class=\"icon ion-android-exit\"></i>\r\n                <span>Sign Out</span>\r\n            </div>\r\n            \r\n            <div class=\"item item-icon-left item-stacked item-special\">            \r\n                <i class=\"icon ion-pound\"></i>\r\n                <span>Version</span>\r\n                <span class=\"gray\">2.0.0.beta1</span>\r\n            </div>\r\n        </div>\r\n\t</ion-content>\r\n    \r\n</div>";
 
 /***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"settings-view\" ng-controller=\"SettingsCtrl\">\r\n\r\n    <div class=\"bar bar-header bar-positive\">\r\n        <button class=\"button button-icon icon ion-android-arrow-back\" ui-sref=\"todos\"></button>\r\n    </div>\r\n    \r\n    <div class=\"bar-user\">\r\n        <img ng-src=\"images/avatars/avatar0.png\">\r\n        <div class=\"title\">Ghiura Alexandru</div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header has-subheader\">\r\n        <div class=\"list\">\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"changeAvatar()\">            \r\n                <i class=\"icon ion-image\"></i>\r\n                <span>Change Avatar</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-person\"></i>\r\n                <span>Change Name</span>\r\n                <span class=\"item-note\"></span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\">            \r\n                <i class=\"icon ion-android-lock\"></i>\r\n                <span>Change Password</span>\r\n            </div>\r\n\r\n            <div class=\"item item-icon-left\" ng-click=\"logout()\">            \r\n                <i class=\"icon ion-android-exit\"></i>\r\n                <span>Sign Out</span>\r\n            </div>\r\n        </div>\r\n\t</ion-content>\r\n    \r\n</div>";
+	module.exports = "<div class=\"smartlist-view\" ng-controller=\"SmartListsCtrl\">\r\n\t\r\n    <div class=\"list list-inset\">\r\n        \r\n\t\t<div class=\"item item-divider\">\r\n\t\t\tSmart Lists\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"item\"\r\n             ng-click=\"deselectAllLists()\"\r\n             ng-class=\"{active: selectedList == null && selectedSmartList == null}\">\r\n            \r\n                <i class=\"icon ion-contrast\"></i>\r\n                <span>All</span>\r\n        </div>\r\n        \r\n        <div class=\"item\"\r\n             ng-repeat=\"list in smartlists\"\r\n             ng-click=\"selectSmartList(list)\"\r\n             ng-class=\"{active: selectedSmartList.id == list.id}\">\r\n            \r\n\t\t\t<i class=\"icon ion-{{list.icon}}\"></i>\r\n\t\t\t<span>{{list.title}}</span>\r\n\t\t\t<span class=\"badge badge-positive\" ng-show=\"list.id == 2 || list.id == 3\">0</span>\r\n\t\t\t\r\n        </div>\r\n        \r\n    </div>\r\n\t\r\n</div>";
 
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <h1 class=\"title\">My Modal title</h1>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        Hello!\r\n    </ion-content>\r\n</ion-modal-view>";
+	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <h1 class=\"title\">Change Avatar</h1>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        Hello!\r\n    </ion-content>\r\n</ion-modal-view>";
 
 /***/ }
 /******/ ]);
