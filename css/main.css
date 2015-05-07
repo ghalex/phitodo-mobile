@@ -5,8 +5,7 @@ BODY {
   font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 .menu-content {
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
+  background-color: coral;
 }
 .sidebar {
   background: #43444F;
