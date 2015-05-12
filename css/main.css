@@ -97,6 +97,23 @@ BODY {
   -ms-align-items: center;
   align-items: center;
 }
+.modal {
+  /*
+    top: 20%;
+    right: 10%;
+    left: 10%;
+    min-height: 240px;
+    width: 80%;
+    border-radius: 5px;
+*/
+}
+.modal .bar {
+  border-bottom: 2px solid #2b88d9;
+  margin: 0px;
+}
+.modal .list input {
+  font-size: 16px;
+}
 .modal-backdrop-bg {
   -webkit-transition: opacity 300ms ease-in-out;
   transition: opacity 300ms ease-in-out;

@@ -4,7 +4,7 @@
         <button class="button button-icon icon ion-navicon" ng-click="toggleMenu()"></button>
         <h1 class="title">Inbox</h1>
         <div class="buttons">
-            <button class="button button-icon icon ion-plus" ng-click="newTodo()"></button>
+            <button class="button button-icon icon ion-compose" ng-click="newTodo()"></button>
             <button class="button button-icon icon ion-gear-a" ui-sref='settings'></button>
         </div>
     </div>
@@ -16,9 +16,7 @@
         
             <div ng-repeat="todo in filteredTodos()" 
                  class="item todo"
-                 ng-click="selectTodo(todo)"
-                 ng-class="{done: todo.attributes.isDone}"
-                 ng-class-odd="'odd'">
+                 ng-click="selectTodo(todo)">
                 
                 <div ng-click="doneTodo(todo, $event)" class="padding-top">
                     <div class="checkbox" ng-class="{checked: todo.attributes.isDone}"></div>

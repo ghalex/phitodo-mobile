@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1ecb571337931f570df3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b64d3fceffaf76d2aefc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -884,6 +884,7 @@
 	    
 	    // region Fields
 	    
+	    $scope.newTodo = {};
 	    $scope.todoModal = $ionicModal.fromTemplate(__webpack_require__(23), {scope: $scope, animation: 'slide-in-up'});
 	    $scope.todos = [
 	        {
@@ -932,19 +933,25 @@
 	        });
 	    };
 	    
-	    $scope.newTodo = function (title) {
-	      
-	        /*var todo = {
+	    $scope.newTodo = function () {
+	        $scope.todoModal.show();
+	    };
+	    
+	    $scope.saveTodo = function () {
+	        
+	        var todo = {
 	            attributes: {
-	                "title": title,
+	                "title": $scope.newTodo.title,
 	                "isDone": false
 	            }
 	        };
 	        
-	        $scope.todos.push(todo);*/
-	        $scope.todoModal.show();
+	        
+	        $scope.todos.push(todo);
+	        $scope.newTodo.title = "";
+	        
+	        $scope.todoModal.hide();
 	    };
-	    
 	    
 	    $scope.toggleMenu = function () {
 	        $ionicSideMenuDelegate.toggleLeft();
@@ -1135,7 +1142,7 @@
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <div class=\"buttons\">\r\n            <button class=\"button button-icon icon ion-plus\" ng-click=\"newTodo()\"></button>\r\n            <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n        </div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n        \r\n            <div ng-repeat=\"todo in filteredTodos()\" \r\n                 class=\"item todo\"\r\n                 ng-click=\"selectTodo(todo)\"\r\n                 ng-class=\"{done: todo.attributes.isDone}\"\r\n                 ng-class-odd=\"'odd'\">\r\n                \r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos().length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in doneTodos()\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n    <drawer side=\"right\">\r\n        <ion-content>\r\n            <div include=\"'smart-lists'\"></div>\r\n        </ion-content>\r\n    </drawer>\r\n</ion-view>";
+	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <div class=\"buttons\">\r\n            <button class=\"button button-icon icon ion-compose\" ng-click=\"newTodo()\"></button>\r\n            <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n        </div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n        \r\n            <div ng-repeat=\"todo in filteredTodos()\" \r\n                 class=\"item todo\"\r\n                 ng-click=\"selectTodo(todo)\">\r\n                \r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos().length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in doneTodos()\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n    <drawer side=\"right\">\r\n        <ion-content>\r\n            <div include=\"'smart-lists'\"></div>\r\n        </ion-content>\r\n    </drawer>\r\n</ion-view>";
 
 /***/ },
 /* 19 */
@@ -1165,7 +1172,7 @@
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <h1 class=\"title\">New Todo</h1>\r\n        <button class=\"button button-clear button-primary\" ng-click=\"todoModal.hide()\">Cancel</button>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        <div class=\"list\">\r\n            <label class=\"item item-input\">\r\n                <i class=\"icon ion-plus placeholder-icon\"></i>\r\n                <input type=\"text\" placeholder=\"Todo title...\">\r\n            </label>\r\n            <label class=\"item item-input item-select\">\r\n                <div class=\"input-label\">\r\n                    List\r\n                </div>\r\n                <select>\r\n                    <option>Blue</option>\r\n                    <option selected>Green</option>\r\n                    <option>Red</option>\r\n                </select>\r\n            </label>\r\n            <button class=\"button button-full button-positive\">Save</button>\r\n        </div>\r\n    </ion-content>\r\n</ion-modal-view>";
+	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <button class=\"button button-clear button-positive\" ng-click=\"saveTodo()\" ng-disabled=\"!newTodo.title || newTodo.title.length < 2\">Save</button>\r\n        <h1 class=\"title\">New Todo</h1>\r\n        <button class=\"button button-clear button-primary\" ng-click=\"todoModal.hide()\">Cancel</button>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        <div class=\"list\">\r\n            <label class=\"item item-input\">\r\n                <input type=\"text\" placeholder=\"Todo title...\" ng-model=\"newTodo.title\">\r\n            </label>\r\n        </div>\r\n        <div class=\"list\">\r\n            <div class=\"item item-divider\">List</div>\r\n            <label class=\"item item-input item-select\">\r\n                <div class=\"input-label\">\r\n                    Choose list:\r\n                </div>\r\n                <select>\r\n                    <option selected>Inbox</option>\r\n                    <option>PhiTodo</option>\r\n                    <option>PhiTrack</option>\r\n                </select>\r\n            </label>\r\n        </div>\r\n    </ion-content>\r\n</ion-modal-view>";
 
 /***/ }
 /******/ ]);

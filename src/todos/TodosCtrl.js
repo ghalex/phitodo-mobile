@@ -8,6 +8,7 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout, 
     
     // region Fields
     
+    $scope.newTodo = {};
     $scope.todoModal = $ionicModal.fromTemplate(require("./NewTodo.html"), {scope: $scope, animation: 'slide-in-up'});
     $scope.todos = [
         {
@@ -56,19 +57,25 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout, 
         });
     };
     
-    $scope.newTodo = function (title) {
-      
-        /*var todo = {
+    $scope.newTodo = function () {
+        $scope.todoModal.show();
+    };
+    
+    $scope.saveTodo = function () {
+        
+        var todo = {
             attributes: {
-                "title": title,
+                "title": $scope.newTodo.title,
                 "isDone": false
             }
         };
         
-        $scope.todos.push(todo);*/
-        $scope.todoModal.show();
+        
+        $scope.todos.push(todo);
+        $scope.newTodo.title = "";
+        
+        $scope.todoModal.hide();
     };
-    
     
     $scope.toggleMenu = function () {
         $ionicSideMenuDelegate.toggleLeft();
