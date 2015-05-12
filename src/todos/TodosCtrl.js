@@ -3,11 +3,12 @@
 
 'use strict';
 
-var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
+var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout, $ionicModal) {
     
     
     // region Fields
     
+    $scope.todoModal = $ionicModal.fromTemplate(require("./NewTodo.html"), {scope: $scope, animation: 'slide-in-up'});
     $scope.todos = [
         {
             attributes: {
@@ -57,14 +58,15 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
     
     $scope.newTodo = function (title) {
       
-        var todo = {
+        /*var todo = {
             attributes: {
                 "title": title,
                 "isDone": false
             }
         };
         
-        $scope.todos.push(todo);
+        $scope.todos.push(todo);*/
+        $scope.todoModal.show();
     };
     
     
@@ -95,6 +97,6 @@ var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) 
     };
 };
     
-TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout"];
+TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout", "$ionicModal"];
 
 module.exports = TodosCtrl;

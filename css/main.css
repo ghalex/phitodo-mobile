@@ -4,10 +4,6 @@ BODY {
   height: 100%;
   font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
-.menu-content {
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
-}
 .sidebar {
   background: #43444F;
 }
@@ -101,18 +97,6 @@ BODY {
   -ms-align-items: center;
   align-items: center;
 }
-.modal {
-  top: 20%;
-  right: 10%;
-  left: 10%;
-  min-height: 140px;
-  width: 80%;
-  border-radius: 5px;
-}
-.modal h1.title {
-  border-bottom: 2px solid #2b88d9;
-  margin: 0px;
-}
 .modal-backdrop-bg {
   -webkit-transition: opacity 300ms ease-in-out;
   transition: opacity 300ms ease-in-out;
@@ -141,7 +125,8 @@ BODY {
   background: url("../images/checkbox.png") no-repeat 0px -16px;
 }
 .todos-view {
-  background: transparent;
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
 }
 .todos-view .list-inset {
   background-color: transparent;
@@ -276,7 +261,8 @@ BODY {
   left: 8px;
 }
 .settings-view {
-  background: transparent;
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
 }
 .settings-view .bar.bar-positive {
   border: none;

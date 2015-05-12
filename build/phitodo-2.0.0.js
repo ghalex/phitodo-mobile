@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "30e9b09c443b436453c2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1ecb571337931f570df3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -543,9 +543,9 @@
 	    module.exports = {
 	        modules: [
 				__webpack_require__(1),
+				__webpack_require__(2),
 				__webpack_require__(4),
 				__webpack_require__(3),
-				__webpack_require__(2),
 				__webpack_require__(5),
 				__webpack_require__(6),
 				__webpack_require__(7)
@@ -585,6 +585,29 @@
 	    "use strict";
 	    
 	    var angular = __webpack_require__(8),
+	        parse = __webpack_require__(9),
+	        m = angular.module("app.login", []);
+	    
+	    m.controller("LoginCtrl", __webpack_require__(12));
+	    m.run(["$templateCache", function ($templateCache) {
+	        $templateCache.put("login", __webpack_require__(17));
+	    }]);
+	    
+	    module.exports = m;
+	    
+	}());
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jslint vars: true, plusplus: true */
+	/*global require, module, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var angular = __webpack_require__(8),
 	        m = angular.module("app.lists", []);
 	    
 	    m.controller("ListsCtrl", __webpack_require__(11));
@@ -597,7 +620,7 @@
 	}());
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jslint plusplus: true, node: true */
@@ -608,35 +631,12 @@
 	var angular = __webpack_require__(8),
 	    m = angular.module("app.todos", []);
 
-	m.controller("TodosCtrl", __webpack_require__(12));
+	m.controller("TodosCtrl", __webpack_require__(13));
 	m.run(["$templateCache", function ($templateCache) {
-	    $templateCache.put("todos", __webpack_require__(17));
+	    $templateCache.put("todos", __webpack_require__(18));
 	}]);
 
 	module.exports = m;
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint vars: true, plusplus: true */
-	/*global require, module, console */
-
-	(function () {
-	    "use strict";
-	    
-	    var angular = __webpack_require__(8),
-	        parse = __webpack_require__(9),
-	        m = angular.module("app.login", []);
-	    
-	    m.controller("LoginCtrl", __webpack_require__(13));
-	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("login", __webpack_require__(19));
-	    }]);
-	    
-	    module.exports = m;
-	    
-	}());
 
 /***/ },
 /* 5 */
@@ -653,7 +653,7 @@
 	    
 	    //m.controller("SmartListsCtrl", require("./SmartListsCtrl"));
 	    m.run(["$templateCache", function ($templateCache) {
-	        $templateCache.put("user-info", __webpack_require__(18));
+	        $templateCache.put("user-info", __webpack_require__(19));
 	    }]);
 	    
 	    module.exports = m;
@@ -836,16 +836,55 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*jslint vars: true, plusplus: true */
+	/*global module, require, console */
+
+	(function () {
+	    "use strict";
+	    
+	    var parse = __webpack_require__(9);
+	    
+	    var LoginCtrl = function ($scope, $rootScope, $state) {
+	        
+	        // region #Vars
+	        
+			$scope.error = false;
+	        $scope.busy = false;
+	        
+	        // endregion
+	        
+	        // region #Public function
+	        
+	        $scope.login = function (user) {
+	            
+	            //var parseUser = new parse.User({username: user.email, password: user.password});
+	            $state.go("todos");
+	            
+	        };
+	        
+	        // endregion
+	    };
+	    
+	    LoginCtrl.$inject = ["$scope", "$rootScope", "$state"];
+	    module.exports = LoginCtrl;
+	    
+	}());
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/*jslint plusplus: true, node: true */
 	/*global require, module */
 
 	'use strict';
 
-	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout) {
+	var TodosCtrl = function ($scope, $rootScope, $ionicSideMenuDelegate, $timeout, $ionicModal) {
 	    
 	    
 	    // region Fields
 	    
+	    $scope.todoModal = $ionicModal.fromTemplate(__webpack_require__(23), {scope: $scope, animation: 'slide-in-up'});
 	    $scope.todos = [
 	        {
 	            attributes: {
@@ -895,14 +934,15 @@
 	    
 	    $scope.newTodo = function (title) {
 	      
-	        var todo = {
+	        /*var todo = {
 	            attributes: {
 	                "title": title,
 	                "isDone": false
 	            }
 	        };
 	        
-	        $scope.todos.push(todo);
+	        $scope.todos.push(todo);*/
+	        $scope.todoModal.show();
 	    };
 	    
 	    
@@ -933,47 +973,9 @@
 	    };
 	};
 	    
-	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout"];
+	TodosCtrl.$inject = ["$scope", "$rootScope", "$ionicSideMenuDelegate", "$timeout", "$ionicModal"];
 
 	module.exports = TodosCtrl;
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*jslint vars: true, plusplus: true */
-	/*global module, require, console */
-
-	(function () {
-	    "use strict";
-	    
-	    var parse = __webpack_require__(9);
-	    
-	    var LoginCtrl = function ($scope, $rootScope, $state) {
-	        
-	        // region #Vars
-	        
-			$scope.error = false;
-	        $scope.busy = false;
-	        
-	        // endregion
-	        
-	        // region #Public function
-	        
-	        $scope.login = function (user) {
-	            
-	            //var parseUser = new parse.User({username: user.email, password: user.password});
-	            $state.go("todos");
-	            
-	        };
-	        
-	        // endregion
-	    };
-	    
-	    LoginCtrl.$inject = ["$scope", "$rootScope", "$state"];
-	    module.exports = LoginCtrl;
-	    
-	}());
 
 /***/ },
 /* 14 */
@@ -1127,19 +1129,19 @@
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n\r\n            <form name=\"newTodoForm\" ng-submit=\"newTodo(todoTitle); todoTitle = '';\">\r\n                <div class=\"item item-input search\">\r\n                    <i class=\"icon ion-plus-round placeholder-icon\"></i>\r\n                    <input type=\"text\" placeholder=\"Add todo...\" ng-model=\"todoTitle\">\r\n                </div>\r\n            </form>\r\n            \r\n            <div ng-repeat=\"todo in filteredTodos()\" \r\n                 class=\"item todo\"\r\n                 ng-click=\"selectTodo(todo)\"\r\n                 ng-class=\"{done: todo.attributes.isDone}\"\r\n                 ng-class-odd=\"'odd'\">\r\n                \r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos().length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in doneTodos()\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n    <drawer side=\"right\">\r\n        <ion-content>\r\n            <div include=\"'smart-lists'\"></div>\r\n        </ion-content>\r\n    </drawer>\r\n</ion-view>";
+	module.exports = "<ion-view title=\"Sign-In\" \r\n          class=\"login-view\" \r\n          ng-controller=\"LoginCtrl\">\r\n\t\r\n    <ion-content>\r\n\t\t\r\n        <div class=\"list\">\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Username</span>\r\n\t\t\t\t<input type=\"text\" ng-model=\"user.username\">\r\n\t\t\t</label>\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Password</span>\r\n\t\t\t\t<input type=\"password\" ng-model=\"user.password\">\r\n\t\t\t</label>\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"padding\">\r\n\t\t\t<button class=\"button button-block button-positive\" ng-click=\"login(user)\">\r\n\t\t\t\tSign-In\r\n\t\t\t</button>\r\n\t\t\t<p class=\"text-center\">\r\n\t\t\t\t<a href=\"#/forgot-password\">Forgot password</a>\r\n\t\t\t</p>\r\n\t\t</div>\r\n        \r\n\t</ion-content>\r\n    \r\n</ion-view>";
 
 /***/ },
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"userinfo-view\">\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-avatar\">\r\n\t\t\t<img ng-src=\"images/avatars/avatar0.png\">\r\n\t\t\t<h2>Ghiura Alexandru</h2>\r\n\t\t\t<p>ghalex@gmail.com</p>\r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n</div>";
+	module.exports = "<ion-view title=\"Todos\" ng-controller=\"TodosCtrl\" class=\"todos-view\">\r\n    \r\n    <div class=\"bar bar-header bar-positive transparent-nav\">\r\n        <button class=\"button button-icon icon ion-navicon\" ng-click=\"toggleMenu()\"></button>\r\n        <h1 class=\"title\">Inbox</h1>\r\n        <div class=\"buttons\">\r\n            <button class=\"button button-icon icon ion-plus\" ng-click=\"newTodo()\"></button>\r\n            <button class=\"button button-icon icon ion-gear-a\" ui-sref='settings'></button>\r\n        </div>\r\n    </div>\r\n    \r\n    <ion-content class=\"has-header\">\r\n        <ion-refresher on-refresh=\"doRefresh()\" pulling-text=\"Pull to sync todos...\"></ion-refresher>\r\n\r\n        <div class=\"list list-inset\">\r\n        \r\n            <div ng-repeat=\"todo in filteredTodos()\" \r\n                 class=\"item todo\"\r\n                 ng-click=\"selectTodo(todo)\"\r\n                 ng-class=\"{done: todo.attributes.isDone}\"\r\n                 ng-class-odd=\"'odd'\">\r\n                \r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                    <span ng-show=\"todo.attributes.progress > 0 && !todo.attributes.isDone\" class=\"inprogress\">( {{todo.attributes.progress}}% )</span>\r\n                </div>\r\n                \r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     on-tap=\"starTodo(todo, $event)\"\r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n                \r\n            </div>\r\n            \r\n        </div>\r\n        \r\n        <div class=\"completed\">\r\n            <span>{{doneTodos().length}} completed <b>todo's</b></span>\r\n        </div>\r\n\r\n        <div class=\"list list-inset\">\r\n            <div ng-repeat=\"todo in doneTodos()\" \r\n                 class=\"item todo done\"\r\n                 ng-class-odd=\"'odd'\">\r\n\r\n                <div ng-click=\"doneTodo(todo, $event)\" class=\"padding-top\">\r\n                    <div class=\"checkbox\" ng-class=\"{checked: todo.attributes.isDone}\"></div>\r\n                </div>\r\n                <div class=\"drag\"></div>\r\n                <div class=\"title\">\r\n                    <span>{{todo.attributes.title}}</span>\r\n                </div>\r\n\r\n                <!--Star-->\r\n                <div class=\"star\" \r\n                     ng-class=\"{starred: todo.attributes.isStarred}\">\r\n                    <i class=\"icon ion-android-star\"></i>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n    </ion-content>\r\n    <drawer side=\"right\">\r\n        <ion-content>\r\n            <div include=\"'smart-lists'\"></div>\r\n        </ion-content>\r\n    </drawer>\r\n</ion-view>";
 
 /***/ },
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view title=\"Sign-In\" \r\n          class=\"login-view\" \r\n          ng-controller=\"LoginCtrl\">\r\n\t\r\n    <ion-content>\r\n\t\t\r\n        <div class=\"list\">\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Username</span>\r\n\t\t\t\t<input type=\"text\" ng-model=\"user.username\">\r\n\t\t\t</label>\r\n\t\t\t<label class=\"item item-input\">\r\n\t\t\t\t<span class=\"input-label\">Password</span>\r\n\t\t\t\t<input type=\"password\" ng-model=\"user.password\">\r\n\t\t\t</label>\r\n\t\t</div>\r\n\t\t\r\n        <div class=\"padding\">\r\n\t\t\t<button class=\"button button-block button-positive\" ng-click=\"login(user)\">\r\n\t\t\t\tSign-In\r\n\t\t\t</button>\r\n\t\t\t<p class=\"text-center\">\r\n\t\t\t\t<a href=\"#/forgot-password\">Forgot password</a>\r\n\t\t\t</p>\r\n\t\t</div>\r\n        \r\n\t</ion-content>\r\n    \r\n</ion-view>";
+	module.exports = "<div class=\"userinfo-view\">\r\n    <div class=\"list\">\r\n        \r\n\t\t<div class=\"item item-avatar\">\r\n\t\t\t<img ng-src=\"images/avatars/avatar0.png\">\r\n\t\t\t<h2>Ghiura Alexandru</h2>\r\n\t\t\t<p>ghalex@gmail.com</p>\r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n</div>";
 
 /***/ },
 /* 20 */
@@ -1158,6 +1160,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <h1 class=\"title\">Change Avatar</h1>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        Hello!\r\n    </ion-content>\r\n</ion-modal-view>";
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<ion-modal-view>\r\n    \r\n    <ion-header-bar>\r\n        <h1 class=\"title\">New Todo</h1>\r\n        <button class=\"button button-clear button-primary\" ng-click=\"todoModal.hide()\">Cancel</button>\r\n    </ion-header-bar>\r\n    \r\n    <ion-content class=\"padding\">\r\n        <div class=\"list\">\r\n            <label class=\"item item-input\">\r\n                <i class=\"icon ion-plus placeholder-icon\"></i>\r\n                <input type=\"text\" placeholder=\"Todo title...\">\r\n            </label>\r\n            <label class=\"item item-input item-select\">\r\n                <div class=\"input-label\">\r\n                    List\r\n                </div>\r\n                <select>\r\n                    <option>Blue</option>\r\n                    <option selected>Green</option>\r\n                    <option>Red</option>\r\n                </select>\r\n            </label>\r\n            <button class=\"button button-full button-positive\">Save</button>\r\n        </div>\r\n    </ion-content>\r\n</ion-modal-view>";
 
 /***/ }
 /******/ ]);

@@ -1,0 +1,27 @@
+<ion-modal-view>
+    
+    <ion-header-bar>
+        <h1 class="title">New Todo</h1>
+        <button class="button button-clear button-primary" ng-click="todoModal.hide()">Cancel</button>
+    </ion-header-bar>
+    
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input">
+                <i class="icon ion-plus placeholder-icon"></i>
+                <input type="text" placeholder="Todo title...">
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    List
+                </div>
+                <select>
+                    <option>Blue</option>
+                    <option selected>Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+            <button class="button button-full button-positive">Save</button>
+        </div>
+    </ion-content>
+</ion-modal-view>
