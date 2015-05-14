@@ -17,6 +17,7 @@
 			'app.components',
 			'app.login',
 			'app.todos',
+			'app.tododetails',
 			'app.userinfo',
 			'app.lists',
 			'app.smartlists',

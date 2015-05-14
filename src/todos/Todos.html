@@ -38,11 +38,11 @@
             
         </div>
         
-        <div class="completed">
+        <div class="completed" ng-click="showCompleted=!showCompleted">
             <span>{{doneTodos().length}} completed <b>todo's</b></span>
         </div>
 
-        <div class="list list-inset">
+        <div class="list list-inset" ng-show="showCompleted">
             <div ng-repeat="todo in doneTodos()" 
                  class="item todo done"
                  ng-class-odd="'odd'">
@@ -66,7 +66,7 @@
     </ion-content>
     <drawer side="right">
         <ion-content>
-            <div include="'smart-lists'"></div>
+            <div include="'todo-details'"></div>
         </ion-content>
     </drawer>
 </ion-view>

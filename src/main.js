@@ -11,6 +11,7 @@
 			require("components"),
 			require("login"),
 			require("todos"),
+			require("todo-details"),
 			require("lists"),
 			require("user-info"),
 			require("smart-lists"),

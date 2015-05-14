@@ -98,18 +98,20 @@ BODY {
   align-items: center;
 }
 .modal {
-  /*
-    top: 20%;
-    right: 10%;
-    left: 10%;
-    min-height: 240px;
-    width: 80%;
-    border-radius: 5px;
-*/
+  top: 20%;
+  right: 10%;
+  bottom: 30%;
+  left: 10%;
+  width: 80%;
+  border-radius: 5px;
 }
 .modal .bar {
   border-bottom: 2px solid #2b88d9;
   margin: 0px;
+}
+.modal .bar .title {
+  right: 0px !important;
+  text-align: center;
 }
 .modal .list input {
   font-size: 16px;

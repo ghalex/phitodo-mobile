@@ -4295,7 +4295,6 @@ ion-tabs.tabs-color-active-dark .tab-item {
   top: 0;
   z-index: 10;
   overflow: hidden;
-  min-height: 100%;
   width: 100%;
   background-color: #fff; }
 

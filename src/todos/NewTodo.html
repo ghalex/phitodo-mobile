@@ -1,7 +1,7 @@
 <ion-modal-view>
     
     <ion-header-bar>
-        <button class="button button-clear button-positive" ng-click="saveTodo()" ng-disabled="!newTodo.title || newTodo.title.length < 2">Save</button>
+<!--        <button class="button button-clear button-positive" ng-click="saveTodo()" ng-disabled="!newTodo.title || newTodo.title.length < 2">Save</button>-->
         <h1 class="title">New Todo</h1>
         <button class="button button-clear button-primary" ng-click="todoModal.hide()">Cancel</button>
     </ion-header-bar>
@@ -11,9 +11,6 @@
             <label class="item item-input">
                 <input type="text" placeholder="Todo title..." ng-model="newTodo.title">
             </label>
-        </div>
-        <div class="list">
-            <div class="item item-divider">List</div>
             <label class="item item-input item-select">
                 <div class="input-label">
                     Choose list:
@@ -25,5 +22,7 @@
                 </select>
             </label>
         </div>
+        
+        <div class="button button-positive button-full" ng-click="saveTodo()" ng-disabled="!newTodo.title || newTodo.title.length < 2">Save</div>
     </ion-content>
 </ion-modal-view>
